@@ -91,13 +91,13 @@ public class InicioUsuario extends JFrame {
 		lblPrincipal.setFont(new Font("Arial", Font.BOLD, 13));
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("D:\\Proyectos\\Java\\Empleadora\\Empleadora-master\\src\\icons\\icons8-casa-24.png"));
+		label.setIcon(new ImageIcon(InicioUsuario.class.getResource("/icons/icons8-casa-24.png")));
 		
 		JLabel lblCitasPendientes = new JLabel("Citas Pendientes");
 		lblCitasPendientes.setFont(new Font("Arial", Font.BOLD, 13));
 		
 		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon("D:\\Proyectos\\Java\\Empleadora\\Empleadora-master\\src\\icons\\icons8-cita-24.png"));
+		label_1.setIcon(new ImageIcon(InicioUsuario.class.getResource("/icons/icons8-cita-24.png")));
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
