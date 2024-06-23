@@ -22,6 +22,7 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
+import java.awt.Dimension;
 
 public class pantallaAdmin extends JFrame {
 
@@ -47,6 +48,7 @@ public class pantallaAdmin extends JFrame {
 	 * Create the frame.
 	 */
 	public pantallaAdmin() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 640);
 		
@@ -84,10 +86,15 @@ public class pantallaAdmin extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel contentPanel = new JPanel();
-		contentPane.add(contentPanel);
+		JPanel contentPanels = new JPanel();
+		contentPanels.setPreferredSize(new Dimension(884, 580));
+		contentPanels.setSize(new Dimension(884, 580));
+		contentPanels.setBackground(Color.BLUE);
+		contentPanels.setMaximumSize(new Dimension(884, 580));
+		contentPane.add(contentPanels);
+		contentPanels.setLayout(new BorderLayout(0, 0));
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
