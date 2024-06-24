@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+import java.awt.Component;
 
 public class panelEmpresas extends JPanel {
 	private JTable table;
@@ -39,6 +40,7 @@ public class panelEmpresas extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.setGridColor(new Color(192, 192, 192));
 		table.setBorder(null);
 		scrollPane.setViewportView(table);
 		
@@ -48,9 +50,14 @@ public class panelEmpresas extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(panelEmpresas.class.getResource("/images/empresa/Empresa 64px.png")));
+		label.setBounds(775, 0, 75, 70);
+		panel.add(label);
+		
 		JLabel lblListaDeEmplesas = new JLabel("Lista de Empresas Empleadoras");
 		lblListaDeEmplesas.setFont(new Font("Roboto Black", Font.BOLD, 25));
-		lblListaDeEmplesas.setBounds(426, 11, 435, 48);
+		lblListaDeEmplesas.setBounds(373, 11, 409, 48);
 		panel.add(lblListaDeEmplesas);
 		
 		JLabel lblNewLabel = new JLabel("");
@@ -76,6 +83,7 @@ public class panelEmpresas extends JPanel {
 		textFieldBuscar.setColumns(10);
 		
 		JButton btnVer = new JButton("Ver  ");
+		btnVer.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnVer.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/binoculars-solid-36.png")));
 		btnVer.setSize(new Dimension(5, 5));
 		btnVer.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -90,6 +98,7 @@ public class panelEmpresas extends JPanel {
 		add(btnVer);
 		
 		JButton btnEditar = new JButton("A\u00F1adir");
+		btnEditar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnEditar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
 		btnEditar.setSize(new Dimension(5, 5));
 		btnEditar.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -104,6 +113,7 @@ public class panelEmpresas extends JPanel {
 		add(btnEditar);
 		
 		JButton btnEditar_1 = new JButton("Editar");
+		btnEditar_1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnEditar_1.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
 		btnEditar_1.setSize(new Dimension(5, 5));
 		btnEditar_1.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -118,6 +128,7 @@ public class panelEmpresas extends JPanel {
 		add(btnEditar_1);
 		
 		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnBorrar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-papelera-50.png")));
 		btnBorrar.setSize(new Dimension(5, 5));
 		btnBorrar.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -132,6 +143,7 @@ public class panelEmpresas extends JPanel {
 		add(btnBorrar);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnBuscar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
 		btnBuscar.setSize(new Dimension(5, 5));
 		btnBuscar.setHorizontalTextPosition(SwingConstants.LEFT);

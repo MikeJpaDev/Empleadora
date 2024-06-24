@@ -27,11 +27,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
 
+import UI.admin.jpanels.PanelEmpleos;
 import UI.admin.jpanels.PanelUsuarios;
 import UI.admin.jpanels.panelEmpresas;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
+import javax.swing.JCheckBoxMenuItem;
 
 public class pantallaAdmin extends JFrame {
 
@@ -39,6 +42,7 @@ public class pantallaAdmin extends JFrame {
 	private panelEmpresas verEmpr = new panelEmpresas();
 	private JPanel contentPanels;
 	private PanelUsuarios verUsers = new PanelUsuarios();
+	private PanelEmpleos pEmpleos;
 
 	/**
 	 * Launch the application.
@@ -95,13 +99,19 @@ public class pantallaAdmin extends JFrame {
 		});
 		mnEmpresas.add(mntmVerEmpresas);
 		
-		JMenu mnFiltrarEmpresas = new JMenu("Filtrar Empresas");
-		mnEmpresas.add(mnFiltrarEmpresas);
+		JMenuItem mntmCrearEmpresa = new JMenuItem("Crear Empresa");
+		mnEmpresas.add(mntmCrearEmpresa);
 		
 		JMenu mnEmpleos = new JMenu("Empleos");
 		menuBar.add(mnEmpleos);
 		
 		JMenuItem mntmListaDeEmpleos = new JMenuItem("Lista de Empleos");
+		mntmListaDeEmpleos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pEmpleos = new PanelEmpleos();
+				cambiarPantalla(pEmpleos);
+			}
+		});
 		mnEmpleos.add(mntmListaDeEmpleos);
 		
 		JMenu mnUsuarios = new JMenu("Usuarios");
@@ -117,6 +127,9 @@ public class pantallaAdmin extends JFrame {
 		
 		JMenu mnCitas = new JMenu("Citas");
 		menuBar.add(mnCitas);
+		
+		JMenu mnRegistro = new JMenu("Registro");
+		menuBar.add(mnRegistro);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
