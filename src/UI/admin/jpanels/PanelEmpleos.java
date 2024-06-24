@@ -31,7 +31,7 @@ public class PanelEmpleos extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(0, 191, 255));
-		panel.setBounds(0, 26, 884, 70);
+		panel.setBounds(0, 23, 884, 70);
 		add(panel);
 		
 		JLabel label = new JLabel("");
@@ -60,6 +60,7 @@ public class PanelEmpleos extends JPanel {
 		add(scrollPane);
 		
 		JButton button = new JButton("Ver  ");
+		button.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/binoculars-solid-36.png")));
 		button.setSize(new Dimension(5, 5));
 		button.setHorizontalTextPosition(SwingConstants.LEFT);
 		button.setForeground(Color.WHITE);
@@ -74,6 +75,7 @@ public class PanelEmpleos extends JPanel {
 		add(button);
 		
 		JButton button_1 = new JButton("A\u00F1adir");
+		button_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
 		button_1.setSize(new Dimension(5, 5));
 		button_1.setHorizontalTextPosition(SwingConstants.LEFT);
 		button_1.setForeground(Color.WHITE);
@@ -88,6 +90,7 @@ public class PanelEmpleos extends JPanel {
 		add(button_1);
 		
 		JButton button_2 = new JButton("Editar");
+		button_2.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
 		button_2.setSize(new Dimension(5, 5));
 		button_2.setHorizontalTextPosition(SwingConstants.LEFT);
 		button_2.setForeground(Color.WHITE);
@@ -102,6 +105,7 @@ public class PanelEmpleos extends JPanel {
 		add(button_2);
 		
 		JButton button_3 = new JButton("Borrar");
+		button_3.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
 		button_3.setSize(new Dimension(5, 5));
 		button_3.setHorizontalTextPosition(SwingConstants.LEFT);
 		button_3.setForeground(Color.WHITE);

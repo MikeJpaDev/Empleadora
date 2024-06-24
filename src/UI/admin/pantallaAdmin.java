@@ -27,7 +27,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
 
+import UI.admin.jpanels.PanelCitas;
 import UI.admin.jpanels.PanelEmpleos;
+import UI.admin.jpanels.PanelRegistros;
 import UI.admin.jpanels.PanelUsuarios;
 import UI.admin.jpanels.panelEmpresas;
 
@@ -43,6 +45,8 @@ public class pantallaAdmin extends JFrame {
 	private JPanel contentPanels;
 	private PanelUsuarios verUsers = new PanelUsuarios();
 	private PanelEmpleos pEmpleos;
+	private PanelCitas pCitas;
+	private PanelRegistros pRegistros;
 
 	/**
 	 * Launch the application.
@@ -128,8 +132,26 @@ public class pantallaAdmin extends JFrame {
 		JMenu mnCitas = new JMenu("Citas");
 		menuBar.add(mnCitas);
 		
+		JMenuItem mntmVerCitas = new JMenuItem("Ver Citas");
+		mntmVerCitas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pCitas = new PanelCitas();
+				cambiarPantalla(pCitas);
+			}
+		});
+		mnCitas.add(mntmVerCitas);
+		
 		JMenu mnRegistro = new JMenu("Registro");
 		menuBar.add(mnRegistro);
+		
+		JMenuItem mntmRegistrosMensuales = new JMenuItem("Registros Mensuales");
+		mntmRegistrosMensuales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pRegistros = new PanelRegistros();
+				cambiarPantalla(pRegistros);
+			}
+		});
+		mnRegistro.add(mntmRegistrosMensuales);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
