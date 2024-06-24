@@ -6,12 +6,12 @@ public class EmpresasTableModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
 	public EmpresasTableModel(){
-		String[] columnNames = {"CI", "Nombre", "Sexo", "Edad", "Nivel de Escolaridad", "Rama"};
+		String[] columnNames = {"IDs","Nombre", "Telefono", "Sector", "Total Empleos"};
 		this.setColumnIdentifiers(columnNames);
 	}
-	public void adicionar(String ci, String nombre ,String sexo, String
-			edad, String nivelEsc, String rama){
-		Object[] newRow = new Object[]{ci, nombre , sexo, edad, nivelEsc, rama};
+	public void adicionar(String ids, String nombre ,String telefono, String
+			sector, String totalEmpleos){
+		Object[] newRow = new Object[]{ids, nombre , telefono, sector, totalEmpleos};
 		addRow(newRow);
 	}
 

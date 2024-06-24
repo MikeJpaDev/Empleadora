@@ -25,6 +25,10 @@ public class panelEmpresas extends JPanel {
 	private JTextField textFieldBuscar;
 	
 	public panelEmpresas() {
+		componentes();
+	}
+	
+	private void componentes(){
 		setBackground(new Color(135, 206, 235));
 		setSize(new Dimension(884, 580));
 		setLayout(null);
@@ -64,7 +68,7 @@ public class panelEmpresas extends JPanel {
 		
 		textFieldBuscar = new JTextField();
 		textFieldBuscar.setForeground(new Color(192, 192, 192));
-		textFieldBuscar.setText("Nombre/CI");
+		textFieldBuscar.setText("Nombre/IDs");
 		textFieldBuscar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldBuscar.setBorder(null);
 		textFieldBuscar.setBounds(36, 122, 644, 42);

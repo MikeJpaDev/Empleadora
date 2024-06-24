@@ -27,15 +27,18 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
 
+import UI.admin.jpanels.PanelUsuarios;
 import UI.admin.jpanels.panelEmpresas;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class pantallaAdmin extends JFrame {
 
 	private JPanel contentPane;
 	private panelEmpresas verEmpr = new panelEmpresas();
 	private JPanel contentPanels;
+	private PanelUsuarios verUsers = new PanelUsuarios();
 
 	/**
 	 * Launch the application.
@@ -57,6 +60,12 @@ public class pantallaAdmin extends JFrame {
 	 * Create the frame.
 	 */
 	public pantallaAdmin() {
+		llenarComponentes();
+	}
+
+	private void llenarComponentes(){
+		setTitle("SIGEM");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(pantallaAdmin.class.getResource("/images/empresa/logo redondo 64.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 884, 640);
@@ -86,6 +95,9 @@ public class pantallaAdmin extends JFrame {
 		});
 		mnEmpresas.add(mntmVerEmpresas);
 		
+		JMenu mnFiltrarEmpresas = new JMenu("Filtrar Empresas");
+		mnEmpresas.add(mnFiltrarEmpresas);
+		
 		JMenu mnEmpleos = new JMenu("Empleos");
 		menuBar.add(mnEmpleos);
 		
@@ -94,6 +106,14 @@ public class pantallaAdmin extends JFrame {
 		
 		JMenu mnUsuarios = new JMenu("Usuarios");
 		menuBar.add(mnUsuarios);
+		
+		JMenuItem mntmListaDeUsuarios = new JMenuItem("Lista de Usuarios");
+		mntmListaDeUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cambiarPantalla(verUsers);
+			}
+		});
+		mnUsuarios.add(mntmListaDeUsuarios);
 		
 		JMenu mnCitas = new JMenu("Citas");
 		menuBar.add(mnCitas);
@@ -109,24 +129,7 @@ public class pantallaAdmin extends JFrame {
 		contentPanels.setMaximumSize(new Dimension(884, 580));
 		contentPane.add(contentPanels);
 		contentPanels.setLayout(new BorderLayout(0, 0));
-	}
-
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
+	
 	}
 	
 	private void cambiarPantalla(JPanel pantalla){
