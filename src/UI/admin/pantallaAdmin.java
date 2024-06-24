@@ -9,24 +9,33 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
+
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JMenuItem;
 import javax.swing.JButton;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
+
+import UI.admin.jpanels.panelEmpresas;
+
 import java.awt.Dimension;
 
 public class pantallaAdmin extends JFrame {
 
 	private JPanel contentPane;
+	private panelEmpresas verEmpr = new panelEmpresas();
+	private JPanel contentPanels;
 
 	/**
 	 * Launch the application.
@@ -50,7 +59,7 @@ public class pantallaAdmin extends JFrame {
 	public pantallaAdmin() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 640);
+		setBounds(100, 100, 884, 640);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -70,6 +79,11 @@ public class pantallaAdmin extends JFrame {
 		menuBar.add(mnEmpresas);
 		
 		JMenuItem mntmVerEmpresas = new JMenuItem("Ver Empresas");
+		mntmVerEmpresas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cambiarPantalla(verEmpr);
+			}
+		});
 		mnEmpresas.add(mntmVerEmpresas);
 		
 		JMenu mnEmpleos = new JMenu("Empleos");
@@ -88,7 +102,7 @@ public class pantallaAdmin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel contentPanels = new JPanel();
+		contentPanels = new JPanel();
 		contentPanels.setPreferredSize(new Dimension(884, 580));
 		contentPanels.setSize(new Dimension(884, 580));
 		contentPanels.setBackground(Color.BLUE);
@@ -113,5 +127,15 @@ public class pantallaAdmin extends JFrame {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
+	}
+	
+	private void cambiarPantalla(JPanel pantalla){
+		pantalla.setSize(884, 580);
+		pantalla.setLocation(284, 0);
+		this.contentPanels.removeAll();
+		this.contentPanels.setLayout(new BorderLayout(0, 0));
+		this.contentPanels.add(pantalla);
+		this.contentPanels.revalidate();
+		this.contentPanels.repaint();
 	}
 }
