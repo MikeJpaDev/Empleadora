@@ -1,8 +1,5 @@
 package UI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -42,7 +39,7 @@ public class IniciarSesion extends JFrame {
 	private JPasswordField pwdIntroduceLaContrasea;
 	
 	public IniciarSesion() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Proyectos\\Java\\Empleadora\\Empleadora-master\\src\\icons\\icons8-usuario-30.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(IniciarSesion.class.getResource("/icons/icons8-usuario-30.png")));
 		
 		setResizable(false);
 		setTitle("Autenticaci\u00F3n");
@@ -68,7 +65,7 @@ public class IniciarSesion extends JFrame {
 		
 		AvatarCircular avatarCircular = new AvatarCircular();
 		avatarCircular.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
-		avatarCircular.setAvatar(new ImageIcon("D:\\Proyectos\\Java\\Empleadora\\Empleadora-master\\src\\icons\\icons8-usuario-100.png"));
+		avatarCircular.setAvatar(new ImageIcon(IniciarSesion.class.getResource("/icons/icons8-usuario-100.png")));
 		avatarCircular.setBounds(446, 17, 125, 125);
 		panel.add(avatarCircular);
 		
@@ -113,7 +110,7 @@ public class IniciarSesion extends JFrame {
 		panel.add(btnmcnRegistrarse);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("D:\\Proyectos\\Java\\Empleadora\\Empleadora-master\\src\\icons\\621d26b292a9c1000165c39e-removebg-preview.png"));
+		lblNewLabel.setIcon(new ImageIcon(IniciarSesion.class.getResource("/icons/621d26b292a9c1000165c39e-removebg-preview.png")));
 		lblNewLabel.setBounds(12, 0, 375, 362);
 		panel.add(lblNewLabel);
 	}
