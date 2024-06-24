@@ -29,6 +29,7 @@ import javax.swing.JDesktopPane;
 
 import UI.admin.jpanels.PanelCitas;
 import UI.admin.jpanels.PanelEmpleos;
+import UI.admin.jpanels.PanelPrincipal;
 import UI.admin.jpanels.PanelRegistros;
 import UI.admin.jpanels.PanelUsuarios;
 import UI.admin.jpanels.panelEmpresas;
@@ -41,12 +42,13 @@ import javax.swing.JCheckBoxMenuItem;
 public class pantallaAdmin extends JFrame {
 
 	private JPanel contentPane;
-	private panelEmpresas verEmpr = new panelEmpresas();
+	private panelEmpresas verEmpr;
 	private JPanel contentPanels;
 	private PanelUsuarios verUsers = new PanelUsuarios();
 	private PanelEmpleos pEmpleos;
 	private PanelCitas pCitas;
 	private PanelRegistros pRegistros;
+	private PanelPrincipal pPrincipal = new PanelPrincipal();
 
 	/**
 	 * Launch the application.
@@ -69,6 +71,7 @@ public class pantallaAdmin extends JFrame {
 	 */
 	public pantallaAdmin() {
 		llenarComponentes();
+		cambiarPantalla(pPrincipal);
 	}
 
 	private void llenarComponentes(){
@@ -90,6 +93,14 @@ public class pantallaAdmin extends JFrame {
 				System.exit(WIDTH);
 			}
 		});
+		
+		JMenuItem mntmInicio = new JMenuItem("Inicio");
+		mntmInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cambiarPantalla(pPrincipal);
+			}
+		});
+		mnArchivo.add(mntmInicio);
 		mnArchivo.add(mntmSalir);
 		
 		JMenu mnEmpresas = new JMenu("Empresas");
@@ -98,6 +109,7 @@ public class pantallaAdmin extends JFrame {
 		JMenuItem mntmVerEmpresas = new JMenuItem("Ver Empresas");
 		mntmVerEmpresas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				verEmpr = new panelEmpresas();
 				cambiarPantalla(verEmpr);
 			}
 		});
@@ -160,7 +172,7 @@ public class pantallaAdmin extends JFrame {
 		contentPanels = new JPanel();
 		contentPanels.setPreferredSize(new Dimension(884, 580));
 		contentPanels.setSize(new Dimension(884, 580));
-		contentPanels.setBackground(Color.BLUE);
+		contentPanels.setBackground(new Color(135, 206, 235));
 		contentPanels.setMaximumSize(new Dimension(884, 580));
 		contentPane.add(contentPanels);
 		contentPanels.setLayout(new BorderLayout(0, 0));
