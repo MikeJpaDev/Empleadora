@@ -1,6 +1,10 @@
 package UI;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -19,27 +23,101 @@ import java.awt.Color;
 import componentesVisuales.NotificacionesModernas;
 
 import com.github.weisj.jsvg.nodes.Line;
+
 import java.awt.FlowLayout;
+
 import javax.swing.border.MatteBorder;
+
 import componentesVisuales.JTextFieldModificado;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JPasswordField;
+
 import componentesVisuales.BotonAnimacion;
 import raven.utils.FlatLafStyleUtils;
 import logica.utilidades.interfaz.ManejadorLookAndFeels;
+
 import java.awt.Toolkit;
+
 import javax.swing.text.IconView;
 import javax.swing.text.Element;
+
 import com.github.weisj.jsvg.nodes.Image;
+
+import java.awt.SystemColor;
+
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Cursor;
+import java.util.ArrayList;
+
+import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
+
+import principal.Empleadora;
+import principal.Empresa;
+import principal.Usuario;
 
 public class IniciarSesion extends JFrame {
 
 	private JPanel contentPane;
-	private JPasswordField pwdIntroduceLaContrasea;
+	private JLabel labelOjo;
+	private JTextFieldModificado lblUser;
+	private JPasswordField lblCont;
+	private char echoCharCont;
+	
+	private void abrirUsuario(){
+		Empleadora e = Empleadora.getInstancia();
+		ArrayList<Usuario> actuales = e.getUsuarios();
+		ArrayList<Empresa> empresa = e.getEmpresas();
+		boolean encontrado = false;
+		boolean error = true;
+		String cont = lblCont.getText();
+		String user = lblUser.getText();
+		
+		for(int i = 0; i < actuales.size() && !encontrado; i++){
+			if(actuales.get(i).getNombre().equals(user) && actuales.get(i).getPsswd().equals(cont)){
+				this.dispose();
+				InicioUsuario usr = new InicioUsuario(actuales.get(i));
+				usr.setVisible(true);
+				encontrado = true;
+				error = false;
+			}
+		}
+		
+		if(!encontrado){
+			for(int i = 0; i < empresa.size() && !encontrado; i++){
+				if(empresa.get(i).getNombre().equals(user) && empresa.get(i).getCont().equals(cont)){
+					this.dispose();
+					InicioUsuario usr = new InicioUsuario(empresa.get(i));
+					usr.setVisible(true);
+					encontrado = true;
+					error = false;
+				}
+			}
+		}
+		if(error){
+			JOptionPane.showMessageDialog(null, "Revise sus credenciales", "Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
+	}
+	
+	private void abrirRegitro(){
+		this.dispose();
+		Registrarse regis = new Registrarse();
+		regis.setVisible(true);
+	}
 	
 	public IniciarSesion() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(IniciarSesion.class.getResource("/icons/icons8-usuario-30.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Proyectos\\Java\\Empleadora\\Empleadora-master\\src\\icons\\icons8-usuario-30.png"));
 		
 		setResizable(false);
 		setTitle("Autenticaci\u00F3n");
@@ -52,14 +130,14 @@ public class IniciarSesion extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setName("");
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(new Color(204, 230, 230));
 		panel.setBorder(null);
 		panel.setBounds(0, 0, 633, 362);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		Linea linea = new Linea(0, 0);
-		linea.setColor(Color.LIGHT_GRAY);
+		linea.setColor(new Color(0, 153, 153));
 		linea.setBounds(376, 0, 11, 362);
 		panel.add(linea);
 		
@@ -69,44 +147,86 @@ public class IniciarSesion extends JFrame {
 		avatarCircular.setBounds(446, 17, 125, 125);
 		panel.add(avatarCircular);
 		
-		JTextFieldModificado textFieldModificado = new JTextFieldModificado();
-		textFieldModificado.setBeepActivado(false);
-		textFieldModificado.setLimite(8);
-		textFieldModificado.setBorder(null);
-		textFieldModificado.setBackground(Color.LIGHT_GRAY);
-		textFieldModificado.setTipoValidacion(0);
-		textFieldModificado.setBounds(427, 173, 169, 20);
-		panel.add(textFieldModificado);
+		lblUser = new JTextFieldModificado();
+		lblUser.setOpaque(false);
+		lblUser.setToolTipText("");
+		lblUser.setBeepActivado(false);
+		lblUser.setLimite(8);
+		lblUser.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 153)));
+		lblUser.setBackground(new Color(135, 206, 235));
+		lblUser.setTipoValidacion(0);
+		lblUser.setBounds(427, 173, 169, 20);
+		panel.add(lblUser);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setFont(new Font("Arial", Font.BOLD, 14));
 		lblUsuario.setBounds(427, 153, 63, 20);
 		panel.add(lblUsuario);
 		
-		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		final JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
 		lblContrasea.setFont(new Font("Arial", Font.BOLD, 14));
 		lblContrasea.setBounds(427, 199, 86, 20);
 		panel.add(lblContrasea);
 		
-		pwdIntroduceLaContrasea = new JPasswordField();
-		pwdIntroduceLaContrasea.setToolTipText("Introduce la contrase\u00F1a");
-		pwdIntroduceLaContrasea.setBorder(null);
-		pwdIntroduceLaContrasea.setBackground(Color.LIGHT_GRAY);
-		pwdIntroduceLaContrasea.setBounds(427, 218, 169, 20);
-		panel.add(pwdIntroduceLaContrasea);
+		lblCont = new JPasswordField();
+		
+		labelOjo = new JLabel("");
+
+		this.echoCharCont = lblCont.getEchoChar();
+		labelOjo.addMouseListener(new MouseAdapter() {
+			int click = 0;
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+				if (click == 0){
+					labelOjo.setIcon(new ImageIcon(IniciarSesion.class.getResource("/icons/icons8-eye-24.png")));
+					lblCont.setEchoChar((char)0);
+					click = 1;
+				}
+				else{
+					labelOjo.setIcon(new ImageIcon(IniciarSesion.class.getResource("/icons/icons8-eye-24 (1).png")));
+					lblCont.setEchoChar((char) echoCharCont);
+					click = 0;
+				}
+				
+			}
+		});
+		labelOjo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		labelOjo.setIcon(new ImageIcon(IniciarSesion.class.getResource("/icons/icons8-eye-24 (1).png")));
+		labelOjo.setBounds(572, 199, 24, 58);
+		panel.add(labelOjo);
+		lblCont.setOpaque(false);
+		lblCont.setToolTipText("Introduce la contrase\u00F1a");
+		lblCont.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 153)));
+		lblCont.setBackground(new Color(135, 206, 235));
+		lblCont.setBounds(427, 218, 169, 20);
+		panel.add(lblCont);
 		
 		BotonAnimacion btnmcnIniciarSesin = new BotonAnimacion();
+		btnmcnIniciarSesin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				abrirUsuario();
+			}
+		});
 		btnmcnIniciarSesin.setFocusPainted(false);
 		btnmcnIniciarSesin.setBorderPainted(false);
 		btnmcnIniciarSesin.setText("Iniciar Sesi\u00F3n");
-		btnmcnIniciarSesin.setBounds(427, 249, 169, 29);
+		btnmcnIniciarSesin.setBounds(427, 265, 169, 29);
 		panel.add(btnmcnIniciarSesin);
 		
 		BotonAnimacion btnmcnRegistrarse = new BotonAnimacion();
+		btnmcnRegistrarse.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				abrirRegitro();
+			}
+		});
 		btnmcnRegistrarse.setText("Registrarse");
 		btnmcnRegistrarse.setFocusPainted(false);
 		btnmcnRegistrarse.setBorderPainted(false);
-		btnmcnRegistrarse.setBounds(427, 289, 169, 29);
+		btnmcnRegistrarse.setBounds(427, 305, 169, 29);
 		panel.add(btnmcnRegistrarse);
 		
 		JLabel lblNewLabel = new JLabel("");
