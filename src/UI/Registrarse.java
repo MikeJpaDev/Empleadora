@@ -21,11 +21,15 @@ import javax.swing.JRadioButton;
 
 import panels.empresaR;
 import panels.usuarioR;
+import principal.Empleadora;
+import principal.Empresa;
+import principal.Usuario;
 import componentesVisuales.Linea;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import componentesVisuales.BotonAnimacion;
 
@@ -35,7 +39,10 @@ public class Registrarse extends JFrame {
 	private JRadioButton rdbtnEmpresa;
 	private JRadioButton rdbtnPersona;
 	private JPanel panelRepaint;
-	private BotonAnimacion botonAnimacion_1;
+	/**
+	 * @wbp.nonvisual location=472,59
+	 */
+	private ButtonGroup buttonGroup;
 	
 	private void terminarVentana(){
 		this.dispose();
@@ -112,7 +119,7 @@ public class Registrarse extends JFrame {
 		panelRepaint.setLayout(null);
 		
 		BotonAnimacion botonAnimacion = new BotonAnimacion();
-		botonAnimacion.setBounds(216, 356, 169, 36);
+		botonAnimacion.setBounds(123, 356, 169, 36);
 		contentPane.add(botonAnimacion);
 		botonAnimacion.addMouseListener(new MouseAdapter() {
 			@Override
@@ -123,12 +130,6 @@ public class Registrarse extends JFrame {
 		botonAnimacion.setText("Cancelar");
 		botonAnimacion.setFocusPainted(false);
 		
-		botonAnimacion_1 = new BotonAnimacion();
-		botonAnimacion_1.setText("Aceptar");
-		botonAnimacion_1.setFocusPainted(false);
-		botonAnimacion_1.setBounds(37, 356, 169, 36);
-		contentPane.add(botonAnimacion_1);
-		
 		empresaR cambio = new empresaR();
 		cambio.setLocation(0, -25);
 		rdbtnPersona.setSelected(false);
@@ -137,5 +138,29 @@ public class Registrarse extends JFrame {
 		panelRepaint.add(cambio);
 		panelRepaint.revalidate();
 		panelRepaint.repaint();
+		
+		getButtonGroup();
+	}
+	
+	private ButtonGroup getButtonGroup(){
+		if(buttonGroup == null){
+			buttonGroup = new ButtonGroup();
+		}
+		buttonGroup.add(rdbtnEmpresa);
+		buttonGroup.add(rdbtnPersona);
+		return buttonGroup;
+	}
+	
+	private String obtenerRol(){
+		
+		String rol = "";
+		if(rdbtnEmpresa.isSelected()){
+			rol = "empresa";
+		}
+		else if(rdbtnPersona.isSelected()){
+			rol = "persona";
+		}
+		return rol;
+		
 	}
 }

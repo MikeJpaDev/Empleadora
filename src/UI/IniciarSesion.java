@@ -15,6 +15,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 
+import UI.admin.pantallaAdmin;
 import componentesVisuales.AvatarCircular;
 import componentesVisuales.Linea;
 
@@ -84,11 +85,20 @@ public class IniciarSesion extends JFrame {
 		
 		for(int i = 0; i < actuales.size() && !encontrado; i++){
 			if(actuales.get(i).getNombre().equals(user) && actuales.get(i).getPsswd().equals(cont)){
-				this.dispose();
-				InicioUsuario usr = new InicioUsuario(actuales.get(i));
-				usr.setVisible(true);
-				encontrado = true;
-				error = false;
+				if(actuales.get(i).getNombre().equals("admin")){
+					this.dispose();
+					pantallaAdmin pantalla = new pantallaAdmin();
+					pantalla.setVisible(true);
+					encontrado = true;
+					error = false;
+				}
+				else{
+					this.dispose();
+					InicioUsuario usr = new InicioUsuario(actuales.get(i));
+					usr.setVisible(true);
+					encontrado = true;
+					error = false;
+				}
 			}
 		}
 		
@@ -105,6 +115,8 @@ public class IniciarSesion extends JFrame {
 		}
 		if(error){
 			JOptionPane.showMessageDialog(null, "Revise sus credenciales", "Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+			lblCont.setText("");
+			lblUser.setText("");
 		}
 		
 		

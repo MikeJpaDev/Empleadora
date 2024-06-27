@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 import java.awt.Component;
@@ -27,6 +28,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
 
+import UI.IniciarSesion;
 import UI.admin.jpanels.PanelCitas;
 import UI.admin.jpanels.PanelEmpleos;
 import UI.admin.jpanels.PanelPrincipal;
@@ -73,6 +75,12 @@ public class pantallaAdmin extends JFrame {
 		llenarComponentes();
 		cambiarPantalla(pPrincipal);
 	}
+	
+	private void terminarVentana(){
+		this.dispose();
+		IniciarSesion sesion = new IniciarSesion();
+		sesion.setVisible(true);
+	}
 
 	private void llenarComponentes(){
 		setTitle("SIGEM");
@@ -90,7 +98,9 @@ public class pantallaAdmin extends JFrame {
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(WIDTH);
+				if(JOptionPane.showConfirmDialog(rootPane, "Cerrar Sesión?", null, JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+					terminarVentana();
+				}
 			}
 		});
 		
