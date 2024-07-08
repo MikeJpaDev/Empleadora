@@ -56,7 +56,7 @@ public class PanelEmpleos extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
-		scrollPane.setBounds(34, 152, 644, 358);
+		scrollPane.setBounds(34, 136, 644, 405);
 		add(scrollPane);
 		
 		JButton button = new JButton("Ver  ");

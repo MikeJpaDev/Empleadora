@@ -10,14 +10,18 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 
+import UI.admin.pantallaAdmin;
+import UI.admin.jdialog.CrearUsuario;
 import util.EmpresasTableModel;
 import util.UsersTableModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
@@ -113,6 +117,14 @@ public class PanelUsuarios extends JPanel {
 		button_2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					CrearUsuario dialog = new CrearUsuario();
+					dialog.setLocationRelativeTo(null);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);		
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		button_2.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));

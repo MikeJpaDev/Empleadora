@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JDialog;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -29,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
 
 import UI.IniciarSesion;
+import UI.admin.jdialog.CrearUsuario;
 import UI.admin.jpanels.PanelCitas;
 import UI.admin.jpanels.PanelEmpleos;
 import UI.admin.jpanels.PanelPrincipal;
@@ -38,6 +40,7 @@ import UI.admin.jpanels.panelEmpresas;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.security.Principal;
 
 import javax.swing.JCheckBoxMenuItem;
 
@@ -51,6 +54,7 @@ public class pantallaAdmin extends JFrame {
 	private PanelCitas pCitas;
 	private PanelRegistros pRegistros;
 	private PanelPrincipal pPrincipal = new PanelPrincipal();
+	
 
 	/**
 	 * Launch the application.
@@ -82,6 +86,17 @@ public class pantallaAdmin extends JFrame {
 		sesion.setVisible(true);
 	}
 
+	private void crearUser(){
+		try {
+			CrearUsuario dialog = new CrearUsuario();
+			dialog.setLocationRelativeTo(null);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);		
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	
 	private void llenarComponentes(){
 		setTitle("SIGEM");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(pantallaAdmin.class.getResource("/images/empresa/logo redondo 64.png")));
@@ -140,6 +155,9 @@ public class pantallaAdmin extends JFrame {
 		});
 		mnEmpleos.add(mntmListaDeEmpleos);
 		
+		JMenuItem mntmCrearEmpleo = new JMenuItem("Crear Empleo");
+		mnEmpleos.add(mntmCrearEmpleo);
+		
 		JMenu mnUsuarios = new JMenu("Usuarios");
 		menuBar.add(mnUsuarios);
 		
@@ -150,6 +168,14 @@ public class pantallaAdmin extends JFrame {
 			}
 		});
 		mnUsuarios.add(mntmListaDeUsuarios);
+		
+		JMenuItem mntmCrearUsuario = new JMenuItem("Crear Usuario");
+		mntmCrearUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearUser();
+			}
+		});
+		mnUsuarios.add(mntmCrearUsuario);
 		
 		JMenu mnCitas = new JMenu("Citas");
 		menuBar.add(mnCitas);
@@ -163,6 +189,9 @@ public class pantallaAdmin extends JFrame {
 		});
 		mnCitas.add(mntmVerCitas);
 		
+		JMenuItem mntmAdministrarCitas = new JMenuItem("Administrar Citas");
+		mnCitas.add(mntmAdministrarCitas);
+		
 		JMenu mnRegistro = new JMenu("Registro");
 		menuBar.add(mnRegistro);
 		
@@ -173,6 +202,9 @@ public class pantallaAdmin extends JFrame {
 				cambiarPantalla(pRegistros);
 			}
 		});
+		
+		JMenuItem mntmAbrirRegistros = new JMenuItem("Abrir Registros");
+		mnRegistro.add(mntmAbrirRegistros);
 		mnRegistro.add(mntmRegistrosMensuales);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
