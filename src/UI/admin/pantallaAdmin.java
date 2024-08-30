@@ -91,7 +91,7 @@ public class pantallaAdmin extends JFrame {
 			CrearUsuario dialog = new CrearUsuario();
 			dialog.setLocationRelativeTo(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);		
+			dialog.setVisible(true);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

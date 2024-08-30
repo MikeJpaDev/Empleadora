@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Component;
 
 public class PanelUsuarios extends JPanel {
-	private JTextField textField;
+	private JTextField txtBuscar;
 	private JTable table;
 	private UsersTableModel tableModel;
 
@@ -74,14 +74,14 @@ public class PanelUsuarios extends JPanel {
 		tableModel = new UsersTableModel();
 		table.setModel(tableModel);
 		
-		textField = new JTextField();
-		textField.setText("Nombre/CI");
-		textField.setForeground(Color.LIGHT_GRAY);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setColumns(10);
-		textField.setBorder(null);
-		textField.setBounds(36, 119, 644, 42);
-		add(textField);
+		txtBuscar = new JTextField();
+		txtBuscar.setText("Nombre/CI");
+		txtBuscar.setForeground(Color.LIGHT_GRAY);
+		txtBuscar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtBuscar.setColumns(10);
+		txtBuscar.setBorder(null);
+		txtBuscar.setBounds(36, 119, 644, 42);
+		add(txtBuscar);
 		
 		JButton button = new JButton("Buscar");
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -121,7 +121,8 @@ public class PanelUsuarios extends JPanel {
 					CrearUsuario dialog = new CrearUsuario();
 					dialog.setLocationRelativeTo(null);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);		
+					dialog.setVisible(true);
+					txtBuscar.setText(dialog.cambTxt());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

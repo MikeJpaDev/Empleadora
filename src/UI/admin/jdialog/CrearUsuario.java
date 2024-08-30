@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.Insets;
+import javax.swing.ButtonGroup;
 
 public class CrearUsuario extends JDialog {
 
@@ -49,6 +50,12 @@ public class CrearUsuario extends JDialog {
 			jtext.setText("");
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
+	}
+	
+	public String cambTxt(){
+		String c1;
+		c1 = txtNom.getText();
+		return c1;
 	}
 	
 	public CrearUsuario() {
@@ -237,6 +244,7 @@ public class CrearUsuario extends JDialog {
 		}
 		
 		JRadioButton rdbSexoMasc = new JRadioButton("Masculino");
+		rdbSexoMasc.setMargin(new Insets(0, 0, 0, 0));
 		rdbSexoMasc.setFont(new Font("Roboto Medium", Font.PLAIN, 13));
 		rdbSexoMasc.setBorder(null);
 		rdbSexoMasc.setBackground(new Color(135, 206, 235));
@@ -272,6 +280,12 @@ public class CrearUsuario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Crear");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						cambTxt();  //Pruebas
+						dispose();	//Pruebas
+					}
+				});
 				okButton.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/aceptar 24px.png")));
 				okButton.setFocusPainted(false);
 				okButton.setBorderPainted(false);
