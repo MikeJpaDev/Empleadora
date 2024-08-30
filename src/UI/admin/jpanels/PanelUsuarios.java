@@ -25,6 +25,7 @@ import util.UsersTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
+import componentesVisuales.BotonAnimacion;
 
 public class PanelUsuarios extends JPanel {
 	private JTextField txtBuscar;
@@ -83,97 +84,45 @@ public class PanelUsuarios extends JPanel {
 		txtBuscar.setBounds(36, 119, 644, 42);
 		add(txtBuscar);
 		
-		JButton button = new JButton("Buscar");
-		button.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
-		button.setSize(new Dimension(5, 5));
-		button.setHorizontalTextPosition(SwingConstants.LEFT);
-		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button.setFocusTraversalPolicyProvider(true);
-		button.setFocusPainted(false);
-		button.setBorderPainted(false);
-		button.setBorder(null);
-		button.setBackground(new Color(30, 144, 255));
-		button.setBounds(715, 119, 134, 42);
-		add(button);
+		BotonAnimacion btnmcnBuscar = new BotonAnimacion();
+		btnmcnBuscar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnBuscar.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
+		btnmcnBuscar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnBuscar.setText("Buscar");
+		btnmcnBuscar.setBounds(715, 119, 134, 42);
+		add(btnmcnBuscar);
 		
-		JButton button_1 = new JButton("Ver  ");
-		button_1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button_1.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/binoculars-solid-36.png")));
-		button_1.setSize(new Dimension(5, 5));
-		button_1.setHorizontalTextPosition(SwingConstants.LEFT);
-		button_1.setForeground(Color.WHITE);
-		button_1.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button_1.setFocusTraversalPolicyProvider(true);
-		button_1.setFocusPainted(false);
-		button_1.setBorderPainted(false);
-		button_1.setBorder(null);
-		button_1.setBackground(new Color(30, 144, 255));
-		button_1.setBounds(715, 222, 134, 42);
-		add(button_1);
+		BotonAnimacion btnmcnVer = new BotonAnimacion();
+		btnmcnVer.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/binoculars-solid-36.png")));
+		btnmcnVer.setText("Ver");
+		btnmcnVer.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnVer.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnVer.setBounds(715, 222, 134, 42);
+		add(btnmcnVer);
 		
-		JButton button_2 = new JButton("A\u00F1adir");
-		button_2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					CrearUsuario dialog = new CrearUsuario();
-					dialog.setLocationRelativeTo(null);
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-					txtBuscar.setText(dialog.cambTxt());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		button_2.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
-		button_2.setSize(new Dimension(5, 5));
-		button_2.setHorizontalTextPosition(SwingConstants.LEFT);
-		button_2.setForeground(Color.WHITE);
-		button_2.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button_2.setFocusTraversalPolicyProvider(true);
-		button_2.setFocusPainted(false);
-		button_2.setBorderPainted(false);
-		button_2.setBorder(null);
-		button_2.setBackground(new Color(30, 144, 255));
-		button_2.setBounds(715, 297, 134, 42);
-		add(button_2);
+		BotonAnimacion btnmcnAadir = new BotonAnimacion();
+		btnmcnAadir.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
+		btnmcnAadir.setText("A\u00F1adir");
+		btnmcnAadir.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnAadir.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnAadir.setBounds(715, 297, 134, 42);
+		add(btnmcnAadir);
 		
-		JButton button_3 = new JButton("Editar");
-		button_3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		button_3.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
-		button_3.setSize(new Dimension(5, 5));
-		button_3.setHorizontalTextPosition(SwingConstants.LEFT);
-		button_3.setForeground(Color.WHITE);
-		button_3.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button_3.setFocusTraversalPolicyProvider(true);
-		button_3.setFocusPainted(false);
-		button_3.setBorderPainted(false);
-		button_3.setBorder(null);
-		button_3.setBackground(new Color(30, 144, 255));
-		button_3.setBounds(715, 369, 134, 42);
-		add(button_3);
+		BotonAnimacion btnmcnEditar = new BotonAnimacion();
+		btnmcnEditar.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
+		btnmcnEditar.setText("Editar");
+		btnmcnEditar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnEditar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnEditar.setBounds(715, 369, 134, 42);
+		add(btnmcnEditar);
 		
-		JButton button_4 = new JButton("Borrar");
-		button_4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button_4.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-papelera-50.png")));
-		button_4.setSize(new Dimension(5, 5));
-		button_4.setHorizontalTextPosition(SwingConstants.LEFT);
-		button_4.setForeground(Color.WHITE);
-		button_4.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button_4.setFocusTraversalPolicyProvider(true);
-		button_4.setFocusPainted(false);
-		button_4.setBorderPainted(false);
-		button_4.setBorder(null);
-		button_4.setBackground(new Color(30, 144, 255));
-		button_4.setBounds(715, 445, 134, 42);
-		add(button_4);
+		BotonAnimacion btnmcnBorrar = new BotonAnimacion();
+		btnmcnBorrar.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-papelera-50.png")));
+		btnmcnBorrar.setText("Borrar");
+		btnmcnBorrar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnBorrar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnBorrar.setBounds(715, 445, 134, 42);
+		add(btnmcnBorrar);
 
 	}
 }

@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import componentesVisuales.BotonAnimacion;
 
 public class PanelEmpleos extends JPanel {
 
@@ -59,65 +60,37 @@ public class PanelEmpleos extends JPanel {
 		scrollPane.setBounds(34, 136, 644, 405);
 		add(scrollPane);
 		
-		JButton button = new JButton("Ver  ");
-		button.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/binoculars-solid-36.png")));
-		button.setSize(new Dimension(5, 5));
-		button.setHorizontalTextPosition(SwingConstants.LEFT);
-		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button.setFocusTraversalPolicyProvider(true);
-		button.setFocusPainted(false);
-		button.setBorderPainted(false);
-		button.setBorder(null);
-		button.setBackground(new Color(30, 144, 255));
-		button.setAlignmentX(0.5f);
-		button.setBounds(713, 191, 134, 42);
-		add(button);
+		BotonAnimacion botonAnimacion = new BotonAnimacion();
+		botonAnimacion.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/binoculars-solid-36.png")));
+		botonAnimacion.setText("Ver");
+		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion.setBounds(713, 191, 134, 42);
+		add(botonAnimacion);
 		
-		JButton button_1 = new JButton("A\u00F1adir");
-		button_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
-		button_1.setSize(new Dimension(5, 5));
-		button_1.setHorizontalTextPosition(SwingConstants.LEFT);
-		button_1.setForeground(Color.WHITE);
-		button_1.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button_1.setFocusTraversalPolicyProvider(true);
-		button_1.setFocusPainted(false);
-		button_1.setBorderPainted(false);
-		button_1.setBorder(null);
-		button_1.setBackground(new Color(30, 144, 255));
-		button_1.setAlignmentX(0.5f);
-		button_1.setBounds(713, 266, 134, 42);
-		add(button_1);
+		BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
+		botonAnimacion_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
+		botonAnimacion_1.setText("Borrar");
+		botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_1.setBounds(713, 414, 134, 42);
+		add(botonAnimacion_1);
 		
-		JButton button_2 = new JButton("Editar");
-		button_2.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
-		button_2.setSize(new Dimension(5, 5));
-		button_2.setHorizontalTextPosition(SwingConstants.LEFT);
-		button_2.setForeground(Color.WHITE);
-		button_2.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button_2.setFocusTraversalPolicyProvider(true);
-		button_2.setFocusPainted(false);
-		button_2.setBorderPainted(false);
-		button_2.setBorder(null);
-		button_2.setBackground(new Color(30, 144, 255));
-		button_2.setAlignmentX(0.5f);
-		button_2.setBounds(713, 338, 134, 42);
-		add(button_2);
+		BotonAnimacion botonAnimacion_2 = new BotonAnimacion();
+		botonAnimacion_2.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
+		botonAnimacion_2.setText("A\u00F1adir");
+		botonAnimacion_2.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_2.setBounds(713, 266, 134, 42);
+		add(botonAnimacion_2);
 		
-		JButton button_3 = new JButton("Borrar");
-		button_3.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
-		button_3.setSize(new Dimension(5, 5));
-		button_3.setHorizontalTextPosition(SwingConstants.LEFT);
-		button_3.setForeground(Color.WHITE);
-		button_3.setFont(new Font("Roboto Black", Font.PLAIN, 18));
-		button_3.setFocusTraversalPolicyProvider(true);
-		button_3.setFocusPainted(false);
-		button_3.setBorderPainted(false);
-		button_3.setBorder(null);
-		button_3.setBackground(new Color(30, 144, 255));
-		button_3.setAlignmentX(0.5f);
-		button_3.setBounds(713, 414, 134, 42);
-		add(button_3);
+		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
+		botonAnimacion_3.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
+		botonAnimacion_3.setText("Editar");
+		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_3.setBounds(713, 338, 134, 42);
+		add(botonAnimacion_3);
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
