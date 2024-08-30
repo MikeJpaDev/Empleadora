@@ -56,25 +56,7 @@ public class pantallaAdmin extends JFrame {
 	private PanelPrincipal pPrincipal = new PanelPrincipal();
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					pantallaAdmin frame = new pantallaAdmin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public pantallaAdmin() {
 		llenarComponentes();
 		cambiarPantalla(pPrincipal);

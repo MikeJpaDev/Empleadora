@@ -29,19 +29,29 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.Insets;
 import javax.swing.ButtonGroup;
+import componentesVisuales.JTextFieldModificado;
+import java.awt.Dimension;
+import java.awt.Component;
+import javax.swing.DefaultComboBoxModel;
+import logica.enums.NivelEscolar;
+import logica.enums.Sector;
+import componentesVisuales.BotonAnimacion;
 
 public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNom;
-	private JTextField txtId;
-	private JTextField txtTel;
 	private JTextField txtDir;
 	private boolean clickName = false;
 	private boolean clickId = false;
 	private boolean clickTel = false;
 	private boolean clickDir = false;
-	
+	private JTextFieldModificado txtId;
+	private JTextFieldModificado txtTel;
+	private JComboBox cmbNvEscolar;
+	private BotonAnimacion btnmcnCrear;
+	private BotonAnimacion btnCancel;
+
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
 			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -51,13 +61,13 @@ public class CrearUsuario extends JDialog {
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
-	
+
 	public String cambTxt(){
 		String c1;
 		c1 = txtNom.getText();
 		return c1;
 	}
-	
+
 	public CrearUsuario() {
 		setModal(true);
 		setResizable(false);
@@ -85,7 +95,7 @@ public class CrearUsuario extends JDialog {
 			}
 		}
 		{
-			JLabel lblNombre = new JLabel("* Nombre :");
+			JLabel lblNombre = new JLabel("Nombre :");
 			lblNombre.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
 			lblNombre.setBounds(10, 60, 80, 26);
 			contentPanel.add(lblNombre);
@@ -133,58 +143,6 @@ public class CrearUsuario extends JDialog {
 			txtNom.setBounds(100, 60, 349, 26);
 			contentPanel.add(txtNom);
 			txtNom.setColumns(10);
-		}
-		{
-			txtId = new JTextField();
-			txtId.addFocusListener(new FocusAdapter() {
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(!clickId){
-						clicBorrar(txtId,clickId);
-						clickId = true;
-					}
-				}
-				@Override
-				public void focusLost(FocusEvent e) {
-					if (txtId.getText().isEmpty()){
-						clicBorrar(txtId,clickId);
-						txtId.setText("Carnet de Identidad");
-						clickId = false;
-					}
-				}
-			});
-			txtId.setText("Carnet de Identidad");
-			txtId.setFont(new Font("Arial", Font.ITALIC, 13));
-			txtId.setColumns(10);
-			txtId.setBorder(new EmptyBorder(0, 5, 0, 5));
-			txtId.setBounds(100, 100, 349, 26);
-			contentPanel.add(txtId);
-		}
-		{
-			txtTel = new JTextField();
-			txtTel.addFocusListener(new FocusAdapter() {
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(!clickTel){
-						clicBorrar(txtTel,clickTel);
-						clickTel = true;
-					}
-				}
-				@Override
-				public void focusLost(FocusEvent e) {
-					if (txtTel.getText().isEmpty()){
-						clicBorrar(txtTel,clickTel);
-						txtTel.setText("N\u00FAmero de Tel\u00E9fono");
-						clickTel = false;
-					}
-				}
-			});
-			txtTel.setText("N\u00FAmero de Tel\u00E9fono");
-			txtTel.setFont(new Font("Arial", Font.ITALIC, 13));
-			txtTel.setColumns(10);
-			txtTel.setBorder(new EmptyBorder(0, 5, 0, 5));
-			txtTel.setBounds(100, 140, 349, 26);
-			contentPanel.add(txtTel);
 		}
 		{
 			txtDir = new JTextField();
@@ -242,7 +200,7 @@ public class CrearUsuario extends JDialog {
 			lblAosDeExperiencia.setBounds(10, 380, 136, 26);
 			contentPanel.add(lblAosDeExperiencia);
 		}
-		
+
 		JRadioButton rdbSexoMasc = new JRadioButton("Masculino");
 		rdbSexoMasc.setMargin(new Insets(0, 0, 0, 0));
 		rdbSexoMasc.setFont(new Font("Roboto Medium", Font.PLAIN, 13));
@@ -250,68 +208,127 @@ public class CrearUsuario extends JDialog {
 		rdbSexoMasc.setBackground(new Color(135, 206, 235));
 		rdbSexoMasc.setBounds(143, 220, 97, 23);
 		contentPanel.add(rdbSexoMasc);
-		
+
 		JRadioButton rdbSexoFem = new JRadioButton("Femenino");
 		rdbSexoFem.setFont(new Font("Roboto Medium", Font.PLAIN, 13));
 		rdbSexoFem.setBorder(null);
 		rdbSexoFem.setBackground(new Color(135, 206, 235));
 		rdbSexoFem.setBounds(309, 220, 109, 23);
 		contentPanel.add(rdbSexoFem);
+
+		cmbNvEscolar = new JComboBox();
+		cmbNvEscolar.setFont(new Font("Arial", Font.PLAIN, 13));
+		cmbNvEscolar.setModel(new DefaultComboBoxModel(NivelEscolar.values()));
+		cmbNvEscolar.setBounds(171, 260, 278, 26);
+		contentPanel.add(cmbNvEscolar);
 		
-		JComboBox cmbEspecialidad = new JComboBox();
-		cmbEspecialidad.setBounds(171, 260, 278, 26);
-		contentPanel.add(cmbEspecialidad);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(100, 300, 307, 26);
-		contentPanel.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(100, 340, 249, 26);
-		contentPanel.add(comboBox_1);
-		
+
+		JComboBox cmbEspc = new JComboBox();
+		cmbEspc.setBounds(100, 300, 307, 26);
+		contentPanel.add(cmbEspc);
+
+		JComboBox cmbRama = new JComboBox();
+		cmbRama.setFont(new Font("Arial", Font.PLAIN, 13));
+		cmbRama.setModel(new DefaultComboBoxModel(Sector.values()));
+		cmbRama.setBounds(100, 340, 249, 26);
+		contentPanel.add(cmbRama);
+
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(156, 380, 84, 26);
 		contentPanel.add(spinner);
+
+		txtId = new JTextFieldModificado();
+		txtId.setTipoValidacion(2);
+		txtId.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		txtId.setPreferredSize(new Dimension(6, 20));
+		txtId.setLimite(11);
+		txtId.setFont(new Font("Arial", Font.ITALIC, 13));
+		txtId.setText("Carnet de Identidad");
+		txtId.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(!clickId){
+					clicBorrar(txtId,clickId);
+					txtId.setForeground(null);
+					clickId = true;
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtId.getText().isEmpty()){
+					clicBorrar(txtId,clickId);
+					txtId.setText("Carnet de Identidad");
+					clickId = false;
+				}
+				else{
+					if(txtId.getText().length() < 11){
+						txtId.setForeground(Color.RED);
+						txtId.setText("Carnet de Identidad no válido");
+						clickId = false;
+					}
+				}
+			}
+		});
+		txtId.setBorder(null);
+		txtId.setBounds(100, 100, 349, 26);
+		contentPanel.add(txtId);
+
+		txtTel = new JTextFieldModificado();
+		txtTel.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(!clickTel){
+					clicBorrar(txtTel,clickTel);
+					txtTel.setForeground(null);
+					clickTel = true;
+				}
+
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtTel.getText().isEmpty()){
+					clicBorrar(txtTel,clickTel);
+					txtTel.setText("Teléfono");
+					clickTel = false;
+				}
+				else{
+					String texto = txtTel.getText();
+
+					if(texto.charAt(0) == '0' || texto.trim().length() < 8){
+						txtTel.setForeground(Color.RED);
+						txtTel.setText("Teléfono no válido");
+						clickTel = false;
+					}
+
+				}
+			}
+		});
+		txtTel.setTipoValidacion(2);
+		txtTel.setText("Tel\u00E9fono");
+		txtTel.setPreferredSize(new Dimension(6, 20));
+		txtTel.setLimite(8);
+		txtTel.setFont(new Font("Arial", Font.ITALIC, 13));
+		txtTel.setBorder(null);
+		txtTel.setAlignmentX(1.0f);
+		txtTel.setBounds(100, 142, 349, 26);
+		contentPanel.add(txtTel);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(0, 191, 255));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("Crear");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						cambTxt();  //Pruebas
-						dispose();	//Pruebas
-					}
-				});
-				okButton.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/aceptar 24px.png")));
-				okButton.setFocusPainted(false);
-				okButton.setBorderPainted(false);
-				okButton.setForeground(Color.WHITE);
-				okButton.setBackground(new Color(30, 144, 255));
-				okButton.setFont(new Font("Roboto Black", Font.BOLD, 14));
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancelar");
-				cancelButton.setIcon(new ImageIcon("E:\\Proyectos de Programaci\u00F3n\\Java\\Empleadora\\src\\icons\\empresa\\icons8-cancelar-24.png"));
-				cancelButton.setFocusPainted(false);
-				cancelButton.setBorderPainted(false);
-				cancelButton.setForeground(Color.WHITE);
-				cancelButton.setBackground(new Color(30, 144, 255));
-				cancelButton.setFont(new Font("Roboto Black", Font.BOLD, 14));
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
+			
+			btnmcnCrear = new BotonAnimacion();
+			btnmcnCrear.setFocusPainted(false);
+			btnmcnCrear.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/aceptar 24px.png")));
+			btnmcnCrear.setText("Crear");
+			buttonPane.add(btnmcnCrear);
+			
+			btnCancel = new BotonAnimacion();
+			btnCancel.setFocusPainted(false);
+			btnCancel.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
+			btnCancel.setText("Cancelar");
+			buttonPane.add(btnCancel);
 		}
 	}
 }

@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import componentesVisuales.CampoCIValidado;
 
 public class CrearEmpresa extends JDialog {
 
@@ -58,5 +59,4 @@ public class CrearEmpresa extends JDialog {
 			}
 		}
 	}
-
 }

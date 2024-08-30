@@ -39,6 +39,8 @@ import javax.swing.JPasswordField;
 
 import componentesVisuales.BotonAnimacion;
 import raven.utils.FlatLafStyleUtils;
+import logica.Empleadora;
+import logica.empresa.Empresa;
 import logica.utilidades.interfaz.ManejadorLookAndFeels;
 
 import java.awt.Toolkit;
@@ -62,10 +64,6 @@ import java.util.ArrayList;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
-import principal.Empleadora;
-import principal.Empresa;
-import principal.Usuario;
-
 public class IniciarSesion extends JFrame {
 
 	private JPanel contentPane;
@@ -74,58 +72,18 @@ public class IniciarSesion extends JFrame {
 	private JPasswordField lblCont;
 	private char echoCharCont;
 	
-	private void abrirUsuario(){
-		Empleadora e = Empleadora.getInstancia();
-		ArrayList<Usuario> actuales = e.getUsuarios();
-		ArrayList<Empresa> empresa = e.getEmpresas();
-		boolean encontrado = false;
-		boolean error = true;
-		String cont = lblCont.getText();
-		String user = lblUser.getText();
-		
-		for(int i = 0; i < actuales.size() && !encontrado; i++){
-			if(actuales.get(i).getNombre().equals(user) && actuales.get(i).getPsswd().equals(cont)){
-				if(actuales.get(i).getNombre().equals("admin")){
-					this.dispose();
-					pantallaAdmin pantalla = new pantallaAdmin();
-					pantalla.setVisible(true);
-					encontrado = true;
-					error = false;
-				}
-				else{
-					this.dispose();
-					InicioUsuario usr = new InicioUsuario(actuales.get(i));
-					usr.setVisible(true);
-					encontrado = true;
-					error = false;
-				}
-			}
-		}
-		
-		if(!encontrado){
-			for(int i = 0; i < empresa.size() && !encontrado; i++){
-				if(empresa.get(i).getNombre().equals(user) && empresa.get(i).getCont().equals(cont)){
-					this.dispose();
-					InicioUsuario usr = new InicioUsuario(empresa.get(i));
-					usr.setVisible(true);
-					encontrado = true;
-					error = false;
-				}
-			}
-		}
-		if(error){
-			JOptionPane.showMessageDialog(null, "Revise sus credenciales", "Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
-			lblCont.setText("");
-			lblUser.setText("");
-		}
-		
-		
-	}
-	
-	private void abrirRegitro(){
+	private void abrirApp(){
 		this.dispose();
-		Registrarse regis = new Registrarse();
-		regis.setVisible(true);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					pantallaAdmin frame = new pantallaAdmin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	public IniciarSesion() {
@@ -219,27 +177,21 @@ public class IniciarSesion extends JFrame {
 		btnmcnIniciarSesin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				abrirUsuario();
+				if(lblUser.getText().equals("admin") && lblCont.getText().equals("admin")){
+					abrirApp();
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Revise sus credenciales", "Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+					lblCont.setText("");
+					lblUser.setText("");
+				}
 			}
 		});
 		btnmcnIniciarSesin.setFocusPainted(false);
 		btnmcnIniciarSesin.setBorderPainted(false);
 		btnmcnIniciarSesin.setText("Iniciar Sesi\u00F3n");
-		btnmcnIniciarSesin.setBounds(427, 265, 169, 29);
+		btnmcnIniciarSesin.setBounds(427, 291, 169, 29);
 		panel.add(btnmcnIniciarSesin);
-		
-		BotonAnimacion btnmcnRegistrarse = new BotonAnimacion();
-		btnmcnRegistrarse.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				abrirRegitro();
-			}
-		});
-		btnmcnRegistrarse.setText("Registrarse");
-		btnmcnRegistrarse.setFocusPainted(false);
-		btnmcnRegistrarse.setBorderPainted(false);
-		btnmcnRegistrarse.setBounds(427, 305, 169, 29);
-		panel.add(btnmcnRegistrarse);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(IniciarSesion.class.getResource("/icons/621d26b292a9c1000165c39e-removebg-preview.png")));
