@@ -15,10 +15,13 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+
+import UI.admin.jdialog.CrearEmpresa;
 
 import java.awt.Component;
 
@@ -34,6 +37,7 @@ public class panelEmpresas extends JPanel {
 	private JTable tableEmps;
 	private EmpresasTableModel tableModel;
 	private JTextField textFieldBuscar;
+	private JScrollPane scrollPane;
 	
 	public panelEmpresas() {
 		componentes();
@@ -44,7 +48,7 @@ public class panelEmpresas extends JPanel {
 		setSize(new Dimension(884, 580));
 		setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setBounds(36, 186, 644, 358);
 		add(scrollPane);
@@ -117,6 +121,14 @@ public class panelEmpresas extends JPanel {
 		add(botonAnimacion_2);
 		
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
+		botonAnimacion_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int pos = tableEmps.getSelectedRow();
+				CrearEmpresa dialog = new CrearEmpresa();
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);	
+			}
+		});
 		botonAnimacion_3.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
 		botonAnimacion_3.setText("Editar");
 		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);

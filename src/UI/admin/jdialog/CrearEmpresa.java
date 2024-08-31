@@ -59,6 +59,18 @@ public class CrearEmpresa extends JDialog {
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
+	
+	public JTextFieldModificado getTxtNom(){
+		return txtNom;
+	}
+	
+	public JTextFieldModificado getTxtDir(){
+		return txtDir;
+	}
+	
+	public JTextFieldModificado getTxtTel(){
+		return txtTel;
+	}
 
 	public CrearEmpresa() {
 		setModal(true);
