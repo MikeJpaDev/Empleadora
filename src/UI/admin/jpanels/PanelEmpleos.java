@@ -60,20 +60,12 @@ public class PanelEmpleos extends JPanel {
 		scrollPane.setBounds(34, 136, 644, 405);
 		add(scrollPane);
 		
-		BotonAnimacion botonAnimacion = new BotonAnimacion();
-		botonAnimacion.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/binoculars-solid-36.png")));
-		botonAnimacion.setText("Ver");
-		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion.setBounds(713, 191, 134, 42);
-		add(botonAnimacion);
-		
 		BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
-		botonAnimacion_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
-		botonAnimacion_1.setText("Borrar");
+		botonAnimacion_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/binoculars-solid-36.png")));
+		botonAnimacion_1.setText("Ver");
 		botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_1.setBounds(713, 414, 134, 42);
+		botonAnimacion_1.setBounds(688, 179, 134, 42);
 		add(botonAnimacion_1);
 		
 		BotonAnimacion botonAnimacion_2 = new BotonAnimacion();
@@ -81,7 +73,7 @@ public class PanelEmpleos extends JPanel {
 		botonAnimacion_2.setText("A\u00F1adir");
 		botonAnimacion_2.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_2.setBounds(713, 266, 134, 42);
+		botonAnimacion_2.setBounds(688, 245, 134, 42);
 		add(botonAnimacion_2);
 		
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
@@ -89,8 +81,24 @@ public class PanelEmpleos extends JPanel {
 		botonAnimacion_3.setText("Editar");
 		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_3.setBounds(713, 338, 134, 42);
+		botonAnimacion_3.setBounds(688, 316, 134, 42);
 		add(botonAnimacion_3);
+		
+		BotonAnimacion botonAnimacion_4 = new BotonAnimacion();
+		botonAnimacion_4.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
+		botonAnimacion_4.setText("Borrar");
+		botonAnimacion_4.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_4.setBounds(688, 388, 134, 42);
+		add(botonAnimacion_4);
+		
+		BotonAnimacion botonAnimacion_5 = new BotonAnimacion();
+		botonAnimacion_5.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
+		botonAnimacion_5.setText("Actualizar");
+		botonAnimacion_5.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_5.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_5.setBounds(688, 461, 134, 42);
+		add(botonAnimacion_5);
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {

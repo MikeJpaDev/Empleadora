@@ -96,7 +96,7 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_1.setText("Ver");
 		botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_1.setBounds(715, 225, 134, 42);
+		botonAnimacion_1.setBounds(715, 197, 134, 42);
 		add(botonAnimacion_1);
 		
 		BotonAnimacion botonAnimacion_2 = new BotonAnimacion();
@@ -104,7 +104,7 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_2.setText("A\u00F1adir");
 		botonAnimacion_2.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_2.setBounds(715, 300, 134, 42);
+		botonAnimacion_2.setBounds(715, 263, 134, 42);
 		add(botonAnimacion_2);
 		
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
@@ -112,7 +112,7 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_3.setText("Editar");
 		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_3.setBounds(715, 372, 134, 42);
+		botonAnimacion_3.setBounds(715, 334, 134, 42);
 		add(botonAnimacion_3);
 		
 		BotonAnimacion botonAnimacion_4 = new BotonAnimacion();
@@ -120,7 +120,15 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_4.setText("Borrar");
 		botonAnimacion_4.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_4.setBounds(715, 448, 134, 42);
+		botonAnimacion_4.setBounds(715, 406, 134, 42);
 		add(botonAnimacion_4);
+		
+		BotonAnimacion btnmcnActualizar = new BotonAnimacion();
+		btnmcnActualizar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
+		btnmcnActualizar.setText("Actualizar");
+		btnmcnActualizar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnActualizar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnActualizar.setBounds(715, 479, 134, 42);
+		add(btnmcnActualizar);
 	}
 }

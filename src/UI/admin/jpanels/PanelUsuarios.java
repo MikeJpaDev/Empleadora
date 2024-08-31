@@ -84,45 +84,53 @@ public class PanelUsuarios extends JPanel {
 		txtBuscar.setBounds(36, 119, 644, 42);
 		add(txtBuscar);
 		
-		BotonAnimacion btnmcnBuscar = new BotonAnimacion();
-		btnmcnBuscar.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnmcnBuscar.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
-		btnmcnBuscar.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnmcnBuscar.setText("Buscar");
-		btnmcnBuscar.setBounds(715, 119, 134, 42);
-		add(btnmcnBuscar);
+		BotonAnimacion botonAnimacion = new BotonAnimacion();
+		botonAnimacion.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
+		botonAnimacion.setText("Buscar");
+		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion.setBounds(697, 119, 134, 42);
+		add(botonAnimacion);
 		
-		BotonAnimacion btnmcnVer = new BotonAnimacion();
-		btnmcnVer.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/binoculars-solid-36.png")));
-		btnmcnVer.setText("Ver");
-		btnmcnVer.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnmcnVer.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnmcnVer.setBounds(715, 222, 134, 42);
-		add(btnmcnVer);
+		BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
+		botonAnimacion_1.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/binoculars-solid-36.png")));
+		botonAnimacion_1.setText("Ver");
+		botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_1.setBounds(697, 194, 134, 42);
+		add(botonAnimacion_1);
 		
-		BotonAnimacion btnmcnAadir = new BotonAnimacion();
-		btnmcnAadir.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
-		btnmcnAadir.setText("A\u00F1adir");
-		btnmcnAadir.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnmcnAadir.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnmcnAadir.setBounds(715, 297, 134, 42);
-		add(btnmcnAadir);
+		BotonAnimacion botonAnimacion_2 = new BotonAnimacion();
+		botonAnimacion_2.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
+		botonAnimacion_2.setText("A\u00F1adir");
+		botonAnimacion_2.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_2.setBounds(697, 260, 134, 42);
+		add(botonAnimacion_2);
 		
-		BotonAnimacion btnmcnEditar = new BotonAnimacion();
-		btnmcnEditar.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
-		btnmcnEditar.setText("Editar");
-		btnmcnEditar.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnmcnEditar.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnmcnEditar.setBounds(715, 369, 134, 42);
-		add(btnmcnEditar);
+		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
+		botonAnimacion_3.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
+		botonAnimacion_3.setText("Editar");
+		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_3.setBounds(697, 331, 134, 42);
+		add(botonAnimacion_3);
 		
-		BotonAnimacion btnmcnBorrar = new BotonAnimacion();
-		btnmcnBorrar.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-papelera-50.png")));
-		btnmcnBorrar.setText("Borrar");
-		btnmcnBorrar.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnmcnBorrar.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnmcnBorrar.setBounds(715, 445, 134, 42);
-		add(btnmcnBorrar);
+		BotonAnimacion botonAnimacion_4 = new BotonAnimacion();
+		botonAnimacion_4.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-papelera-50.png")));
+		botonAnimacion_4.setText("Borrar");
+		botonAnimacion_4.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_4.setBounds(697, 403, 134, 42);
+		add(botonAnimacion_4);
+		
+		BotonAnimacion botonAnimacion_5 = new BotonAnimacion();
+		botonAnimacion_5.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
+		botonAnimacion_5.setText("Actualizar");
+		botonAnimacion_5.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion_5.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion_5.setBounds(697, 476, 134, 42);
+		add(botonAnimacion_5);
 
 	}
 }
