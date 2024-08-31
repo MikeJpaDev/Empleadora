@@ -28,14 +28,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.Insets;
+
 import javax.swing.ButtonGroup;
+
 import componentesVisuales.JTextFieldModificado;
+
 import java.awt.Dimension;
 import java.awt.Component;
+
 import javax.swing.DefaultComboBoxModel;
+
+import sun.security.jca.GetInstance;
+import logica.Empleadora;
+import logica.candidato.Candidato;
 import logica.enums.NivelEscolar;
 import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
+import logica.enums.Genero;
 
 public class CrearUsuario extends JDialog {
 
@@ -51,6 +60,8 @@ public class CrearUsuario extends JDialog {
 	private JComboBox cmbNvEscolar;
 	private BotonAnimacion btnmcnCrear;
 	private BotonAnimacion btnCancel;
+	private JSpinner spinner;
+	private JComboBox cmbGen;
 
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
@@ -171,7 +182,7 @@ public class CrearUsuario extends JDialog {
 			contentPanel.add(txtDir);
 		}
 		{
-			JLabel lblSexo = new JLabel("Sexo");
+			JLabel lblSexo = new JLabel("Sexo: ");
 			lblSexo.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
 			lblSexo.setBounds(10, 220, 80, 26);
 			contentPanel.add(lblSexo);
@@ -201,21 +212,6 @@ public class CrearUsuario extends JDialog {
 			contentPanel.add(lblAosDeExperiencia);
 		}
 
-		JRadioButton rdbSexoMasc = new JRadioButton("Masculino");
-		rdbSexoMasc.setMargin(new Insets(0, 0, 0, 0));
-		rdbSexoMasc.setFont(new Font("Roboto Medium", Font.PLAIN, 13));
-		rdbSexoMasc.setBorder(null);
-		rdbSexoMasc.setBackground(new Color(135, 206, 235));
-		rdbSexoMasc.setBounds(143, 220, 97, 23);
-		contentPanel.add(rdbSexoMasc);
-
-		JRadioButton rdbSexoFem = new JRadioButton("Femenino");
-		rdbSexoFem.setFont(new Font("Roboto Medium", Font.PLAIN, 13));
-		rdbSexoFem.setBorder(null);
-		rdbSexoFem.setBackground(new Color(135, 206, 235));
-		rdbSexoFem.setBounds(309, 220, 109, 23);
-		contentPanel.add(rdbSexoFem);
-
 		cmbNvEscolar = new JComboBox();
 		cmbNvEscolar.setFont(new Font("Arial", Font.PLAIN, 13));
 		cmbNvEscolar.setModel(new DefaultComboBoxModel(NivelEscolar.values()));
@@ -233,7 +229,7 @@ public class CrearUsuario extends JDialog {
 		cmbRama.setBounds(100, 340, 249, 26);
 		contentPanel.add(cmbRama);
 
-		JSpinner spinner = new JSpinner();
+		spinner = new JSpinner();
 		spinner.setBounds(156, 380, 84, 26);
 		contentPanel.add(spinner);
 
@@ -313,12 +309,24 @@ public class CrearUsuario extends JDialog {
 		txtTel.setBounds(100, 142, 349, 26);
 		contentPanel.add(txtTel);
 		{
+			cmbGen = new JComboBox();
+			cmbGen.setModel(new DefaultComboBoxModel(Genero.values()));
+			cmbGen.setFont(new Font("Arial", Font.PLAIN, 13));
+			cmbGen.setBounds(100, 217, 349, 26);
+			contentPanel.add(cmbGen);
+		}
+		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(0, 191, 255));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
 			btnmcnCrear = new BotonAnimacion();
+			btnmcnCrear.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Empleadora emp = Empleadora.getInstancia();
+				}
+			});
 			btnmcnCrear.setFocusPainted(false);
 			btnmcnCrear.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/aceptar 24px.png")));
 			btnmcnCrear.setText("Crear");

@@ -26,6 +26,8 @@ import componentesVisuales.JTextFieldModificado;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import logica.Empleadora;
+import logica.empresa.Empresa;
 import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
 
@@ -33,6 +35,8 @@ import javax.swing.SwingConstants;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CrearEmpresa extends JDialog {
 
@@ -43,6 +47,7 @@ public class CrearEmpresa extends JDialog {
 	private boolean clickNom = false;
 	private boolean clickDir = false;
 	private boolean clickTel = false;
+	private JComboBox cmbSect;
 	
 	
 	private void clicBorrar(JTextField jtext, boolean click){
@@ -180,11 +185,11 @@ public class CrearEmpresa extends JDialog {
 		lblSector.setBounds(10, 209, 92, 26);
 		contentPanel.add(lblSector);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Arial", Font.ITALIC, 13));
-		comboBox.setModel(new DefaultComboBoxModel(Sector.values()));
-		comboBox.setBounds(93, 209, 349, 26);
-		contentPanel.add(comboBox);
+		cmbSect = new JComboBox();
+		cmbSect.setFont(new Font("Arial", Font.ITALIC, 13));
+		cmbSect.setModel(new DefaultComboBoxModel(Sector.values()));
+		cmbSect.setBounds(93, 209, 349, 26);
+		contentPanel.add(cmbSect);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(135, 206, 235));
@@ -192,6 +197,16 @@ public class CrearEmpresa extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
 			BotonAnimacion botonAnimacion = new BotonAnimacion();
+			botonAnimacion.setFocusPainted(false);
+			botonAnimacion.setFocusTraversalKeysEnabled(false);
+			botonAnimacion.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Empleadora emp = Empleadora.getInstancia();
+					Empresa empresa = new Empresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
+					emp.agEmpresa(empresa);
+					dispose();
+				}
+			});
 			botonAnimacion.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/empresa/aceptar 24px.png")));
 			botonAnimacion.setText("Crear");
 			botonAnimacion.setBorderPainted(false);

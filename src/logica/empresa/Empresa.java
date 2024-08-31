@@ -6,23 +6,13 @@ public class Empresa {
 	private String direccion;
 	private String telefeno;
 	private String sector;
-	private String cont;
 	
 	
-	public Empresa(String nombre, String direccion, String telefeno, String sector, String cont) {
+	public Empresa(String nombre, String direccion, String telefeno, String sector) {
 		setNombre(nombre);
 		setDireccion(direccion);
 		setTelefeno(telefeno);
 		setSector(sector);
-		setCont(cont);
-	}
-	
-	public String getCont() {
-		return cont;
-	}
-
-	public void setCont(String cont) {
-		this.cont = cont;
 	}
 
 

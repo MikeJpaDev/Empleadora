@@ -12,17 +12,26 @@ import util.EmpresasTableModel;
 
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+
 import java.awt.Component;
+
 import componentesVisuales.BotonAnimacion;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import logica.Empleadora;
+import logica.empresa.Empresa;
+
 public class panelEmpresas extends JPanel {
-	private JTable table;
+	private JTable tableEmps;
 	private EmpresasTableModel tableModel;
 	private JTextField textFieldBuscar;
 	
@@ -40,10 +49,10 @@ public class panelEmpresas extends JPanel {
 		scrollPane.setBounds(36, 186, 644, 358);
 		add(scrollPane);
 		
-		table = new JTable();
-		table.setGridColor(new Color(192, 192, 192));
-		table.setBorder(null);
-		scrollPane.setViewportView(table);
+		tableEmps = new JTable();
+		tableEmps.setGridColor(new Color(192, 192, 192));
+		tableEmps.setBorder(null);
+		scrollPane.setViewportView(tableEmps);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 191, 255));
@@ -72,7 +81,7 @@ public class panelEmpresas extends JPanel {
 		panel.add(lblSigem);
 		
 		tableModel = new EmpresasTableModel();
-		table.setModel(tableModel);
+		tableEmps.setModel(tableModel);
 		
 		textFieldBuscar = new JTextField();
 		textFieldBuscar.setForeground(new Color(192, 192, 192));
@@ -124,6 +133,21 @@ public class panelEmpresas extends JPanel {
 		add(botonAnimacion_4);
 		
 		BotonAnimacion btnmcnActualizar = new BotonAnimacion();
+		btnmcnActualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Empleadora emp = Empleadora.getInstancia();
+				int cont = 1;
+				Object[] datos = new Object[5];
+				for(Empresa emps: emp.getEmpresas()){
+					datos[0] = cont;
+					datos[1] = emps.getNombre();
+					datos[2] = emps.getTelefeno();
+					datos[3] = emps.getSector();
+					datos[4] = 1;
+					tableModel.addRow(datos);
+				}
+			}
+		});
 		btnmcnActualizar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
 		btnmcnActualizar.setText("Actualizar");
 		btnmcnActualizar.setHorizontalTextPosition(SwingConstants.LEFT);
