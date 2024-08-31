@@ -126,7 +126,7 @@ public class panelEmpresas extends JPanel {
 				int pos = tableEmps.getSelectedRow();
 				CrearEmpresa dialog = new CrearEmpresa();
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				dialog.setVisible(true);	
+				dialog.setVisible(true);
 			}
 		});
 		botonAnimacion_3.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
