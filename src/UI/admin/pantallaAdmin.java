@@ -30,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
 
 import UI.IniciarSesion;
+import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.CrearUsuario;
 import UI.admin.jpanels.PanelCitas;
 import UI.admin.jpanels.PanelEmpleos;
@@ -79,6 +80,16 @@ public class pantallaAdmin extends JFrame {
 		}
 	}
 	
+	private void crearEmp(){
+		try {
+			CrearEmpresa dialog = new CrearEmpresa();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void llenarComponentes(){
 		setTitle("SIGEM");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(pantallaAdmin.class.getResource("/images/empresa/logo redondo 64.png")));
@@ -123,6 +134,11 @@ public class pantallaAdmin extends JFrame {
 		mnEmpresas.add(mntmVerEmpresas);
 		
 		JMenuItem mntmCrearEmpresa = new JMenuItem("Crear Empresa");
+		mntmCrearEmpresa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearEmp();
+			}
+		});
 		mnEmpresas.add(mntmCrearEmpresa);
 		
 		JMenu mnEmpleos = new JMenu("Empleos");

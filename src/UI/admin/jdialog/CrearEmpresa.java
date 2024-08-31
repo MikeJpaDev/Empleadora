@@ -8,55 +8,200 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
 import componentesVisuales.CampoCIValidado;
+
+import javax.swing.JLabel;
+
+import componentesVisuales.AvatarCircular;
+
+import javax.swing.ImageIcon;
+
+import java.awt.Font;
+
+import componentesVisuales.JTextFieldModificado;
+
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+import logica.enums.Sector;
+import componentesVisuales.BotonAnimacion;
+
+import javax.swing.SwingConstants;
+
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CrearEmpresa extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			CrearEmpresa dialog = new CrearEmpresa();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
+	private JTextFieldModificado txtNom;
+	private JTextFieldModificado txtDir;
+	private JTextFieldModificado txtTel;
+	private boolean clickNom = false;
+	private boolean clickDir = false;
+	private boolean clickTel = false;
+	
+	
+	private void clicBorrar(JTextField jtext, boolean click){
+		if(click){
+			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
+		}
+		else{
+			jtext.setText("");
+			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public CrearEmpresa() {
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
 		setTitle("Crear Empresa");
-		setBounds(100, 100, 465, 500);
+		setBounds(100, 100, 465, 424);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(135, 206, 235));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
+			JLabel lblNewLabel = new JLabel("New label");
+			lblNewLabel.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/icons8-bank-building-80.png")));
+			lblNewLabel.setBounds(196, 11, 82, 69);
+			contentPanel.add(lblNewLabel);
+		}
+		{
+			JLabel lblNombre = new JLabel("Nombre: ");
+			lblNombre.setFont(new Font("Arial", Font.PLAIN, 18));
+			lblNombre.setBounds(10, 98, 73, 26);
+			contentPanel.add(lblNombre);
+		}
+		
+		txtNom = new JTextFieldModificado();
+		txtNom.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(!clickNom){
+					clicBorrar(txtNom,clickNom);
+					clickNom = true;
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtNom.getText().isEmpty()){
+					clicBorrar(txtNom,clickNom);
+					txtNom.setText("Introduce el Nombre");
+					clickNom = false;
+				}
+			}
+		});
+		txtNom.setFont(new Font("Arial", Font.ITALIC, 13));
+		txtNom.setText("Introduce el Nombre");
+		txtNom.setBorder(null);
+		txtNom.setBounds(93, 97, 349, 26);
+		contentPanel.add(txtNom);
+		{
+			JLabel lblDireccin = new JLabel("Direcci\u00F3n: ");
+			lblDireccin.setFont(new Font("Arial", Font.PLAIN, 18));
+			lblDireccin.setBounds(10, 135, 92, 26);
+			contentPanel.add(lblDireccin);
+		}
+		
+		txtDir = new JTextFieldModificado();
+		txtDir.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(!clickDir){
+					clicBorrar(txtDir,clickDir);
+					clickDir = true;
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtDir.getText().isEmpty()){
+					clicBorrar(txtDir,clickDir);
+					txtDir.setText("Introduce la Dirección");
+					clickDir = false;
+				}
+			}
+		});
+		txtDir.setFont(new Font("Arial", Font.ITALIC, 13));
+		txtDir.setText("Introduce la Direcci\u00F3n");
+		txtDir.setBorder(null);
+		txtDir.setBounds(93, 134, 349, 26);
+		contentPanel.add(txtDir);
+		
+		JLabel lblTelfono = new JLabel("Tel\u00E9fono: ");
+		lblTelfono.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblTelfono.setBounds(10, 172, 92, 26);
+		contentPanel.add(lblTelfono);
+		
+		txtTel = new JTextFieldModificado();
+		txtTel.setTipoValidacion(2);
+		txtTel.setLimite(8);
+		txtTel.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(!clickTel){
+					clicBorrar(txtTel,clickTel);
+					clickTel = true;
+					txtTel.setForeground(null);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtTel.getText().isEmpty()){
+					clicBorrar(txtTel,clickTel);
+					txtTel.setText("Introduce el Teléfono");
+					clickTel = false;
+				}
+				else{
+					String texto = txtTel.getText();
+
+					if(texto.charAt(0) == '0' || texto.trim().length() < 8){
+						txtTel.setForeground(Color.RED);
+						txtTel.setText("Teléfono no válido");
+						clickTel = false;
+					}
+
+				}
+			}
+		});
+		txtTel.setText("Introduce el Tel\u00E9fono");
+		txtTel.setFont(new Font("Arial", Font.ITALIC, 13));
+		txtTel.setBorder(null);
+		txtTel.setBounds(93, 172, 349, 26);
+		contentPanel.add(txtTel);
+		
+		JLabel lblSector = new JLabel("Sector: ");
+		lblSector.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblSector.setBounds(10, 209, 92, 26);
+		contentPanel.add(lblSector);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Arial", Font.ITALIC, 13));
+		comboBox.setModel(new DefaultComboBoxModel(Sector.values()));
+		comboBox.setBounds(93, 209, 349, 26);
+		contentPanel.add(comboBox);
+		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(135, 206, 235));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
+			
+			BotonAnimacion botonAnimacion = new BotonAnimacion();
+			botonAnimacion.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/empresa/aceptar 24px.png")));
+			botonAnimacion.setText("Crear");
+			botonAnimacion.setBorderPainted(false);
+			buttonPane.add(botonAnimacion);
+			
+			BotonAnimacion btnmcnCancelar = new BotonAnimacion();
+			btnmcnCancelar.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
+			btnmcnCancelar.setFocusPainted(false);
+			btnmcnCancelar.setText("Cancelar");
+			buttonPane.add(btnmcnCancelar);
 		}
 	}
 }
