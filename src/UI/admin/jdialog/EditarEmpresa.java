@@ -129,7 +129,7 @@ public class EditarEmpresa extends JDialog {
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
-		setTitle("Crear Empresa");
+		setTitle("Editar Empresa");
 		setBounds(100, 100, 465, 424);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(135, 206, 235));

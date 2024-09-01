@@ -18,6 +18,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
@@ -27,6 +28,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 
 import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.EditarEmpresa;
+import UI.admin.jdialog.VerEmpresa;
 
 import java.awt.Component;
 
@@ -39,15 +41,36 @@ import logica.Empleadora;
 import logica.empresa.Empresa;
 import logica.enums.Sector;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 public class panelEmpresas extends JPanel {
 	private JTable tableEmps;
 	private EmpresasTableModel tableModel;
-	private JTextField textFieldBuscar;
+	private JTextField txtBuscar;
 	private JScrollPane scrollPane;
 	private int cont = 1;
+	private boolean clickBusc = false;
+	private boolean okBusc = false;
 
 	public panelEmpresas() {
 		componentes();
+	}
+	
+	private void verDatos(){
+		int filaSelct = tableEmps.getSelectedRow();
+
+		if(filaSelct != -1){
+			Empleadora emp = Empleadora.getInstancia();
+			
+			try {
+				VerEmpresa dialog = new VerEmpresa(emp.getEmpresas().get(filaSelct));	
+				dialog.setVisible(true);
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 
 	private void obtDatos(){
@@ -88,11 +111,44 @@ public class panelEmpresas extends JPanel {
 			tableModel.addRow(datos);
 		}
 	}
+	
+	private void busTabla(String nom){
+		limpiarJTable();
+		Empleadora emp = Empleadora.getInstancia();
+		Object[] datos = new Object[6];
+		int cont = 0;
+		for(Empresa emps: emp.getEmpresas()){
+			if(emps.getNombre().equalsIgnoreCase(nom)){
+				datos[0] = cont++;
+				datos[1] = emps.getNombre();
+				datos[2] = emps.getDireccion();
+				datos[3] = emps.getTelefeno();
+				datos[4] = emps.getSector();
+				datos[5] = 0;
+				tableModel.addRow(datos);
+				cont++;
+			}
+		}
+		
+		if(cont == 0){
+			JOptionPane.showMessageDialog(null, "No se han registrados Empresas bajo ese nombre", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
 
 	private void eliminarEmp(Empresa emprD){
 		Empleadora emp = Empleadora.getInstancia();
 		emp.getEmpresas().remove(emprD);
 		actTabla();
+	}
+	
+	private void clicBorrar(JTextField jtext, boolean click){
+		if(click){
+			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
+		}
+		else{
+			jtext.setText("");
+			jtext.setFont(new Font("Arial", Font.BOLD, 13));
+		}
 	}
 
 	private void componentes(){
@@ -106,6 +162,7 @@ public class panelEmpresas extends JPanel {
 		add(scrollPane);
 
 		tableEmps = new JTable();
+		tableEmps.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		tableEmps.setGridColor(new Color(192, 192, 192));
 		tableEmps.setBorder(null);
 		scrollPane.setViewportView(tableEmps);
@@ -145,16 +202,44 @@ public class panelEmpresas extends JPanel {
 		};
 		tableEmps.setModel(tableModel);
 
-		textFieldBuscar = new JTextField();
-		textFieldBuscar.setForeground(new Color(192, 192, 192));
-		textFieldBuscar.setText("Nombre/IDs");
-		textFieldBuscar.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textFieldBuscar.setBorder(null);
-		textFieldBuscar.setBounds(36, 122, 644, 42);
-		add(textFieldBuscar);
-		textFieldBuscar.setColumns(10);
+		txtBuscar = new JTextField();
+		txtBuscar.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(!clickBusc){
+					clicBorrar(txtBuscar,clickBusc);
+					clickBusc = true;
+					txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
+					okBusc = true;
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtBuscar.getText().isEmpty()){
+					clicBorrar(txtBuscar,clickBusc);
+					txtBuscar.setText("Introduce el Nombre");
+					txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
+					clickBusc = false;
+					okBusc = false;
+				}
+			}
+		});
+		txtBuscar.setForeground(new Color(192, 192, 192));
+		txtBuscar.setText("Introduce el Nombre");
+		txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
+		txtBuscar.setBorder(null);
+		txtBuscar.setBounds(36, 122, 644, 42);
+		add(txtBuscar);
+		txtBuscar.setColumns(10);
 
 		BotonAnimacion botonAnimacion = new BotonAnimacion();
+		botonAnimacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtBuscar.getText().trim().length() != 0){
+					busTabla(txtBuscar.getText());
+				}
+			}
+		});
 		botonAnimacion.setFocusPainted(false);
 		botonAnimacion.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
 		botonAnimacion.setText("Buscar");
@@ -164,6 +249,11 @@ public class panelEmpresas extends JPanel {
 		add(botonAnimacion);
 
 		BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
+		botonAnimacion_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				verDatos();
+			}
+		});
 		botonAnimacion_1.setFocusPainted(false);
 		botonAnimacion_1.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/binoculars-solid-36.png")));
 		botonAnimacion_1.setText("Ver");
