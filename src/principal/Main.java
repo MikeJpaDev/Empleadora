@@ -2,8 +2,6 @@ package principal;
 
 import java.awt.EventQueue;
 
-import logica.Empleadora;
-import Fechas.Dia;
 import UI.IniciarSesion;
 
 public class Main {

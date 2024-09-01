@@ -21,6 +21,8 @@ import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import UI.admin.jdialog.CrearEmpresa;
 
 import java.awt.Component;
@@ -38,9 +40,40 @@ public class panelEmpresas extends JPanel {
 	private EmpresasTableModel tableModel;
 	private JTextField textFieldBuscar;
 	private JScrollPane scrollPane;
+	private int cont = 1;
 	
 	public panelEmpresas() {
 		componentes();
+	}
+	
+	private void limpiarJTable(){
+        int a = tableModel.getRowCount()-1;
+        this.cont = 1;
+        for(int i=a;i>=0;i--){ 
+            tableModel.removeRow(i);
+        }
+    }
+	
+	//Mejorar
+	private void actTabla(){
+		limpiarJTable();
+		Empleadora emp = Empleadora.getInstancia();
+		Object[] datos = new Object[5];
+		for(Empresa emps: emp.getEmpresas()){
+			datos[0] = cont++;
+			datos[1] = emps.getNombre();
+			datos[2] = emps.getTelefeno();
+			datos[3] = emps.getSector();
+			datos[4] = 0;
+			tableModel.addRow(datos);
+		}
+	}
+	
+	//Implementar
+	private boolean eliminarEmp(Empresa emprD){
+		boolean retorno = false;
+		
+		return retorno;
 	}
 	
 	private void componentes(){
@@ -84,7 +117,13 @@ public class panelEmpresas extends JPanel {
 		lblSigem.setBounds(110, 11, 112, 48);
 		panel.add(lblSigem);
 		
-		tableModel = new EmpresasTableModel();
+		tableModel = new EmpresasTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int filas, int columnas){
+				return false;
+			}
+		};
 		tableEmps.setModel(tableModel);
 		
 		textFieldBuscar = new JTextField();
@@ -121,14 +160,6 @@ public class panelEmpresas extends JPanel {
 		add(botonAnimacion_2);
 		
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
-		botonAnimacion_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int pos = tableEmps.getSelectedRow();
-				CrearEmpresa dialog = new CrearEmpresa();
-				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				dialog.setVisible(true);
-			}
-		});
 		botonAnimacion_3.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
 		botonAnimacion_3.setText("Editar");
 		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -147,17 +178,7 @@ public class panelEmpresas extends JPanel {
 		BotonAnimacion btnmcnActualizar = new BotonAnimacion();
 		btnmcnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Empleadora emp = Empleadora.getInstancia();
-				int cont = 1;
-				Object[] datos = new Object[5];
-				for(Empresa emps: emp.getEmpresas()){
-					datos[0] = cont;
-					datos[1] = emps.getNombre();
-					datos[2] = emps.getTelefeno();
-					datos[3] = emps.getSector();
-					datos[4] = 1;
-					tableModel.addRow(datos);
-				}
+				actTabla();
 			}
 		});
 		btnmcnActualizar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-actualizar-24.png")));

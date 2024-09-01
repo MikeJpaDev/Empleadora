@@ -15,7 +15,6 @@ public class Empleadora {
 		if (instancia == null){
 			instancia = new Empleadora();
 		}
-		
 		return instancia;
 	}
 	

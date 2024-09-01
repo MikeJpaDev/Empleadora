@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -33,6 +34,7 @@ import componentesVisuales.BotonAnimacion;
 
 import javax.swing.SwingConstants;
 
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +51,10 @@ public class CrearEmpresa extends JDialog {
 	private boolean clickTel = false;
 	private JComboBox cmbSect;
 	
+	private boolean okNom = false;
+	private boolean okDir = false;
+	private boolean okTel = false;
+	
 	
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
@@ -58,6 +64,44 @@ public class CrearEmpresa extends JDialog {
 			jtext.setText("");
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
+	}
+	
+	private boolean existe(Empresa empresa){
+		
+		boolean encontrado = false;
+		
+		Empleadora emp = Empleadora.getInstancia();
+		for(int i = 0; i < emp.getEmpresas().size()-1 && !encontrado; i++){
+			if(emp.getEmpresas().get(i).getNombre().equalsIgnoreCase(empresa.getNombre())){
+				encontrado = true;
+			}
+		}
+		
+		return encontrado;
+	}
+	
+	private boolean crearEmp(){
+		boolean retorno = false;
+		
+		if(this.okDir && this.okNom && this.okTel){
+			Empleadora emp = Empleadora.getInstancia();
+			Empresa empresa = new Empresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
+			emp.agEmpresa(empresa);
+			if(emp.getEmpresas().size() != 1){
+				if(!existe(empresa)){
+					retorno = true;
+				}
+				else{
+					emp.getEmpresas().remove(empresa);
+					retorno = false;
+				}
+			}
+			else{
+				retorno = true;
+			}
+		}
+		
+		return retorno;
 	}
 	
 	public JTextFieldModificado getTxtNom(){
@@ -103,6 +147,7 @@ public class CrearEmpresa extends JDialog {
 				if(!clickNom){
 					clicBorrar(txtNom,clickNom);
 					clickNom = true;
+					okNom = true;
 				}
 			}
 			@Override
@@ -111,6 +156,7 @@ public class CrearEmpresa extends JDialog {
 					clicBorrar(txtNom,clickNom);
 					txtNom.setText("Introduce el Nombre");
 					clickNom = false;
+					okNom = false;
 				}
 			}
 		});
@@ -133,6 +179,7 @@ public class CrearEmpresa extends JDialog {
 				if(!clickDir){
 					clicBorrar(txtDir,clickDir);
 					clickDir = true;
+					okDir = true;
 				}
 			}
 			@Override
@@ -141,6 +188,7 @@ public class CrearEmpresa extends JDialog {
 					clicBorrar(txtDir,clickDir);
 					txtDir.setText("Introduce la Dirección");
 					clickDir = false;
+					okDir = false;
 				}
 			}
 		});
@@ -165,6 +213,7 @@ public class CrearEmpresa extends JDialog {
 					clicBorrar(txtTel,clickTel);
 					clickTel = true;
 					txtTel.setForeground(null);
+					okTel = true;
 				}
 			}
 			@Override
@@ -173,6 +222,7 @@ public class CrearEmpresa extends JDialog {
 					clicBorrar(txtTel,clickTel);
 					txtTel.setText("Introduce el Teléfono");
 					clickTel = false;
+					okTel = false;
 				}
 				else{
 					String texto = txtTel.getText();
@@ -181,6 +231,7 @@ public class CrearEmpresa extends JDialog {
 						txtTel.setForeground(Color.RED);
 						txtTel.setText("Teléfono no válido");
 						clickTel = false;
+						okTel = false;
 					}
 
 				}
@@ -213,10 +264,12 @@ public class CrearEmpresa extends JDialog {
 			botonAnimacion.setFocusTraversalKeysEnabled(false);
 			botonAnimacion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Empleadora emp = Empleadora.getInstancia();
-					Empresa empresa = new Empresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
-					emp.agEmpresa(empresa);
-					dispose();
+					if(crearEmp()){
+						dispose();
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Error al Crear Empresa.\n Posibles Causas:\n 1- Campos vacíos o incorrectos.\n 2- Ya existe una empresa del mismo Nombre", "Error" , JOptionPane.ERROR_MESSAGE); 
+					}
 				}
 			});
 			botonAnimacion.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/empresa/aceptar 24px.png")));
@@ -225,6 +278,11 @@ public class CrearEmpresa extends JDialog {
 			buttonPane.add(botonAnimacion);
 			
 			BotonAnimacion btnmcnCancelar = new BotonAnimacion();
+			btnmcnCancelar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnmcnCancelar.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
 			btnmcnCancelar.setFocusPainted(false);
 			btnmcnCancelar.setText("Cancelar");
