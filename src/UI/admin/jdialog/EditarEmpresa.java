@@ -45,7 +45,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CrearEmpresa extends JDialog {
+public class EditarEmpresa extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextFieldModificado txtNom;
@@ -56,11 +56,11 @@ public class CrearEmpresa extends JDialog {
 	private boolean clickTel = false;
 	private JComboBox cmbSect;
 	
-	private boolean okNom = false;
-	private boolean okDir = false;
-	private boolean okTel = false;
+	private boolean okNom = true;
+	private boolean okDir = true;
+	private boolean okTel = true;
 	private BotonAnimacion btnmcnCancelar;
-	private BotonAnimacion btnCrear;
+	private BotonAnimacion btnActu;
 	
 	
 	private void clicBorrar(JTextField jtext, boolean click){
@@ -73,12 +73,12 @@ public class CrearEmpresa extends JDialog {
 		}
 	}
 	
-	private boolean existe(Empresa empresa){
+	private boolean existe(Empresa empresa, int pos){
 		
 		boolean encontrado = false;
 		
 		Empleadora emp = Empleadora.getInstancia();
-		for(int i = 0; i < emp.getEmpresas().size()-1 && !encontrado; i++){
+		for(int i = 0; i < emp.getEmpresas().size() && i != pos && !encontrado; i++){
 			if(emp.getEmpresas().get(i).getNombre().equalsIgnoreCase(empresa.getNombre())){
 				encontrado = true;
 			}
@@ -87,15 +87,17 @@ public class CrearEmpresa extends JDialog {
 		return encontrado;
 	}
 	
-	private boolean crearEmp(){
+	private boolean ediEmp(Empresa empresa, int pos){
 		boolean retorno = false;
 		
 		if(this.okDir && this.okNom && this.okTel){
 			Empleadora emp = Empleadora.getInstancia();
-			Empresa empresa = new Empresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
-			emp.agEmpresa(empresa);
+			empresa.setNombre(txtNom.getText());
+			empresa.setDireccion(txtDir.getText());
+			empresa.setTelefeno(txtTel.getText());
+			empresa.setSector(cmbSect.getSelectedItem().toString());
 			if(emp.getEmpresas().size() != 1){
-				if(!existe(empresa)){
+				if(!existe(empresa, pos)){
 					retorno = true;
 				}
 				else{
@@ -124,7 +126,7 @@ public class CrearEmpresa extends JDialog {
 		return txtTel;
 	}
 	
-	private void iniciarComponetes(){
+	private void iniciarComponetes(final Empresa act, final int pos){
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
@@ -137,7 +139,7 @@ public class CrearEmpresa extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblNewLabel = new JLabel("New label");
-			lblNewLabel.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/icons8-bank-building-80.png")));
+			lblNewLabel.setIcon(new ImageIcon(EditarEmpresa.class.getResource("/icons/icons8-bank-building-80.png")));
 			lblNewLabel.setBounds(196, 11, 82, 69);
 			contentPanel.add(lblNewLabel);
 		}
@@ -149,6 +151,7 @@ public class CrearEmpresa extends JDialog {
 		}
 		
 		txtNom = new JTextFieldModificado();
+		txtNom.setText("Introduce el Nombre");
 		txtNom.setBeepActivado(false);
 		txtNom.addFocusListener(new FocusAdapter() {
 			@Override
@@ -170,7 +173,6 @@ public class CrearEmpresa extends JDialog {
 			}
 		});
 		txtNom.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtNom.setText("Introduce el Nombre");
 		txtNom.setBorder(null);
 		txtNom.setBounds(93, 97, 349, 26);
 		contentPanel.add(txtNom);
@@ -270,12 +272,13 @@ public class CrearEmpresa extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
-			btnCrear = new BotonAnimacion();
-			btnCrear.setFocusPainted(false);
-			btnCrear.setFocusTraversalKeysEnabled(false);
-			btnCrear.addActionListener(new ActionListener() {
+			btnActu = new BotonAnimacion();
+			btnActu.setFocusPainted(false);
+			btnActu.setFocusTraversalKeysEnabled(false);
+			btnActu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(crearEmp()){
+					if(ediEmp(act, pos)){
+						JOptionPane.showMessageDialog(null, "Presione Actualizar para Visualizar los Cambios", "Nota", JOptionPane.INFORMATION_MESSAGE);
 						dispose();
 					}
 					else{
@@ -283,10 +286,10 @@ public class CrearEmpresa extends JDialog {
 					}
 				}
 			});
-			btnCrear.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/empresa/aceptar 24px.png")));
-			btnCrear.setText("Crear");
-			btnCrear.setBorderPainted(false);
-			buttonPane.add(btnCrear);
+			btnActu.setIcon(new ImageIcon(EditarEmpresa.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
+			btnActu.setText("Actualizar");
+			btnActu.setBorderPainted(false);
+			buttonPane.add(btnActu);
 			
 			btnmcnCancelar = new BotonAnimacion();
 			btnmcnCancelar.addActionListener(new ActionListener() {
@@ -294,7 +297,7 @@ public class CrearEmpresa extends JDialog {
 					dispose();
 				}
 			});
-			btnmcnCancelar.setIcon(new ImageIcon(CrearEmpresa.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
+			btnmcnCancelar.setIcon(new ImageIcon(EditarEmpresa.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
 			btnmcnCancelar.setFocusPainted(false);
 			btnmcnCancelar.setText("Cancelar");
 			buttonPane.add(btnmcnCancelar);
@@ -309,9 +312,13 @@ public class CrearEmpresa extends JDialog {
 			});
 		}
 	}
-
-	public CrearEmpresa() {
-		iniciarComponetes();
+	
+	public EditarEmpresa(Empresa emp, int pos){
+		iniciarComponetes(emp, pos);
+		txtNom.setText(emp.getNombre());
+		txtDir.setText(emp.getDireccion());
+		txtTel.setText(emp.getTelefeno());
+		cmbSect.setSelectedItem(Sector.valueOf(emp.getSector()));;
 	}
 
 }
