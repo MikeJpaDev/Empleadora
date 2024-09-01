@@ -101,7 +101,6 @@ public class EditarEmpresa extends JDialog {
 					retorno = true;
 				}
 				else{
-					emp.getEmpresas().remove(empresa);
 					retorno = false;
 				}
 			}
