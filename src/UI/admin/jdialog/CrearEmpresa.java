@@ -73,39 +73,11 @@ public class CrearEmpresa extends JDialog {
 		}
 	}
 	
-	private boolean existe(Empresa empresa){
-		
-		boolean encontrado = false;
-		
-		Empleadora emp = Empleadora.getInstancia();
-		for(int i = 0; i < emp.getEmpresas().size()-1 && !encontrado; i++){
-			if(emp.getEmpresas().get(i).getNombre().equalsIgnoreCase(empresa.getNombre())){
-				encontrado = true;
-			}
-		}
-		
-		return encontrado;
-	}
-	
 	private boolean crearEmp(){
 		boolean retorno = false;
 		
 		if(this.okDir && this.okNom && this.okTel){
-			Empleadora emp = Empleadora.getInstancia();
-			Empresa empresa = new Empresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
-			emp.agEmpresa(empresa);
-			if(emp.getEmpresas().size() != 1){
-				if(!existe(empresa)){
-					retorno = true;
-				}
-				else{
-					emp.getEmpresas().remove(empresa);
-					retorno = false;
-				}
-			}
-			else{
-				retorno = true;
-			}
+			retorno = Empleadora.getInstancia().agEmpresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
 		}
 		
 		return retorno;
@@ -264,6 +236,24 @@ public class CrearEmpresa extends JDialog {
 		cmbSect.setModel(new DefaultComboBoxModel(Sector.values()));
 		cmbSect.setBounds(93, 209, 349, 26);
 		contentPanel.add(cmbSect);
+		
+		JLabel lblLuegoDeCrear = new JLabel("Luego de Crear:");
+		lblLuegoDeCrear.setForeground(Color.DARK_GRAY);
+		lblLuegoDeCrear.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblLuegoDeCrear.setBounds(10, 284, 118, 26);
+		contentPanel.add(lblLuegoDeCrear);
+		
+		JLabel lblVayaAl = new JLabel("    1- Vaya al Apartado Ver Empresas");
+		lblVayaAl.setForeground(Color.DARK_GRAY);
+		lblVayaAl.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblVayaAl.setBounds(10, 299, 232, 26);
+		contentPanel.add(lblVayaAl);
+		
+		JLabel lblpulseElBotn = new JLabel("    2- Pulse el Bot\u00F3n Actualizar");
+		lblpulseElBotn.setForeground(Color.DARK_GRAY);
+		lblpulseElBotn.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblpulseElBotn.setBounds(10, 314, 232, 26);
+		contentPanel.add(lblpulseElBotn);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(135, 206, 235));
@@ -313,5 +303,4 @@ public class CrearEmpresa extends JDialog {
 	public CrearEmpresa() {
 		iniciarComponetes();
 	}
-
 }

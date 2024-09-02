@@ -1,6 +1,6 @@
 package UI.admin.jpanels;
 
-import javafx.scene.control.ComboBox;
+//import javafx.scene.control.ComboBox;
 
 import javax.swing.JPanel;
 
@@ -8,7 +8,7 @@ import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JButton;
+//import javax.swing.JButton;
 
 import util.EmpresasTableModel;
 
@@ -16,21 +16,21 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
+//import javax.swing.border.LineBorder;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
+//import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
+//import org.omg.CORBA.PUBLIC_MEMBER;
 
 import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.EditarEmpresa;
-import UI.admin.jdialog.VerEmpresa;
+//import UI.admin.jdialog.VerEmpresa;
 
-import java.awt.Component;
+//import java.awt.Component;
 
 import componentesVisuales.BotonAnimacion;
 
@@ -39,10 +39,13 @@ import java.awt.event.ActionEvent;
 
 import logica.Empleadora;
 import logica.empresa.Empresa;
-import logica.enums.Sector;
+//import logica.enums.Sector;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+//import java.util.ArrayList;
 
 public class panelEmpresas extends JPanel {
 	private JTable tableEmps;
@@ -56,36 +59,22 @@ public class panelEmpresas extends JPanel {
 	public panelEmpresas() {
 		componentes();
 	}
-	
+
+	//Enlazar esta funcion a La Clase Gestora
 	private void verDatos(){
 		int filaSelct = tableEmps.getSelectedRow();
 
 		if(filaSelct != -1){
-			Empleadora emp = Empleadora.getInstancia();
-			
-			try {
-				VerEmpresa dialog = new VerEmpresa(emp.getEmpresas().get(filaSelct));	
-				dialog.setVisible(true);
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			Empleadora.getInstancia().verEmpresa(filaSelct);
 		}
 	}
 
+	//Enlazar esta funcion a La Clase Gestora
 	private void obtDatos(){
 		int filaSelct = tableEmps.getSelectedRow();
 
 		if(filaSelct != -1){
-			Empleadora emp = Empleadora.getInstancia();
-			
-			try {
-				EditarEmpresa dialog = new EditarEmpresa(emp.getEmpresas().get(filaSelct), filaSelct);	
-				dialog.setVisible(true);
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			Empleadora.getInstancia().editarDatos(filaSelct);
 		}
 	}
 
@@ -97,6 +86,7 @@ public class panelEmpresas extends JPanel {
 		}
 	}
 
+	//Enlazar esta funcion a La Clase Gestora
 	private void actTabla(){
 		limpiarJTable();
 		Empleadora emp = Empleadora.getInstancia();
@@ -111,36 +101,27 @@ public class panelEmpresas extends JPanel {
 			tableModel.addRow(datos);
 		}
 	}
-	
-	private void busTabla(String nom){
+
+	//Enlazar esta funcion a La Clase Gestora
+	private void busTabla(){
 		limpiarJTable();
 		Empleadora emp = Empleadora.getInstancia();
-		Object[] datos = new Object[6];
-		int cont = 0;
-		for(Empresa emps: emp.getEmpresas()){
-			if(emps.getNombre().equalsIgnoreCase(nom)){
-				datos[0] = cont++;
-				datos[1] = emps.getNombre();
-				datos[2] = emps.getDireccion();
-				datos[3] = emps.getTelefeno();
-				datos[4] = emps.getSector();
-				datos[5] = 0;
+		if(emp.buscarEmpresa(txtBuscar.getText()).size() != 0){
+			for (int i = 0; i < emp.buscarEmpresa(txtBuscar.getText()).size(); i++){
+				Object[] datos = new Object[6];
+				datos = (Object[]) emp.buscarEmpresa(txtBuscar.getText()).get(i);
 				tableModel.addRow(datos);
-				cont++;
 			}
-		}
-		
-		if(cont == 0){
-			JOptionPane.showMessageDialog(null, "No se han registrados Empresas bajo ese nombre", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
-	private void eliminarEmp(Empresa emprD){
-		Empleadora emp = Empleadora.getInstancia();
-		emp.getEmpresas().remove(emprD);
+	//Enlazar esta funcion a La Clase Gestora
+	private void eliminarEmp(){
+		int index = tableEmps.getSelectedRow();
+		Empleadora.getInstancia().elimEmpresa(index);
 		actTabla();
 	}
-	
+
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
 			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -235,8 +216,8 @@ public class panelEmpresas extends JPanel {
 		BotonAnimacion botonAnimacion = new BotonAnimacion();
 		botonAnimacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(txtBuscar.getText().trim().length() != 0){
-					busTabla(txtBuscar.getText());
+				if(txtBuscar.getText().trim().length() != 0 && okBusc){
+					busTabla();
 				}
 			}
 		});
@@ -302,7 +283,7 @@ public class panelEmpresas extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Empleadora emp = Empleadora.getInstancia();
 				if(tableEmps.getSelectedRow() != -1){
-					eliminarEmp(emp.getEmpresas().get(tableEmps.getSelectedRow()));
+					eliminarEmp();
 				}
 			}
 		});
