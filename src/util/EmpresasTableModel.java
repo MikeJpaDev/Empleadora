@@ -1,6 +1,7 @@
 package util;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 public class EmpresasTableModel extends DefaultTableModel {
 
@@ -12,7 +13,7 @@ public class EmpresasTableModel extends DefaultTableModel {
 	public void adicionar(String ids, String nombre ,String direccion, String telefono, String
 			sector, String totalEmpleos){
 		Object[] newRow = new Object[]{ids, nombre , direccion, telefono, sector, totalEmpleos};
-		addRow(newRow);
+		addRow(newRow); 
 	}
 
 }

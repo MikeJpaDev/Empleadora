@@ -129,6 +129,7 @@ public class pantallaAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				verEmpr = new panelEmpresas();
 				cambiarPantalla(verEmpr);
+				panelEmpresas.actTabla();
 			}
 		});
 		mnEmpresas.add(mntmVerEmpresas);

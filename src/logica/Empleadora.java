@@ -40,6 +40,8 @@ public class Empleadora {
 	}
 
 	//Metodos para trabajar con Las Empresas
+	
+	
 	public ArrayList<Object[]> buscarEmpresa(String nom){
 		
 		Object[] datos = null;
@@ -47,7 +49,10 @@ public class Empleadora {
 		int cont = 0;
 		for(int i = 0; i < empresas.size(); i++){
 			if(empresas.get(i).getNombre().contains(nom) 
-					|| empresas.get(i).getNombre().contains(nom.toUpperCase()) || empresas.get(i).getNombre().contains(nom.toLowerCase())){
+					|| empresas.get(i).getNombre().toUpperCase().contains(nom.toUpperCase()) || 
+					empresas.get(i).getNombre().toLowerCase().contains(nom.toLowerCase()) ||
+					empresas.get(i).getNombre().contains(nom)){
+				
 				datos = new Object[6];
 				datos[0] = cont+1;
 				datos[1] = empresas.get(i).getNombre();
@@ -56,6 +61,7 @@ public class Empleadora {
 				datos[4] = empresas.get(i).getSector();
 				datos[5] = 0;
 				cont++;
+				
 				datosNuevos.add(datos);
 			}
 		}

@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 //import javax.swing.JButton;
 
+
 import util.EmpresasTableModel;
 
 import java.awt.Color;
@@ -18,6 +19,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 //import javax.swing.border.LineBorder;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 //import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 //import javax.swing.UIManager;
@@ -25,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
 //import org.omg.CORBA.PUBLIC_MEMBER;
+
 
 import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.EditarEmpresa;
@@ -41,6 +44,7 @@ import logica.Empleadora;
 import logica.empresa.Empresa;
 //import logica.enums.Sector;
 
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
@@ -49,10 +53,10 @@ import java.awt.event.MouseEvent;
 
 public class panelEmpresas extends JPanel {
 	private JTable tableEmps;
-	private EmpresasTableModel tableModel;
+	private static EmpresasTableModel tableModel;
 	private JTextField txtBuscar;
 	private JScrollPane scrollPane;
-	private int cont = 1;
+	private static int cont = 1;
 	private boolean clickBusc = false;
 	private boolean okBusc = false;
 
@@ -78,20 +82,19 @@ public class panelEmpresas extends JPanel {
 		}
 	}
 
-	private void limpiarJTable(){
+	private static void limpiarJTable(){
 		int a = tableModel.getRowCount()-1;
-		this.cont = 1;
+		cont = 1;
 		for(int i=a;i>=0;i--){ 
 			tableModel.removeRow(i);
 		}
 	}
 
 	//Enlazar esta funcion a La Clase Gestora
-	private void actTabla(){
+	public static void actTabla(){
 		limpiarJTable();
-		Empleadora emp = Empleadora.getInstancia();
 		Object[] datos = new Object[6];
-		for(Empresa emps: emp.getEmpresas()){
+		for(Empresa emps: Empleadora.getInstancia().getEmpresas()){
 			datos[0] = cont++;
 			datos[1] = emps.getNombre();
 			datos[2] = emps.getDireccion();
@@ -294,18 +297,18 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_4.setBounds(715, 406, 134, 42);
 		add(botonAnimacion_4);
 
-		BotonAnimacion btnmcnActualizar = new BotonAnimacion();
-		btnmcnActualizar.setFocusPainted(false);
-		btnmcnActualizar.addActionListener(new ActionListener() {
+		BotonAnimacion btnCrearEmpleo = new BotonAnimacion();
+		btnCrearEmpleo.setFocusPainted(false);
+		btnCrearEmpleo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actTabla();
+				JOptionPane.showMessageDialog(null, "Implementar");
 			}
 		});
-		btnmcnActualizar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
-		btnmcnActualizar.setText("Actualizar");
-		btnmcnActualizar.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnmcnActualizar.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnmcnActualizar.setBounds(715, 479, 134, 42);
-		add(btnmcnActualizar);
+		btnCrearEmpleo.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
+		btnCrearEmpleo.setText("Actualizar");
+		btnCrearEmpleo.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnCrearEmpleo.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnCrearEmpleo.setBounds(715, 479, 134, 42);
+		add(btnCrearEmpleo);
 	}
 }
