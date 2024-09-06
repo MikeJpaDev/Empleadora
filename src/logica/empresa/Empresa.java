@@ -1,11 +1,20 @@
 package logica.empresa;
 
+import java.util.ArrayList;
+
+import logica.empleo.Empleo;
+
 public class Empresa {
 	
 	private String nombre;
 	private String direccion;
 	private String telefeno;
 	private String sector;
+	private ArrayList<Empleo> empleos;
+	
+	public int getTamArray(){
+		return empleos.size();
+	}
 	
 	
 	public Empresa(String nombre, String direccion, String telefeno, String sector) {
@@ -13,6 +22,11 @@ public class Empresa {
 		setDireccion(direccion);
 		setTelefeno(telefeno);
 		setSector(sector);
+		empleos = new ArrayList<Empleo>();
+	}
+	
+	public void agEmpleo(String id, String rama, Double sal, String ofer){
+		empleos.add(new Empleo(id, rama, sal, ofer));
 	}
 
 

@@ -11,6 +11,7 @@ import javax.swing.JTable;
 //import javax.swing.JButton;
 
 
+
 import util.EmpresasTableModel;
 
 import java.awt.Color;
@@ -29,6 +30,8 @@ import javax.swing.ImageIcon;
 //import org.omg.CORBA.PUBLIC_MEMBER;
 
 
+
+import UI.admin.jdialog.CrearEmpleo;
 import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.EditarEmpresa;
 //import UI.admin.jdialog.VerEmpresa;
@@ -45,6 +48,7 @@ import logica.empresa.Empresa;
 //import logica.enums.Sector;
 
 
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
@@ -52,7 +56,7 @@ import java.awt.event.MouseEvent;
 //import java.util.ArrayList;
 
 public class panelEmpresas extends JPanel {
-	private JTable tableEmps;
+	private static JTable tableEmps;
 	private static EmpresasTableModel tableModel;
 	private JTextField txtBuscar;
 	private JScrollPane scrollPane;
@@ -89,6 +93,12 @@ public class panelEmpresas extends JPanel {
 			tableModel.removeRow(i);
 		}
 	}
+	
+	public static void actEmpleos(Empresa emp){
+		int filaSelct = tableEmps.getSelectedRow();
+		tableModel.setValueAt(emp.getTamArray(), filaSelct, 5);
+		actTabla();
+	}
 
 	//Enlazar esta funcion a La Clase Gestora
 	public static void actTabla(){
@@ -100,7 +110,7 @@ public class panelEmpresas extends JPanel {
 			datos[2] = emps.getDireccion();
 			datos[3] = emps.getTelefeno();
 			datos[4] = emps.getSector();
-			datos[5] = 0;
+			datos[5] = emps.getTamArray();
 			tableModel.addRow(datos);
 		}
 	}
@@ -284,7 +294,6 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_4.setFocusPainted(false);
 		botonAnimacion_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Empleadora emp = Empleadora.getInstancia();
 				if(tableEmps.getSelectedRow() != -1){
 					eliminarEmp();
 				}
@@ -301,11 +310,12 @@ public class panelEmpresas extends JPanel {
 		btnCrearEmpleo.setFocusPainted(false);
 		btnCrearEmpleo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Implementar");
+				CrearEmpleo empleo = new CrearEmpleo(Empleadora.getInstancia().getEmpresas().get(tableEmps.getSelectedRow()));
+				empleo.setVisible(true);
 			}
 		});
-		btnCrearEmpleo.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
-		btnCrearEmpleo.setText("Actualizar");
+		btnCrearEmpleo.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
+		btnCrearEmpleo.setText("Empleo");
 		btnCrearEmpleo.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnCrearEmpleo.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnCrearEmpleo.setBounds(715, 479, 134, 42);
