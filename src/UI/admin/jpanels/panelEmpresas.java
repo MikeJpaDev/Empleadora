@@ -118,11 +118,10 @@ public class panelEmpresas extends JPanel {
 	//Enlazar esta funcion a La Clase Gestora
 	private void busTabla(){
 		limpiarJTable();
-		Empleadora emp = Empleadora.getInstancia();
-		if(emp.buscarEmpresa(txtBuscar.getText()).size() != 0){
-			for (int i = 0; i < emp.buscarEmpresa(txtBuscar.getText()).size(); i++){
+		if(Empleadora.getInstancia().buscarEmpresa(txtBuscar.getText()).size() != 0){
+			for (int i = 0; i < Empleadora.getInstancia().buscarEmpresa(txtBuscar.getText()).size(); i++){
 				Object[] datos = new Object[6];
-				datos = (Object[]) emp.buscarEmpresa(txtBuscar.getText()).get(i);
+				datos = (Object[]) Empleadora.getInstancia().buscarEmpresa(txtBuscar.getText()).get(i);
 				tableModel.addRow(datos);
 			}
 		}

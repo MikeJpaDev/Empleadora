@@ -34,16 +34,20 @@ import logica.Empleadora;
 import logica.empleo.Empleo;
 import logica.empresa.Empresa;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 public class PanelEmpleos extends JPanel {
-	private JTextField textField;
+	private JTextField txtBuscar;
 	private static JTable tableEmps;
 	private static EmpleoTableModel tableModel;
 	private static int cont = 1;
-	private BotonAnimacion botonAnimacion;
-	private BotonAnimacion botonAnimacion_1;
-	private BotonAnimacion botonAnimacion_2;
-	private BotonAnimacion botonAnimacion_3;
-	private BotonAnimacion botonAnimacion_4;
+	private BotonAnimacion btnAdd;
+	private BotonAnimacion btnDel;
+	private boolean okBusc = false;
+	private boolean clickBusc = false;
 
 	public PanelEmpleos(){
 		InicializarComponentes();
@@ -67,6 +71,27 @@ public class PanelEmpleos extends JPanel {
 				datos[2] = p.getRama();
 				datos[3] = p.getSalario();
 				datos[4] = p.getEmpOfertante();
+				tableModel.addRow(datos);
+			}
+		}
+	}
+	
+	private void clicBorrar(JTextField jtext, boolean click){
+		if(click){
+			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
+		}
+		else{
+			jtext.setText("");
+			jtext.setFont(new Font("Arial", Font.BOLD, 13));
+		}
+	}
+	
+	private void busTabla(){
+		limpiarJTable();
+		if(Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).size() != 0){
+			for (int i = 0; i < Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).size(); i++){
+				Object[] datos = new Object[5];
+				datos = (Object[]) Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).get(i);
 				tableModel.addRow(datos);
 			}
 		}
@@ -123,57 +148,80 @@ public class PanelEmpleos extends JPanel {
 		};
 		tableEmps.setModel(tableModel);
 
-		botonAnimacion = new BotonAnimacion();
-		botonAnimacion.setFocusPainted(false);
-		botonAnimacion.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/binoculars-solid-36.png")));
-		botonAnimacion.setText("Ver");
-		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion.setBounds(688, 179, 134, 42);
-		add(botonAnimacion);
+		btnAdd = new BotonAnimacion();
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdd.setFocusPainted(false);
+		btnAdd.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
+		btnAdd.setText("A\u00F1adir");
+		btnAdd.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnAdd.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnAdd.setBounds(688, 177, 134, 42);
+		add(btnAdd);
 
-		botonAnimacion_1 = new BotonAnimacion();
-		botonAnimacion_1.setFocusPainted(false);
-		botonAnimacion_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
-		botonAnimacion_1.setText("A\u00F1adir");
-		botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_1.setBounds(688, 245, 134, 42);
-		add(botonAnimacion_1);
+		btnDel = new BotonAnimacion();
+		btnDel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tableEmps.getSelectedRow() != -1){
+					Empleadora.getInstancia().elimEmpleo(tableEmps.getValueAt(tableEmps.getSelectedRow(), 1).toString());
+					actTabla();
+				}
+			}
+		});
+		btnDel.setFocusPainted(false);
+		btnDel.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
+		btnDel.setText("Borrar");
+		btnDel.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnDel.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnDel.setBounds(688, 253, 134, 42);
+		add(btnDel);
 
-		botonAnimacion_2 = new BotonAnimacion();
-		botonAnimacion_2.setFocusPainted(false);
-		botonAnimacion_2.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
-		botonAnimacion_2.setText("Editar");
-		botonAnimacion_2.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_2.setBounds(688, 316, 134, 42);
-		add(botonAnimacion_2);
-
-		botonAnimacion_3 = new BotonAnimacion();
-		botonAnimacion_3.setFocusPainted(false);
-		botonAnimacion_3.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
-		botonAnimacion_3.setText("Borrar");
-		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_3.setBounds(688, 388, 134, 42);
-		add(botonAnimacion_3);
-
-		botonAnimacion_4 = new BotonAnimacion();
-		botonAnimacion_4.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
-		botonAnimacion_4.setText("Actualizar");
-		botonAnimacion_4.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_4.setBounds(688, 461, 134, 42);
-		add(botonAnimacion_4);
-
-		textField = new JTextField();
-		textField.setText("Introduce el Nombre");
-		textField.setForeground(Color.LIGHT_GRAY);
-		textField.setFont(new Font("Arial", Font.ITALIC, 22));
-		textField.setColumns(10);
-		textField.setBorder(null);
-		textField.setBounds(34, 104, 644, 42);
-		add(textField);
+		txtBuscar = new JTextField();
+		txtBuscar.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(!clickBusc){
+					clicBorrar(txtBuscar,clickBusc);
+					clickBusc = true;
+					txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
+					okBusc = true;
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtBuscar.getText().isEmpty()){
+					clicBorrar(txtBuscar,clickBusc);
+					txtBuscar.setText("Introduce el Nombre");
+					txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
+					clickBusc = false;
+					okBusc = false;
+				}
+			}
+		});
+		txtBuscar.setText("Introduce el Nombre");
+		txtBuscar.setForeground(Color.LIGHT_GRAY);
+		txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
+		txtBuscar.setColumns(10);
+		txtBuscar.setBorder(null);
+		txtBuscar.setBounds(34, 104, 644, 42);
+		add(txtBuscar);
+		
+		BotonAnimacion btnBuscar = new BotonAnimacion();
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtBuscar.getText().trim().length() != 0 && okBusc){
+					busTabla();
+				}
+			}
+		});
+		btnBuscar.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
+		btnBuscar.setText("Buscar");
+		btnBuscar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnBuscar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnBuscar.setFocusPainted(false);
+		btnBuscar.setBounds(688, 104, 134, 42);
+		add(btnBuscar);
 	}
 }
