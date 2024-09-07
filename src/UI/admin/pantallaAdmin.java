@@ -49,7 +49,7 @@ public class pantallaAdmin extends JFrame {
 
 	private JPanel contentPane;
 	private panelEmpresas verEmpr;
-	private JPanel contentPanels;
+	private static JPanel contentPanels;
 	private PanelUsuarios verUsers = new PanelUsuarios();
 	private PanelEmpleos pEmpleos;
 	private PanelCitas pCitas;
@@ -150,6 +150,7 @@ public class pantallaAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				pEmpleos = new PanelEmpleos();
 				cambiarPantalla(pEmpleos);
+				PanelEmpleos.actTabla();
 			}
 		});
 		mnEmpleos.add(mntmListaDeEmpleos);
@@ -220,13 +221,13 @@ public class pantallaAdmin extends JFrame {
 	
 	}
 	
-	private void cambiarPantalla(JPanel pantalla){
+	public static void cambiarPantalla(JPanel pantalla){
 		pantalla.setSize(884, 580);
 		pantalla.setLocation(284, 0);
-		this.contentPanels.removeAll();
-		this.contentPanels.setLayout(new BorderLayout(0, 0));
-		this.contentPanels.add(pantalla);
-		this.contentPanels.revalidate();
-		this.contentPanels.repaint();
+		contentPanels.removeAll();
+		contentPanels.setLayout(new BorderLayout(0, 0));
+		contentPanels.add(pantalla);
+		contentPanels.revalidate();
+		contentPanels.repaint();
 	}
 }

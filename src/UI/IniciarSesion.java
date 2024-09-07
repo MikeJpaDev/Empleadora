@@ -39,6 +39,7 @@ import javax.swing.JPasswordField;
 
 import componentesVisuales.BotonAnimacion;
 import raven.utils.FlatLafStyleUtils;
+import util.CreadorRandom;
 import logica.Empleadora;
 import logica.empresa.Empresa;
 import logica.utilidades.interfaz.ManejadorLookAndFeels;
@@ -77,6 +78,7 @@ public class IniciarSesion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					CreadorRandom.creadorEmpresas();
 					pantallaAdmin frame = new pantallaAdmin();
 					frame.setVisible(true);
 				} catch (Exception e) {

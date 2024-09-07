@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import UI.admin.pantallaAdmin;
+import UI.admin.jpanels.PanelEmpleos;
 import UI.admin.jpanels.panelEmpresas;
 import componentesVisuales.CampoCIValidado;
 
@@ -38,6 +40,8 @@ import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
 
 import javax.swing.SwingConstants;
+
+
 
 
 
@@ -74,7 +78,7 @@ public class CrearEmpleo extends JDialog {
 	}
 	
 	private void agEmpleo(Empresa emp){
-		emp.agEmpleo("Emp", emp.getSector(), Double.parseDouble(txtSal.getText()), emp.getNombre());
+		emp.agEmpleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp.getNombre());
 	}
 	
 	private void clicBorrar(JTextField jtext, boolean click){
@@ -86,12 +90,28 @@ public class CrearEmpleo extends JDialog {
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
+	
+	private boolean verifPuntos(String txt){
+		boolean retorno = true;
+		int cont = 0;
+		
+		for(int i = 0; i < txt.length() && cont <= 1; i++){
+			if (txt.charAt(i) == '.'){
+				cont++;
+			}
+			if (cont > 1){
+				retorno = false;
+			}
+		}
+		
+		return retorno;
+	}
 
 	private void iniciarComponetes(final Empresa emp){
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
-		setTitle("Ver Empresa");
+		setTitle("Crear Empleo");
 		setBounds(100, 100, 465, 424);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(135, 206, 235));
@@ -117,6 +137,8 @@ public class CrearEmpleo extends JDialog {
 		contentPanel.add(lblEmpleo);
 		
 		txtEmp = new JTextFieldModificado();
+		txtEmp.setValidacionPersonalizada("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ");
+		txtEmp.setTipoValidacion(4);
 		txtEmp.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -172,6 +194,8 @@ public class CrearEmpleo extends JDialog {
 		}
 
 		txtSal = new JTextFieldModificado();
+		txtSal.setValidacionPersonalizada("123456789.");
+		txtSal.setTipoValidacion(4);
 		txtSal.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -183,9 +207,18 @@ public class CrearEmpleo extends JDialog {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
+				boolean correcto = verifPuntos(txtSal.getText());
 				if (txtSal.getText().isEmpty()){
+					txtSal.setForeground(null);
 					clicBorrar(txtSal,clickSal);
 					txtSal.setText("Introduce el Salario");
+					clickSal = false;
+					okSal = false;
+				}
+				else if (txtSal.getText().charAt(0) == '0' || txtSal.getText().charAt(0) == '.' ||!correcto){
+					clicBorrar(txtSal,clickSal);
+					txtSal.setForeground(Color.red);
+					txtSal.setText("Salario no válido");
 					clickSal = false;
 					okSal = false;
 				}
@@ -223,7 +256,10 @@ public class CrearEmpleo extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					if(okEmp && okSal){
 						agEmpleo(emp);
+						PanelEmpleos pEmpleos = new PanelEmpleos();
+						pantallaAdmin.cambiarPantalla(pEmpleos);
 						panelEmpresas.actEmpleos(emp);
+						PanelEmpleos.actTabla();
 						dispose();
 					}
 					else{

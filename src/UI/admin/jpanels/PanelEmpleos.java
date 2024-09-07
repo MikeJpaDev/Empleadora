@@ -28,11 +28,17 @@ import util.EmpleoTableModel;
 import util.EmpresasTableModel;
 
 import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
+
+import logica.Empleadora;
+import logica.empleo.Empleo;
+import logica.empresa.Empresa;
 
 public class PanelEmpleos extends JPanel {
 	private JTextField textField;
 	private static JTable tableEmps;
 	private static EmpleoTableModel tableModel;
+	private static int cont = 1;
 	private BotonAnimacion botonAnimacion;
 	private BotonAnimacion botonAnimacion_1;
 	private BotonAnimacion botonAnimacion_2;
@@ -42,49 +48,72 @@ public class PanelEmpleos extends JPanel {
 	public PanelEmpleos(){
 		InicializarComponentes();
 	}
-	
+
+	private static void limpiarJTable(){
+		int a = tableModel.getRowCount()-1;
+		cont = 1;
+		for(int i=a;i>=0;i--){ 
+			tableModel.removeRow(i);
+		}
+	}
+
+	public static void actTabla(){
+		limpiarJTable();
+		Object[] datos = new Object[5];
+		for(Empresa emps: Empleadora.getInstancia().getEmpresas()){
+			for (Empleo p: emps.getEmpleos()){
+				datos[0] = cont++;
+				datos[1] = p.getID();
+				datos[2] = p.getRama();
+				datos[3] = p.getSalario();
+				datos[4] = p.getEmpOfertante();
+				tableModel.addRow(datos);
+			}
+		}
+	}
+
 	private void InicializarComponentes() {
 		setBackground(new Color(135, 206, 235));
 		setSize(new Dimension(884, 580));
 		setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(0, 191, 255));
 		panel.setBounds(0, 23, 884, 70);
 		add(panel);
-		
+
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/images/empresa/curriculum 64px.png")));
 		label.setBounds(783, 0, 75, 70);
 		panel.add(label);
-		
+
 		JLabel lblListaDeEmpleos = new JLabel("Lista de Empleos");
 		lblListaDeEmpleos.setFont(new Font("Roboto Black", Font.BOLD, 25));
 		lblListaDeEmpleos.setBounds(568, 11, 227, 48);
 		panel.add(lblListaDeEmpleos);
-		
+
 		JLabel label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/images/empresa/logo redondo 64.png")));
 		label_1.setBounds(32, 0, 86, 70);
 		panel.add(label_1);
-		
+
 		JLabel label_2 = new JLabel("SIGEM");
 		label_2.setFont(new Font("Roboto Black", Font.BOLD, 24));
 		label_2.setBounds(110, 11, 112, 48);
 		panel.add(label_2);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setBounds(34, 157, 644, 384);
 		add(scrollPane);
-		
+
 		tableEmps = new JTable();
 		tableEmps.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		tableEmps.setGridColor(new Color(192, 192, 192));
 		tableEmps.setBorder(null);
 		scrollPane.setViewportView(tableEmps);
-		
+
 		tableModel = new EmpleoTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -93,7 +122,7 @@ public class PanelEmpleos extends JPanel {
 			}
 		};
 		tableEmps.setModel(tableModel);
-		
+
 		botonAnimacion = new BotonAnimacion();
 		botonAnimacion.setFocusPainted(false);
 		botonAnimacion.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/binoculars-solid-36.png")));
@@ -102,7 +131,7 @@ public class PanelEmpleos extends JPanel {
 		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion.setBounds(688, 179, 134, 42);
 		add(botonAnimacion);
-		
+
 		botonAnimacion_1 = new BotonAnimacion();
 		botonAnimacion_1.setFocusPainted(false);
 		botonAnimacion_1.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
@@ -111,7 +140,7 @@ public class PanelEmpleos extends JPanel {
 		botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_1.setBounds(688, 245, 134, 42);
 		add(botonAnimacion_1);
-		
+
 		botonAnimacion_2 = new BotonAnimacion();
 		botonAnimacion_2.setFocusPainted(false);
 		botonAnimacion_2.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
@@ -120,7 +149,7 @@ public class PanelEmpleos extends JPanel {
 		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_2.setBounds(688, 316, 134, 42);
 		add(botonAnimacion_2);
-		
+
 		botonAnimacion_3 = new BotonAnimacion();
 		botonAnimacion_3.setFocusPainted(false);
 		botonAnimacion_3.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-papelera-50.png")));
@@ -129,7 +158,7 @@ public class PanelEmpleos extends JPanel {
 		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_3.setBounds(688, 388, 134, 42);
 		add(botonAnimacion_3);
-		
+
 		botonAnimacion_4 = new BotonAnimacion();
 		botonAnimacion_4.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
 		botonAnimacion_4.setText("Actualizar");
@@ -137,7 +166,7 @@ public class PanelEmpleos extends JPanel {
 		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_4.setBounds(688, 461, 134, 42);
 		add(botonAnimacion_4);
-		
+
 		textField = new JTextField();
 		textField.setText("Introduce el Nombre");
 		textField.setForeground(Color.LIGHT_GRAY);

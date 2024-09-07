@@ -310,8 +310,10 @@ public class panelEmpresas extends JPanel {
 		btnCrearEmpleo.setFocusPainted(false);
 		btnCrearEmpleo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearEmpleo empleo = new CrearEmpleo(Empleadora.getInstancia().getEmpresas().get(tableEmps.getSelectedRow()));
-				empleo.setVisible(true);
+				if (tableEmps.getSelectedRow() != -1){
+					CrearEmpleo empleo = new CrearEmpleo(Empleadora.getInstancia().getEmpresas().get(tableEmps.getSelectedRow()));
+					empleo.setVisible(true);
+				}
 			}
 		});
 		btnCrearEmpleo.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));

@@ -61,6 +61,11 @@ public class Empresa {
 	public void setSector(String sector) {
 		this.sector = sector;
 	}
+
+
+	public ArrayList<Empleo> getEmpleos() {
+		return empleos;
+	}
 	
 	
 	
