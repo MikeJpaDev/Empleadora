@@ -180,6 +180,11 @@ public class Empleadora {
 	//Logica Empleados
 	
 	public void agCandidato(Candidato can){
+		
+		for(int i = 0; i<candidatos.size();i++){
+			if(candidatos.get(i).getCi().equals(can.getCi()))
+				throw new IllegalArgumentException("Usuario Repetido");
+		}
 		candidatos.add(can);
 		Collections.sort(candidatos);
 	}

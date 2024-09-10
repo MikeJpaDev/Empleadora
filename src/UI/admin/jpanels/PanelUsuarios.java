@@ -11,6 +11,7 @@ import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -70,10 +71,16 @@ public class PanelUsuarios extends JPanel {
 	}
 	
 	private void prueba(){
-		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04010266989", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
+		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04050233879", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
 		Empleadora.getInstancia().agCandidato(can);
-		Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "04010266989", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
-		Empleadora.getInstancia().agCandidato(can2);
+		
+		try{
+			Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "04045877123", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
+			Empleadora.getInstancia().agCandidato(can2);
+		}
+		catch(IllegalArgumentException e){
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 	
 	private void llenarComponentes(){
@@ -116,7 +123,13 @@ public class PanelUsuarios extends JPanel {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		tableModel = new UsersTableModel();
+		tableModel = new UsersTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int filas, int columnas){
+				return false;
+			}
+		};
 		table.setModel(tableModel);
 		
 		txtBuscar = new JTextField();
