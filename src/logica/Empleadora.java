@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JOptionPane;
 
@@ -26,10 +27,6 @@ public class Empleadora {
 	private Empleadora(){
 		empresas = new ArrayList<Empresa>();
 		candidatos = new ArrayList<Candidato>();
-	}
-
-	public void agCandidato(Candidato u){
-		candidatos.add(u);
 	}
 
 	public ArrayList<Candidato> getUsuarios(){
@@ -177,6 +174,14 @@ public class Empleadora {
 				}
 			}
 		}
+	}
+	
+	
+	//Logica Empleados
+	
+	public void agCandidato(Candidato can){
+		candidatos.add(can);
+		Collections.sort(candidatos);
 	}
 
 }

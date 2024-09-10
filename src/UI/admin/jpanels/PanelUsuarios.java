@@ -25,14 +25,58 @@ import util.UsersTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
+
+import logica.Empleadora;
+import logica.candidato.Candidato;
+import logica.enums.Genero;
+import logica.enums.NivelEscolar;
 import componentesVisuales.BotonAnimacion;
 
 public class PanelUsuarios extends JPanel {
 	private JTextField txtBuscar;
 	private JTable table;
-	private UsersTableModel tableModel;
+	private static UsersTableModel tableModel;
 
 	public PanelUsuarios() {
+		llenarComponentes();
+		prueba();
+		llenarTabla();
+	}
+	
+	//Limpiar Tabla 
+	
+	private static void limpiarTabla(){
+		int cantFil = tableModel.getRowCount()-1;
+		for(int i=cantFil ; i>=0 ; i--){ 
+			tableModel.removeRow(i);
+		}
+	}
+	
+	//Llenar Tabla
+	
+	private void llenarTabla(){
+		limpiarTabla();
+		Object datos[] = new Object[6];
+		
+		for(Candidato c: Empleadora.getInstancia().getUsuarios()){
+			datos[0] = c.getCi();
+			datos[1] = c.getNombre();
+			datos[2] = c.getGenero().name();
+			datos[3] = c.getAniosExp();
+			datos[4] = c.getNivelEscolar().name();
+			datos[5] = c.getCi();
+			tableModel.addRow(datos);
+		}
+	}
+	
+	private void prueba(){
+		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04010266989", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
+		Empleadora.getInstancia().agCandidato(can);
+		Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "04010266989", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
+		Empleadora.getInstancia().agCandidato(can2);
+	}
+	
+	private void llenarComponentes(){
 		setBackground(new Color(135, 206, 235));
 		setSize(new Dimension(884, 580));
 		setMaximumSize(new Dimension(884, 580));
@@ -131,6 +175,5 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion_5.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_5.setBounds(697, 476, 134, 42);
 		add(botonAnimacion_5);
-
 	}
 }

@@ -27,7 +27,7 @@ public class Candidato implements Comparable<Candidato>{
 		this.setNombre(nombre);
 		this.setDir(dir);
 		this.setTelef(telef);
-		this.setCi(ci);
+		this.ci = ci;
 		this.setAniosExp(aniosExp);
 		this.setGenero(genero);
 		this.setNivelEscolar(nivelEscolar);
@@ -146,10 +146,7 @@ public class Candidato implements Comparable<Candidato>{
 
 	@Override
 	public int compareTo(Candidato o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.nombre.compareTo(o.getNombre());
 	}
-	
-	// 
 	
 }
