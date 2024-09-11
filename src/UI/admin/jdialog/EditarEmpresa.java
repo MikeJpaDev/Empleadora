@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import UI.admin.jpanels.panelEmpresas;
 import componentesVisuales.CampoCIValidado;
 
 import javax.swing.JLabel;
@@ -39,6 +40,10 @@ import javax.swing.SwingConstants;
 
 
 
+
+
+
+import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -277,7 +282,7 @@ public class EditarEmpresa extends JDialog {
 			btnActu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(ediEmp(act, pos)){
-						JOptionPane.showMessageDialog(null, "Presione Actualizar para Visualizar los Cambios", "Nota", JOptionPane.INFORMATION_MESSAGE);
+						panelEmpresas.actTabla();
 						dispose();
 					}
 					else{

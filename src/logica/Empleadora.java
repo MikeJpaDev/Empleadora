@@ -84,12 +84,13 @@ public class Empleadora {
 						empleo.getID().toLowerCase().contains(nom.toLowerCase()) ||
 						empleo.getID().contains(nom)){
 
-					datos = new Object[5];
+					datos = new Object[6];
 					datos[0] = cont+1;
 					datos[1] = empleo.getID();
 					datos[2] = empleo.getRama();
 					datos[3] = empleo.getSalario();
 					datos[4] = empleo.getEmpOfertante();
+					datos[5] = empleo.getRamaEmp();
 					cont++;
 
 					datosNuevos.add(datos);

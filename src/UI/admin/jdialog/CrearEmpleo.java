@@ -36,6 +36,7 @@ import javax.swing.DefaultComboBoxModel;
 import logica.Empleadora;
 import logica.empleo.Empleo;
 import logica.empresa.Empresa;
+import logica.enums.Rama;
 import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
 
@@ -49,10 +50,16 @@ import javax.swing.SwingConstants;
 
 
 
+
+
+
+import com.formdev.flatlaf.FlatLightLaf;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class CrearEmpleo extends JDialog {
 
@@ -67,6 +74,7 @@ public class CrearEmpleo extends JDialog {
 	private boolean clickEmp = false;
 	private boolean okEmp = false;
 	private JTextFieldModificado txtEmp;
+	private JComboBox<Rama> cmbRamas;
 	
 	
 	
@@ -74,11 +82,27 @@ public class CrearEmpleo extends JDialog {
 	public CrearEmpleo(Empresa emp) {
 		iniciarComponetes(emp);
 		txtNom.setText(emp.getNombre());
-		txtSect.setText(emp.getSector());		
+		txtSect.setText(emp.getSector());
+		ArrayList<Rama> ramas;
+		
+		if(emp.getSector().equalsIgnoreCase(Sector.EDUCACION.toString())){
+			ramas = Rama.getRamasEducacion();
+		}
+		else if(emp.getSector().equalsIgnoreCase(Sector.SALUD.toString())){
+			ramas = Rama.getRamasSalud();
+		}
+		else{
+			ramas = Rama.getRamasTurPriv();
+		}
+		
+		for (Rama r : ramas){
+			cmbRamas.addItem(r);
+		}
+		
 	}
 	
 	private void agEmpleo(Empresa emp){
-		emp.agEmpleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp.getNombre());
+		emp.agEmpleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp.getNombre(), (Rama)cmbRamas.getSelectedItem());
 	}
 	
 	private void clicBorrar(JTextField jtext, boolean click){
@@ -277,14 +301,15 @@ public class CrearEmpleo extends JDialog {
 			btnCancelar.setText("Cancelar");
 			btnCancelar.setBorderPainted(false);
 			buttonPane.add(btnCancelar);
-
-
-			SwingUtilities.invokeLater(new Runnable() {
-
-				@Override
-				public void run() {
-				}
-			});
+			
+			JLabel lblRama = new JLabel("Rama: ");
+			lblRama.setFont(new Font("Arial", Font.PLAIN, 18));
+			lblRama.setBounds(10, 243, 92, 26);
+			contentPanel.add(lblRama);
+			
+			cmbRamas = new JComboBox();
+			cmbRamas.setBounds(131, 243, 311, 26);
+			contentPanel.add(cmbRamas);
 		}
 	}
 }

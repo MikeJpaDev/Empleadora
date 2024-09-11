@@ -63,7 +63,7 @@ public class PanelEmpleos extends JPanel {
 
 	public static void actTabla(){
 		limpiarJTable();
-		Object[] datos = new Object[5];
+		Object[] datos = new Object[6];
 		for(Empresa emps: Empleadora.getInstancia().getEmpresas()){
 			for (Empleo p: emps.getEmpleos()){
 				datos[0] = cont++;
@@ -71,6 +71,7 @@ public class PanelEmpleos extends JPanel {
 				datos[2] = p.getRama();
 				datos[3] = p.getSalario();
 				datos[4] = p.getEmpOfertante();
+				datos[5] = p.getRamaEmp();
 				tableModel.addRow(datos);
 			}
 		}
@@ -90,7 +91,7 @@ public class PanelEmpleos extends JPanel {
 		limpiarJTable();
 		if(Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).size() != 0){
 			for (int i = 0; i < Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).size(); i++){
-				Object[] datos = new Object[5];
+				Object[] datos = new Object[6];
 				datos = (Object[]) Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).get(i);
 				tableModel.addRow(datos);
 			}

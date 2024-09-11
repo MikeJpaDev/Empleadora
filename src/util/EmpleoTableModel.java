@@ -6,7 +6,7 @@ public class EmpleoTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
 	
 	public EmpleoTableModel(){
-		String[] columNames = {"Nº", "ID", "Rama", "Salario", "Empleadora"};
+		String[] columNames = {"Nº", "ID", "Sector", "Salario", "Empleadora", "Rama"};
 		this.setColumnIdentifiers(columNames);
 	}
 	

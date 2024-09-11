@@ -42,6 +42,9 @@ import javax.swing.SwingConstants;
 
 
 
+
+import com.formdev.flatlaf.FlatLightLaf;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
@@ -100,6 +103,7 @@ public class CrearEmpresa extends JDialog {
 	}
 	
 	private void iniciarComponetes(){
+		FlatLightLaf.setup();
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));

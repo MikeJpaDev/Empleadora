@@ -3,6 +3,7 @@ package logica.empresa;
 import java.util.ArrayList;
 
 import logica.empleo.Empleo;
+import logica.enums.Rama;
 
 public class Empresa {
 	
@@ -25,8 +26,8 @@ public class Empresa {
 		empleos = new ArrayList<Empleo>();
 	}
 	
-	public void agEmpleo(String id, String rama, Double sal, String ofer){
-		empleos.add(new Empleo(id, rama, sal, ofer));
+	public void agEmpleo(String id, String rama, Double sal, String ofer, Rama ramaE){
+		empleos.add(new Empleo(id, rama, sal, ofer, ramaE));
 	}
 
 

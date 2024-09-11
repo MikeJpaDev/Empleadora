@@ -1,17 +1,25 @@
 package logica.empleo;
 
+import logica.enums.Rama;
+
 public class Empleo {
 	
 	private String ID;
 	private String rama;
 	private Double salario;
 	private String empOfertante;
+	private Rama ramaEmp;
 	
-	public Empleo( String id, String rama, double sal, String empO){
+	public Empleo( String id, String rama, double sal, String empO, Rama ramaEmp){
 		this.setID(id);
 		this.setRama(rama);
 		this.setSalario(sal);
-		this.setEmpOfertante(empO);		
+		this.setEmpOfertante(empO);	
+		this.ramaEmp = ramaEmp;
+	}
+	
+	public Rama getRamaEmp(){
+		return this.ramaEmp;
 	}
 
 	public String getID() {

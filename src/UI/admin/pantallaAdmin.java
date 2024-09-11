@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.UIManager;
 
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -45,6 +46,11 @@ import java.security.Principal;
 
 import javax.swing.JCheckBoxMenuItem;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme;
+
 public class pantallaAdmin extends JFrame {
 
 	private JPanel contentPane;
@@ -77,16 +83,6 @@ public class pantallaAdmin extends JFrame {
 			dialog.setVisible(true);
 		} catch (Exception e1) {
 			e1.printStackTrace();
-		}
-	}
-	
-	private void crearEmp(){
-		try {
-			CrearEmpresa dialog = new CrearEmpresa();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -133,14 +129,6 @@ public class pantallaAdmin extends JFrame {
 			}
 		});
 		mnEmpresas.add(mntmVerEmpresas);
-		
-		JMenuItem mntmCrearEmpresa = new JMenuItem("Crear Empresa");
-		mntmCrearEmpresa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				crearEmp();
-			}
-		});
-		mnEmpresas.add(mntmCrearEmpresa);
 		
 		JMenu mnEmpleos = new JMenu("Empleos");
 		menuBar.add(mnEmpleos);
