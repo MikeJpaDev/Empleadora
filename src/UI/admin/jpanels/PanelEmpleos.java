@@ -23,6 +23,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 
+import UI.admin.jdialog.CrearEmpleoPtllaEmp;
 import componentesVisuales.BotonAnimacion;
 import util.EmpleoTableModel;
 import util.EmpresasTableModel;
@@ -69,7 +70,7 @@ public class PanelEmpleos extends JPanel {
 				datos[0] = cont++;
 				datos[1] = p.getID();
 				datos[2] = p.getRama();
-				datos[3] = p.getSalario();
+				datos[3] = "$" + p.getSalario();
 				datos[4] = p.getEmpOfertante();
 				datos[5] = p.getRamaEmp();
 				tableModel.addRow(datos);
@@ -152,6 +153,8 @@ public class PanelEmpleos extends JPanel {
 		btnAdd = new BotonAnimacion();
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CrearEmpleoPtllaEmp ptlla = new CrearEmpleoPtllaEmp();
+				ptlla.setVisible(true);
 			}
 		});
 		btnAdd.setFocusPainted(false);

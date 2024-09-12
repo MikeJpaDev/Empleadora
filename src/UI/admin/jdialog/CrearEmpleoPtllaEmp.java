@@ -53,6 +53,8 @@ import javax.swing.SwingConstants;
 
 
 
+
+
 import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.event.FocusAdapter;
@@ -60,11 +62,15 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
-public class CrearEmpleo extends JDialog {
+public class CrearEmpleoPtllaEmp extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextFieldModificado txtNom;
 	private JTextFieldModificado txtSal;
 	private BotonAnimacion btnCancelar;
 	private JTextFieldModificado txtSect;
@@ -75,14 +81,17 @@ public class CrearEmpleo extends JDialog {
 	private boolean okEmp = false;
 	private JTextFieldModificado txtEmp;
 	private JComboBox<Rama> cmbRamas;
+	private JComboBox<String> cmbEmpleadoras;
+	
+	private void getEmpresasToCmb(JComboBox<String> cmb){
+		for(Empresa emp:Empleadora.getInstancia().getEmpresas()){
+			cmb.addItem(emp.getNombre());
+		}
+	}
 	
 	
-	
-
-	public CrearEmpleo(Empresa emp) {
-		iniciarComponetes(emp);
-		txtNom.setText(emp.getNombre());
-		txtSect.setText(emp.getSector());
+	private void getRamas(Empresa emp, JComboBox<Rama> cmb){
+		cmb.removeAllItems();
 		ArrayList<Rama> ramas;
 		
 		if(emp.getSector().equalsIgnoreCase(Sector.EDUCACION.toString())){
@@ -98,7 +107,10 @@ public class CrearEmpleo extends JDialog {
 		for (Rama r : ramas){
 			cmbRamas.addItem(r);
 		}
-		
+	}
+
+	public CrearEmpleoPtllaEmp() {
+		iniciarComponetes();
 	}
 	
 	private void agEmpleo(Empresa emp){
@@ -131,7 +143,7 @@ public class CrearEmpleo extends JDialog {
 		return retorno;
 	}
 
-	private void iniciarComponetes(final Empresa emp){
+	private void iniciarComponetes(){
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
@@ -144,7 +156,7 @@ public class CrearEmpleo extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblNewLabel = new JLabel("New label");
-			lblNewLabel.setIcon(new ImageIcon(CrearEmpleo.class.getResource("/icons/icons8-bank-building-80.png")));
+			lblNewLabel.setIcon(new ImageIcon(CrearEmpleoPtllaEmp.class.getResource("/icons/icons8-bank-building-80.png")));
 			lblNewLabel.setBounds(196, 11, 82, 69);
 			contentPanel.add(lblNewLabel);
 		}
@@ -201,16 +213,6 @@ public class CrearEmpleo extends JDialog {
 		txtSect.setBeepActivado(false);
 		txtSect.setBounds(131, 206, 311, 26);
 		contentPanel.add(txtSect);
-
-		txtNom = new JTextFieldModificado();
-		txtNom.setDisabledTextColor(Color.BLACK);
-		txtNom.setEnabled(false);
-		txtNom.setBeepActivado(false);
-		txtNom.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtNom.setText("Introduce el Nombre");
-		txtNom.setBorder(null);
-		txtNom.setBounds(131, 131, 311, 26);
-		contentPanel.add(txtNom);
 		{
 			JLabel lblDireccin = new JLabel("Salario: ");
 			lblDireccin.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -219,12 +221,14 @@ public class CrearEmpleo extends JDialog {
 		}
 
 		txtSal = new JTextFieldModificado();
+		txtSal.setLimite(9);
 		txtSal.setValidacionPersonalizada("1234567890.");
 		txtSal.setTipoValidacion(4);
 		txtSal.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if(!clickSal){
+					txtSal.setForeground(null);
 					clicBorrar(txtSal,clickSal);
 					clickSal = true;
 					okSal = true;
@@ -279,25 +283,23 @@ public class CrearEmpleo extends JDialog {
 			BotonAnimacion btnmcnCrear = new BotonAnimacion();
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(okEmp && okSal){
-						agEmpleo(emp);
-						new PanelEmpleos();
-						panelEmpresas.actEmpleos(emp);
-						PanelEmpleos.actTabla();
+					if(okEmp && okSal && cmbEmpleadoras.getSelectedIndex() != -1){
+						agEmpleo(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()));
 						dispose();
+						PanelEmpleos.actTabla();
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Verifique los Datos", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});
-			btnmcnCrear.setIcon(new ImageIcon(CrearEmpleo.class.getResource("/icons/empresa/aceptar 24px.png")));
+			btnmcnCrear.setIcon(new ImageIcon(CrearEmpleoPtllaEmp.class.getResource("/icons/empresa/aceptar 24px.png")));
 			btnmcnCrear.setText("Crear");
 			btnmcnCrear.setFocusTraversalKeysEnabled(false);
 			btnmcnCrear.setFocusPainted(false);
 			btnmcnCrear.setBorderPainted(false);
 			buttonPane.add(btnmcnCrear);
-			btnCancelar.setIcon(new ImageIcon(CrearEmpleo.class.getResource("/icons/empresa/aceptar 24px.png")));
+			btnCancelar.setIcon(new ImageIcon(CrearEmpleoPtllaEmp.class.getResource("/icons/empresa/aceptar 24px.png")));
 			btnCancelar.setText("Cancelar");
 			btnCancelar.setBorderPainted(false);
 			buttonPane.add(btnCancelar);
@@ -307,9 +309,22 @@ public class CrearEmpleo extends JDialog {
 			lblRama.setBounds(10, 243, 92, 26);
 			contentPanel.add(lblRama);
 			
-			cmbRamas = new JComboBox();
+			cmbRamas = new JComboBox<Rama>();
 			cmbRamas.setBounds(131, 243, 311, 26);
 			contentPanel.add(cmbRamas);
+			cmbEmpleadoras = new JComboBox<String>();
+			cmbEmpleadoras.addItemListener(new ItemListener() {
+				public void itemStateChanged(ItemEvent e) {
+					if (cmbEmpleadoras.getSelectedIndex()!= -1){
+						txtSect.setText(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()).getSector());
+						getRamas(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()), cmbRamas);
+					}
+				}
+			});
+			cmbEmpleadoras.setBounds(131, 132, 311, 26);
+			contentPanel.add(cmbEmpleadoras);
+			getEmpresasToCmb(cmbEmpleadoras);
+			cmbEmpleadoras.setSelectedIndex(-1);
 		}
 	}
 }
