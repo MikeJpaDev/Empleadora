@@ -219,16 +219,14 @@ public class Empleadora {
 		return disponibles;
 	}
 	
-	//public ArrayList<Cita> citasDisponibles(Candidato candidato){
-	//	ArrayList<Cita> citasDisp = new ArrayList<>();
-	//	
-	//	for(Cita c : citas){
-	//		if(candidato.esValido(c.getEmpleo()))
-	//			
-	//	}
-	//	
-	//	return citasDisp;
-	//}
+	public void citasDisponibles(Candidato candidato){
+		
+		for(Cita c : citas){
+			if(candidato.esValido(c.getEmpleo()))
+				if(candidato.disponible(c.getFecha()))
+					candidato.aggCitas(c);
+		}
+	}
 	
 	//Logica Citas
 	

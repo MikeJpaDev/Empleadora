@@ -275,7 +275,7 @@ public class Candidato implements Comparable<Candidato>{
 		
 		if(diaSiglo <= 5  && diaSiglo >=0)
 			anio = "19" + ci.substring(0, 2);
-		else if(diaSiglo <= 7  && diaSiglo >=6)
+		else if(diaSiglo <= 8  && diaSiglo >=6)
 			anio = "20" + ci.substring(0, 2);
 		else
 			throw new IllegalArgumentException("El septimo digito del ci es incorrecto");
