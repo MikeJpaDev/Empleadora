@@ -31,6 +31,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 
 import logica.Empleadora;
+import logica.candidato.Candidato;
+import logica.enums.Genero;
 import logica.utilidades.logica.Sexo;
 
 import java.awt.event.ActionListener;
@@ -43,14 +45,14 @@ public class CrearUsuarioNomb extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private BotonAnimacion btnmcnCrear;
 	private BotonAnimacion btnCancel;
+	private JTextFieldModificado txtNombre;
 	private JTextFieldModificado txtCi;
 	private JTextFieldModificado txtTel;
-	private JTextFieldModificado txtNombre;
-	private boolean clickNombre = false;
+	private JComboBox cmbSexo;
 
 	private void crearUser(){
 		try {
-			CrearUsuario dialog = new CrearUsuario();
+			CrearUsuario dialog = new CrearUsuario(txtNombre.getText(), txtCi.getText(), (Genero)cmbSexo.getSelectedItem(), txtTel.getText());
 			dialog.setLocationRelativeTo(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -58,7 +60,8 @@ public class CrearUsuarioNomb extends JDialog {
 			e1.printStackTrace();
 		}
 	}
-
+	
+	
 	public CrearUsuarioNomb() {
 		setModal(true);
 		setResizable(false);
@@ -77,36 +80,6 @@ public class CrearUsuarioNomb extends JDialog {
 		label.setBounds(10, 53, 80, 26);
 		contentPanel.add(label);
 		
-		txtNombre = new JTextFieldModificado();
-		txtNombre.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				//if()
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-			}
-		});
-		txtNombre.setValidacionPersonalizada("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ Ò·ÈÌÛ˙¡…Õ”⁄ ");
-		txtNombre.setTipoValidacion(4);
-		txtNombre.setText("Nombre Completo");
-		txtNombre.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtNombre.setColumns(10);
-		txtNombre.setBorder(new EmptyBorder(0, 5, 0, 5));
-		txtNombre.setBounds(100, 53, 349, 26);
-		contentPanel.add(txtNombre);
-		
-		txtCi = new JTextFieldModificado();
-		txtCi.setTipoValidacion(2);
-		txtCi.setText("Carnet de Identidad");
-		txtCi.setPreferredSize(new Dimension(6, 20));
-		txtCi.setLimite(11);
-		txtCi.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtCi.setBorder(null);
-		txtCi.setAlignmentX(1.0f);
-		txtCi.setBounds(100, 93, 349, 26);
-		contentPanel.add(txtCi);
-		
 		JLabel label_1 = new JLabel("CI");
 		label_1.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
 		label_1.setBounds(10, 93, 80, 26);
@@ -116,17 +89,6 @@ public class CrearUsuarioNomb extends JDialog {
 		label_2.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
 		label_2.setBounds(10, 133, 80, 26);
 		contentPanel.add(label_2);
-		
-		txtTel = new JTextFieldModificado();
-		txtTel.setTipoValidacion(2);
-		txtTel.setText("Tel\u00E9fono");
-		txtTel.setPreferredSize(new Dimension(6, 20));
-		txtTel.setLimite(8);
-		txtTel.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtTel.setBorder(null);
-		txtTel.setAlignmentX(1.0f);
-		txtTel.setBounds(100, 135, 349, 26);
-		contentPanel.add(txtTel);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -146,11 +108,40 @@ public class CrearUsuarioNomb extends JDialog {
 		lblSexo.setBounds(10, 170, 62, 26);
 		contentPanel.add(lblSexo);
 		
-		JComboBox cmbSexo = new JComboBox();
+		cmbSexo = new JComboBox();
 		cmbSexo.setFont(new Font("Arial", Font.PLAIN, 13));
-		cmbSexo.setModel(new DefaultComboBoxModel(Sexo.values()));
+		cmbSexo.setModel(new DefaultComboBoxModel(Genero.values()));
 		cmbSexo.setBounds(68, 170, 287, 26);
 		contentPanel.add(cmbSexo);
+		
+		txtNombre = new JTextFieldModificado();
+		txtNombre.setBorder(new EmptyBorder(0, 5, 0, 5));
+		txtNombre.setBeepActivado(false);
+		txtNombre.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtNombre.setValidacionPersonalizada("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ \u00E1\u00E9\u00ED\u00F3\u00C1\u00C9\u00CD\u00D3 \u00F1");
+		txtNombre.setTipoValidacion(4);
+		txtNombre.setBounds(100, 53, 349, 23);
+		contentPanel.add(txtNombre);
+		
+		txtCi = new JTextFieldModificado();
+		txtCi.setBeepActivado(false);
+		txtCi.setLimite(11);
+		txtCi.setColumns(10);
+		txtCi.setBorder(new EmptyBorder(0, 5, 0, 5));
+		txtCi.setValidacionPersonalizada("0123456789");
+		txtCi.setTipoValidacion(2);
+		txtCi.setBounds(100, 93, 349, 23);
+		contentPanel.add(txtCi);
+		
+		txtTel = new JTextFieldModificado();
+		txtTel.setBeepActivado(false);
+		txtTel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtTel.setBorder(new EmptyBorder(0, 5, 0, 5));
+		txtTel.setLimite(9);
+		txtTel.setValidacionPersonalizada("0123456789");
+		txtTel.setTipoValidacion(2);
+		txtTel.setBounds(100, 133, 349, 23);
+		contentPanel.add(txtTel);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(0, 191, 255));
@@ -163,7 +154,11 @@ public class CrearUsuarioNomb extends JDialog {
 				btnmcnCrear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try{
+							Candidato.validarNombre(txtNombre.getText());
+							Candidato.validarTelef(txtTel.getText());
+							Candidato.validarCi(txtCi.getText());
 							Empleadora.getInstancia().esNuevo(txtCi.getText());
+							dispose();
 							crearUser();
 						}catch(IllegalArgumentException e1){
 							JOptionPane.showMessageDialog(null,e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

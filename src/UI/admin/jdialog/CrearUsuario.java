@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
@@ -34,6 +35,7 @@ import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
 
+import UI.admin.jpanels.PanelUsuarios;
 import componentesVisuales.JTextFieldModificado;
 
 import java.awt.Dimension;
@@ -56,27 +58,31 @@ import logica.utilidades.logica.Sexo;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+
+import javax.swing.SpinnerNumberModel;
 
 public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtDir;
-	private boolean clickName = false;
-	private boolean clickId = false;
-	private boolean clickTel = false;
 	private boolean clickDir = false;
 	private JComboBox cmbNvEscolar;
 	private BotonAnimacion btnmcnCrear;
 	private BotonAnimacion btnCancel;
-	private JSpinner spinner;
+	private JSpinner spnExp;
 	private JTable tableDocs;
 	private JTextField txtEspecialidad;
 	private DocumentosTableModel tableModel;
 	private JComboBox<String> cmbDocs;
 	private JComboBox cmbRama;
-
+	private String nombre;
+	private String ci;
+	private Genero sexo;
+	private String telef;
+	
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
 			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -109,7 +115,11 @@ public class CrearUsuario extends JDialog {
 		
 	}
 
-	public CrearUsuario() {
+	public CrearUsuario(String nombre, String ci, Genero sexo, String telef) {
+		this.nombre = nombre;
+		this.ci = ci;
+		this.sexo = sexo;
+		this.telef = telef;
 		iniciarComponentes();
 		llenarCmbDocs(cmbRama.getSelectedItem().toString());
 	}
@@ -217,9 +227,10 @@ public class CrearUsuario extends JDialog {
 		cmbRama.setBounds(100, 170, 249, 26);
 		contentPanel.add(cmbRama);
 
-		spinner = new JSpinner();
-		spinner.setBounds(156, 210, 84, 26);
-		contentPanel.add(spinner);
+		spnExp = new JSpinner();
+		spnExp.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spnExp.setBounds(156, 210, 84, 26);
+		contentPanel.add(spnExp);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 343, 415, 73);
@@ -278,7 +289,17 @@ public class CrearUsuario extends JDialog {
 			btnmcnCrear = new BotonAnimacion();
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Empleadora emp = Empleadora.getInstancia();
+					try{
+						Empleadora emp = Empleadora.getInstancia();
+						Candidato cand = new Candidato(nombre,txtDir.getText() , telef, ci, (int)spnExp.getValue() ,sexo, (NivelEscolar)cmbNvEscolar.getSelectedItem(), (Rama)cmbRama.getSelectedItem(), txtEspecialidad.getText());
+						emp.agCandidato(cand);
+						PanelUsuarios.llenarTabla();
+						dispose();
+					}
+					catch(IllegalArgumentException e1){
+						JOptionPane.showMessageDialog(null,e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					
 				}
 			});
 			btnmcnCrear.setFocusPainted(false);
@@ -289,12 +310,17 @@ public class CrearUsuario extends JDialog {
 			btnCancel = new BotonAnimacion();
 			btnCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					try {
+						dispose();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 					dispose();
 				}
 			});
 			btnCancel.setFocusPainted(false);
 			btnCancel.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
-			btnCancel.setText("Cancelar");
+			btnCancel.setText("Atras");
 			buttonPane.add(btnCancel);
 		}
 	}

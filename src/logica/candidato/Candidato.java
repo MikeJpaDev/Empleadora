@@ -1,5 +1,8 @@
 package logica.candidato;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,7 +35,7 @@ public class Candidato implements Comparable<Candidato>{
 		this.setNombre(nombre);
 		this.setDir(dir);
 		this.setTelef(telef);
-		this.ci = ci;
+		this.setCi(ci);
 		this.setAniosExp(aniosExp);
 		this.setGenero(genero);
 		this.setNivelEscolar(nivelEscolar);
@@ -47,42 +50,32 @@ public class Candidato implements Comparable<Candidato>{
 
 
 	private void setCi(String ci) {
-		if(ci != null && !ci.isEmpty())
-			throw new IllegalArgumentException("esta vacio el campo del ci");
 		
-		String test = new String(ci); //Comprobando caracteres especiales
-		for(int i = 0; i < test.length(); i++)
-			if(!Character.isDigit(test.charAt(i)))
-				throw new IllegalArgumentException("el carnet de identidad contiene caracteres no numericos");
+		try{
+			Candidato.validarCi(ci);
+			this.ci = ci;
+		}
+		catch(IllegalArgumentException e){
+			throw e;
+		}
 		
-		if(ci.length() != 11)
-			throw new IllegalArgumentException("La longitud del CI no es correcta");
-		
-		/*if()  falta validacion carnet de identidad*/
 	}
 	
 	private void setNombre(String nombre){
 		
-		if(nombre == null && nombre.isEmpty())  //Comprobando nombre vacio
-			throw new IllegalArgumentException("esta vacio el nombre");
+		try{
+			Candidato.validarNombre(nombre);
+			this.nombre = nombre;
+		}
+		catch(IllegalArgumentException e){
+			throw e;
+		}
 		
-		if(!nombre.equalsIgnoreCase(nombre.trim()))  //Espacios al principio o final
-			throw new IllegalArgumentException("No deje espacios en blanco al principio o al final");
-		
-		if(!nombre.equalsIgnoreCase(nombre.replaceAll("  ", "")))
-			throw new IllegalArgumentException("dos espacios en blanco juntos");
-		
-		String test = new String(nombre.replace(" ", "")); //Comprobando caracteres especiales
-		for(int i = 0; i < test.length(); i++)
-			if(!Character.isAlphabetic(test.charAt(i)))
-				throw new IllegalArgumentException("El nombre contiene caracteres no validos");
-		
-		this.nombre = nombre;
 	}
 
 	private void setDir(String dir) {
 		
-		if(dir == null && dir.isEmpty())  //Comprobando nombre vacio
+		if(dir == null || dir.isEmpty())  //Comprobando nombre vacio
 			throw new IllegalArgumentException("esta vacia la direccion");
 		
 		if(!dir.equalsIgnoreCase(dir.trim()))  //Espacios al principio o final
@@ -101,22 +94,34 @@ public class Candidato implements Comparable<Candidato>{
 
 	private void setTelef(String telef) {
 		
-		if(telef == null && telef.isEmpty())
-			throw new IllegalArgumentException("el telefono esta vacio");
+		try{
+			Candidato.validarTelef(telef);
+			this.telef = telef;
+		}
+		catch(IllegalArgumentException e){
+			throw e;
+		}
 		
-		String test = new String(telef); //Comprobando caracteres no númericos
-		for(int i = 0; i < test.length(); i++)
-			if(!Character.isDigit(test.charAt(i)))
-				throw new IllegalArgumentException("el telefono contiene caracteres no numericos");
-		
-		if(telef.length() > 9)
-			throw new IllegalArgumentException("la cantidad de digitos es mayor de 9");
-		
-		this.telef = telef;
 	}
 
 	private void setAniosExp(int aniosExp) {
-		if (aniosExp >= 0 && aniosExp <= 100)
+		
+		int diaSiglo = Character.getNumericValue(ci.charAt(6));
+		
+		String anio = null;
+		if(diaSiglo <= 5  && diaSiglo >=0)
+			anio = "19" + ci.substring(0, 2);
+		else if(diaSiglo <= 7  && diaSiglo >=6)
+			anio = "20" + ci.substring(0, 2);
+		
+		int anioInt = Integer.parseInt(anio);
+		
+		LocalDate nacido = LocalDate.of(anioInt + 18, 1, 1);
+		LocalDate hoy = LocalDate.now();
+		
+		int difAnios = (int)ChronoUnit.YEARS.between(nacido, hoy);
+		
+		if (aniosExp >= 0 && aniosExp<= difAnios)
 			this.aniosExp = aniosExp;
 		else
 			throw new IllegalArgumentException("años de experiencias no volido");
@@ -202,5 +207,89 @@ public class Candidato implements Comparable<Candidato>{
 		}
 		
 		return valido;
+	}
+	
+	public static void validarNombre(String nombre){
+		
+		if(nombre == null || nombre.isEmpty())  //Comprobando nombre vacio
+			throw new IllegalArgumentException("esta vacio el nombre");
+		
+		if(!nombre.equalsIgnoreCase(nombre.trim()))  //Espacios al principio o final
+			throw new IllegalArgumentException("No deje espacios en blanco al principio o al final");
+		
+		if(!nombre.equalsIgnoreCase(nombre.replaceAll("  ", "")))
+			throw new IllegalArgumentException("dos espacios en blanco juntos");
+		
+		String test = new String(nombre.replace(" ", "")); //Comprobando caracteres especiales
+		for(int i = 0; i < test.length(); i++)
+			if(!Character.isAlphabetic(test.charAt(i)))
+				throw new IllegalArgumentException("El nombre contiene caracteres no validos");
+	}
+	
+	public static void validarTelef(String telef){
+		
+		if(telef == null || telef.isEmpty())
+			throw new IllegalArgumentException("el telefono esta vacio");
+		
+		String test = new String(telef); //Comprobando caracteres no númericos
+		for(int i = 0; i < test.length(); i++)
+			if(!Character.isDigit(test.charAt(i)))
+				throw new IllegalArgumentException("el telefono contiene caracteres no numericos");
+		
+		if(telef.length() > 12)
+			throw new IllegalArgumentException("la cantidad de digitos del telefono tiene que ser menor que 12");
+		if(telef.length() < 8)
+			throw new IllegalArgumentException("la cantidad de digitos del telefono tiene que ser mayor que 8");
+	}
+	
+	public static void validarCi(String ci){
+		
+		
+		String anio = null;
+		if(ci == null || ci.isEmpty())
+			throw new IllegalArgumentException("esta vacio el campo del ci");
+		
+		String test = new String(ci); //Comprobando caracteres especiales
+		for(int i = 0; i < test.length(); i++)
+			if(!Character.isDigit(test.charAt(i)))
+				throw new IllegalArgumentException("el carnet de identidad contiene caracteres no numericos");
+		
+		if(ci.length() != 11)
+			throw new IllegalArgumentException("La longitud del CI no es correcta");
+		
+		int diaSiglo = Character.getNumericValue(ci.charAt(6));
+		
+		if(diaSiglo <= 5  && diaSiglo >=0)
+			anio = "19" + ci.substring(0, 2);
+		else if(diaSiglo <= 7  && diaSiglo >=6)
+			anio = "20" + ci.substring(0, 2);
+		else
+			throw new IllegalArgumentException("El septimo digito del ci es incorrecto");
+		
+		int mesInt = Integer.parseInt(ci.substring(2, 4));
+		
+		if(mesInt < 1 || mesInt > 12)
+			throw new IllegalArgumentException("El mes del ci es incorrecto");
+		
+		Month mes = Month.of(mesInt);
+		int cantDias = mes.length(false);
+		int dia = Integer.parseInt(ci.substring(4, 6));
+		
+		if(dia <=0 || dia> cantDias)
+			throw new IllegalArgumentException("Los dias no coinciden con el mes del ci, es incorrecto");
+		
+		int anioInt = Integer.parseInt(anio);
+		
+		LocalDate fechaCi = LocalDate.of(anioInt, mes, dia);
+		LocalDate hoy = LocalDate.now();
+		
+		if(hoy.compareTo(fechaCi) <= 0)
+			throw new IllegalArgumentException("fecha mayor que la actual en el Ci");
+		
+		int difAnios = (int)ChronoUnit.YEARS.between(fechaCi, hoy);
+		
+		if(difAnios < 18)
+			throw new IllegalArgumentException("Menor de 18 aÑos");
+		
 	}
 }

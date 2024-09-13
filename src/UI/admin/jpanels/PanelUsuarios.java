@@ -54,7 +54,7 @@ public class PanelUsuarios extends JPanel {
 	
 	//Llenar Tabla
 	
-	private static void llenarTabla(){
+	public static void llenarTabla(){
 		limpiarTabla();
 		Object datos[] = new Object[6];
 		
@@ -70,11 +70,11 @@ public class PanelUsuarios extends JPanel {
 	}
 	
 	private void prueba(){
-		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04050233879", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.CHOFER,"asdasdasd");
+		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04010266989", 0, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.CHOFER,"asdasdasd");
 		Empleadora.getInstancia().agCandidato(can);
 		
 		try{
-			Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "04045877123", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.ENFERMERA,"asdasdasd");
+			Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "02010266989", 0, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.ENFERMERA,"asdasdasd");
 			Empleadora.getInstancia().agCandidato(can2);
 		}
 		catch(IllegalArgumentException e){
