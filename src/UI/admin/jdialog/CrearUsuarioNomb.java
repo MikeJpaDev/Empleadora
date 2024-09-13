@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,12 +15,21 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Component;
 
 import componentesVisuales.BotonAnimacion;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
+
 import componentesVisuales.JTextFieldModificado;
+
 import java.awt.Dimension;
+
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+
+import logica.utilidades.logica.Sexo;
 
 public class CrearUsuarioNomb extends JDialog {
 
@@ -49,9 +59,9 @@ public class CrearUsuarioNomb extends JDialog {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
 		setTitle("Crear usuario");
-		setBounds(100, 100, 465, 261);
+		setBounds(100, 100, 465, 295);
 		getContentPane().setLayout(null);
-		contentPanel.setBounds(0, 0, 459, 188);
+		contentPanel.setBounds(0, 0, 459, 222);
 		contentPanel.setBackground(new Color(135, 206, 235));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
@@ -114,10 +124,21 @@ public class CrearUsuarioNomb extends JDialog {
 		label_3.setFont(new Font("Roboto Black", Font.BOLD, 20));
 		label_3.setBounds(10, 0, 439, 42);
 		panel.add(label_3);
+		
+		JLabel lblSexo = new JLabel("Sexo");
+		lblSexo.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
+		lblSexo.setBounds(10, 170, 62, 26);
+		contentPanel.add(lblSexo);
+		
+		JComboBox cmbSexo = new JComboBox();
+		cmbSexo.setFont(new Font("Arial", Font.PLAIN, 13));
+		cmbSexo.setModel(new DefaultComboBoxModel(Sexo.values()));
+		cmbSexo.setBounds(68, 170, 287, 26);
+		contentPanel.add(cmbSexo);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(0, 191, 255));
-			buttonPane.setBounds(0, 188, 459, 45);
+			buttonPane.setBounds(0, 221, 459, 45);
 			getContentPane().add(buttonPane);
 			FlowLayout fl_buttonPane = new FlowLayout(FlowLayout.RIGHT, 5, 5);
 			buttonPane.setLayout(fl_buttonPane);

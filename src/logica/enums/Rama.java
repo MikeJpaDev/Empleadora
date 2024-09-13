@@ -62,7 +62,26 @@ public enum Rama {
 		return ramas;
 	}
 	
+	//Documentos Necesarios
 	
+	public static ArrayList<String> getDocSeguridad(){
+		
+		ArrayList<String> doc = new ArrayList<String>();
+		
+		doc.add("Pruebas de Eficiencia Fisica");
+		doc.add("Numero de historia Clinica");
+		
+		return doc;
+	}
+	
+	public static ArrayList<String> getDocSalud(){
+			
+			ArrayList<String> doc = new ArrayList<String>();
+			
+			doc.add("Titulo de Medicina");
+			
+			return doc;
+		}
 	
 	
 	

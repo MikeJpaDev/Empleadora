@@ -3,10 +3,13 @@ package UI.admin.jdialog;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javafx.scene.control.TableColumn;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableColumnModel;
 
 import java.awt.Toolkit;
 import java.awt.GridLayout;
@@ -35,6 +38,7 @@ import componentesVisuales.JTextFieldModificado;
 
 import java.awt.Dimension;
 import java.awt.Component;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 
@@ -44,12 +48,16 @@ import util.EmpresasTableModel;
 import logica.Empleadora;
 import logica.candidato.Candidato;
 import logica.enums.NivelEscolar;
+import logica.enums.Rama;
 import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
 import logica.enums.Genero;
+import logica.utilidades.logica.Sexo;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class CrearUsuario extends JDialog {
 
@@ -66,6 +74,9 @@ public class CrearUsuario extends JDialog {
 	private JTable tableDocs;
 	private JTextField txtEspecialidad;
 	private DocumentosTableModel tableModel;
+	private JComboBox<String> cmbDocs;
+	private ArrayList<String> docNecesarios;
+	private JComboBox cmbRama;
 
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
@@ -76,8 +87,33 @@ public class CrearUsuario extends JDialog {
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
+	
+	
+	private void llenarCmbDocs(){
+		
+		if(cmbRama.getSelectedItem().toString().equalsIgnoreCase(Rama.SEGURIDAD.toString())){
+			docNecesarios = Rama.getDocSeguridad();
+		}
+		else if(cmbRama.getSelectedItem().toString().equalsIgnoreCase(Rama.DOCTOR.toString())){
+			docNecesarios = Rama.getDocSalud();
+		}
+		
+		
+		if(!(docNecesarios == null))
+			for(String s: docNecesarios){
+				cmbDocs.addItem(s);
+			}
+		cmbDocs.addItem("Otros Documentos");
+		
+	}
 
 	public CrearUsuario() {
+		iniciarComponentes();
+		llenarCmbDocs();
+	}
+	
+	
+	private void iniciarComponentes(){
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
@@ -166,9 +202,14 @@ public class CrearUsuario extends JDialog {
 		cmbNvEscolar.setBounds(171, 90, 278, 26);
 		contentPanel.add(cmbNvEscolar);
 
-		JComboBox cmbRama = new JComboBox();
+		cmbRama = new JComboBox();
+		cmbRama.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				
+			}
+		});
 		cmbRama.setFont(new Font("Arial", Font.PLAIN, 13));
-		cmbRama.setModel(new DefaultComboBoxModel(Sector.values()));
+		cmbRama.setModel(new DefaultComboBoxModel(Rama.values()));
 		cmbRama.setBounds(100, 170, 249, 26);
 		contentPanel.add(cmbRama);
 
@@ -185,7 +226,7 @@ public class CrearUsuario extends JDialog {
 		
 		JLabel lblDoc = new JLabel("Documentos Necesarios");
 		lblDoc.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-		lblDoc.setBounds(10, 254, 205, 26);
+		lblDoc.setBounds(10, 254, 166, 26);
 		contentPanel.add(lblDoc);
 		
 		BotonAnimacion btnmcnAadir = new BotonAnimacion();
@@ -216,11 +257,14 @@ public class CrearUsuario extends JDialog {
 			}
 		};
 		tableDocs.setModel(tableModel);
+		TableColumnModel columnModel1 = tableDocs.getColumnModel();
+		columnModel1.getColumn(0).setMaxWidth(50);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Arial", Font.PLAIN, 13));
-		comboBox.setBounds(186, 254, 249, 26);
-		contentPanel.add(comboBox);
+		
+		cmbDocs = new JComboBox();
+		cmbDocs.setFont(new Font("Arial", Font.PLAIN, 13));
+		cmbDocs.setBounds(186, 254, 249, 26);
+		contentPanel.add(cmbDocs);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(0, 191, 255));
