@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.CrearUsuario;
 import UI.admin.jdialog.CrearUsuarioNomb;
+import UI.admin.jdialog.VerCitasXUsuario;
 import util.UsersTableModel;
 import logica.Empleadora;
 import logica.candidato.Candidato;
@@ -42,22 +43,22 @@ public class PanelUsuarios extends JPanel {
 		prueba();
 		llenarTabla();
 	}
-	
+
 	//Limpiar Tabla 
-	
+
 	private static void limpiarTabla(){
 		int cantFil = tableModel.getRowCount()-1;
 		for(int i=cantFil ; i>=0 ; i--){ 
 			tableModel.removeRow(i);
 		}
 	}
-	
+
 	//Llenar Tabla
-	
+
 	public static void llenarTabla(){
 		limpiarTabla();
 		Object datos[] = new Object[6];
-		
+
 		for(Candidato c: Empleadora.getInstancia().getUsuarios()){
 			datos[0] = c.getCi();
 			datos[1] = c.getNombre();
@@ -68,18 +69,18 @@ public class PanelUsuarios extends JPanel {
 			tableModel.addRow(datos);
 		}
 	}
-	
-	
+
+
 	//Eliminar un Candidato
 	private void eliminarCandidato(int index){
 		Empleadora.getInstancia().getUsuarios().remove(index);
 		llenarTabla();
 	}
-	
+
 	private void prueba(){
 		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04010266989", 0, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.CHOFER,"asdasdasd");
 		Empleadora.getInstancia().agCandidato(can);
-		
+
 		try{
 			Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "02010266989", 0, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.ENFERMERA,"asdasdasd");
 			Empleadora.getInstancia().agCandidato(can2);
@@ -88,45 +89,45 @@ public class PanelUsuarios extends JPanel {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
-	
+
 	private void llenarComponentes(){
 		setBackground(new Color(135, 206, 235));
 		setSize(new Dimension(884, 580));
 		setMaximumSize(new Dimension(884, 580));
 		setMinimumSize(new Dimension(884, 580));
 		setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(0, 191, 255));
 		panel.setBounds(0, 23, 884, 70);
 		add(panel);
-		
+
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/images/empresa/Usuarios 64px.png")));
 		label.setBounds(778, 0, 75, 70);
 		panel.add(label);
-		
+
 		JLabel lblListaDeUsuarios = new JLabel("Lista de Usuarios");
 		lblListaDeUsuarios.setFont(new Font("Roboto Black", Font.BOLD, 25));
 		lblListaDeUsuarios.setBounds(555, 11, 306, 48);
 		panel.add(lblListaDeUsuarios);
-		
+
 		JLabel label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/images/empresa/logo redondo 64.png")));
 		label_1.setBounds(32, 0, 86, 70);
 		panel.add(label_1);
-		
+
 		JLabel label_2 = new JLabel("SIGEM");
 		label_2.setFont(new Font("Roboto Black", Font.BOLD, 24));
 		label_2.setBounds(110, 11, 112, 48);
 		panel.add(label_2);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setBounds(36, 183, 644, 358);
 		add(scrollPane);
-		
+
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		tableModel = new UsersTableModel(){
@@ -137,7 +138,7 @@ public class PanelUsuarios extends JPanel {
 			}
 		};
 		table.setModel(tableModel);
-		
+
 		txtBuscar = new JTextField();
 		txtBuscar.setText("Nombre/CI");
 		txtBuscar.setForeground(Color.LIGHT_GRAY);
@@ -146,7 +147,7 @@ public class PanelUsuarios extends JPanel {
 		txtBuscar.setBorder(null);
 		txtBuscar.setBounds(36, 119, 644, 42);
 		add(txtBuscar);
-		
+
 		BotonAnimacion botonAnimacion = new BotonAnimacion();
 		botonAnimacion.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
 		botonAnimacion.setText("Buscar");
@@ -154,15 +155,30 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion.setBounds(697, 119, 134, 42);
 		add(botonAnimacion);
-		
+
 		BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
+		botonAnimacion_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() != -1){
+					try {
+						int selct = table.getSelectedRow();
+						Candidato cand = Empleadora.getInstancia().getUsuarios().get(selct);
+						VerCitasXUsuario dialog = new VerCitasXUsuario(cand);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		botonAnimacion_1.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/binoculars-solid-36.png")));
 		botonAnimacion_1.setText("Ver");
 		botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_1.setBounds(697, 194, 134, 42);
 		add(botonAnimacion_1);
-		
+
 		BotonAnimacion botonAnimacion_2 = new BotonAnimacion();
 		botonAnimacion_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -181,7 +197,7 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_2.setBounds(697, 260, 134, 42);
 		add(botonAnimacion_2);
-		
+
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
 		botonAnimacion_3.setEnabled(false);
 		botonAnimacion_3.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
@@ -190,7 +206,7 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_3.setBounds(697, 331, 134, 42);
 		add(botonAnimacion_3);
-		
+
 		BotonAnimacion botonAnimacion_4 = new BotonAnimacion();
 		botonAnimacion_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
