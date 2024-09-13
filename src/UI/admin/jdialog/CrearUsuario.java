@@ -39,6 +39,8 @@ import java.awt.Component;
 import javax.swing.DefaultComboBoxModel;
 
 import sun.security.jca.GetInstance;
+import util.DocumentosTableModel;
+import util.EmpresasTableModel;
 import logica.Empleadora;
 import logica.candidato.Candidato;
 import logica.enums.NivelEscolar;
@@ -46,22 +48,24 @@ import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
 import logica.enums.Genero;
 
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtNom;
 	private JTextField txtDir;
 	private boolean clickName = false;
 	private boolean clickId = false;
 	private boolean clickTel = false;
 	private boolean clickDir = false;
-	private JTextFieldModificado txtId;
-	private JTextFieldModificado txtTel;
 	private JComboBox cmbNvEscolar;
 	private BotonAnimacion btnmcnCrear;
 	private BotonAnimacion btnCancel;
 	private JSpinner spinner;
-	private JComboBox cmbGen;
+	private JTable tableDocs;
+	private JTextField txtEspecialidad;
+	private DocumentosTableModel tableModel;
 
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
@@ -71,12 +75,6 @@ public class CrearUsuario extends JDialog {
 			jtext.setText("");
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
-	}
-
-	public String cambTxt(){
-		String c1;
-		c1 = txtNom.getText();
-		return c1;
 	}
 
 	public CrearUsuario() {
@@ -106,54 +104,10 @@ public class CrearUsuario extends JDialog {
 			}
 		}
 		{
-			JLabel lblNombre = new JLabel("Nombre :");
-			lblNombre.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblNombre.setBounds(10, 60, 80, 26);
-			contentPanel.add(lblNombre);
-		}
-		{
-			JLabel lblCarnetDeIdentidad = new JLabel("CI");
-			lblCarnetDeIdentidad.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblCarnetDeIdentidad.setBounds(10, 100, 80, 26);
-			contentPanel.add(lblCarnetDeIdentidad);
-		}
-		{
-			JLabel lblTelfono = new JLabel("Tel\u00E9fono");
-			lblTelfono.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblTelfono.setBounds(10, 140, 80, 26);
-			contentPanel.add(lblTelfono);
-		}
-		{
 			JLabel lblDireccin = new JLabel("Direcci\u00F3n");
 			lblDireccin.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblDireccin.setBounds(10, 180, 80, 26);
+			lblDireccin.setBounds(10, 53, 80, 26);
 			contentPanel.add(lblDireccin);
-		}
-		{
-			txtNom = new JTextField();
-			txtNom.addFocusListener(new FocusAdapter() {
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(!clickName){
-						clicBorrar(txtNom,clickName);
-						clickName = true;
-					}
-				}
-				@Override
-				public void focusLost(FocusEvent e) {
-					if (txtNom.getText().isEmpty()){
-						clicBorrar(txtNom,clickName);
-						txtNom.setText("Nombre Completo");
-						clickName = false;
-					}
-				}
-			});
-			txtNom.setFont(new Font("Arial", Font.ITALIC, 13));
-			txtNom.setText("Nombre Completo");
-			txtNom.setBorder(new EmptyBorder(0, 5, 0, 5));
-			txtNom.setBounds(100, 60, 349, 26);
-			contentPanel.add(txtNom);
-			txtNom.setColumns(10);
 		}
 		{
 			txtDir = new JTextField();
@@ -178,143 +132,95 @@ public class CrearUsuario extends JDialog {
 			txtDir.setFont(new Font("Arial", Font.ITALIC, 13));
 			txtDir.setColumns(10);
 			txtDir.setBorder(new EmptyBorder(0, 5, 0, 5));
-			txtDir.setBounds(100, 180, 349, 26);
+			txtDir.setBounds(100, 53, 349, 26);
 			contentPanel.add(txtDir);
-		}
-		{
-			JLabel lblSexo = new JLabel("Sexo: ");
-			lblSexo.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblSexo.setBounds(10, 220, 80, 26);
-			contentPanel.add(lblSexo);
 		}
 		{
 			JLabel lblNivelDeEscolaridad = new JLabel("Nivel de Escolaridad");
 			lblNivelDeEscolaridad.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblNivelDeEscolaridad.setBounds(10, 260, 155, 26);
+			lblNivelDeEscolaridad.setBounds(10, 90, 155, 26);
 			contentPanel.add(lblNivelDeEscolaridad);
 		}
 		{
 			JLabel lblEspecialidad = new JLabel("Especialidad");
 			lblEspecialidad.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblEspecialidad.setBounds(10, 300, 118, 26);
+			lblEspecialidad.setBounds(10, 130, 118, 26);
 			contentPanel.add(lblEspecialidad);
 		}
 		{
 			JLabel lblRama = new JLabel("Rama");
 			lblRama.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblRama.setBounds(10, 340, 80, 26);
+			lblRama.setBounds(10, 170, 80, 26);
 			contentPanel.add(lblRama);
 		}
 		{
 			JLabel lblAosDeExperiencia = new JLabel("A\u00F1os de Experiencia");
 			lblAosDeExperiencia.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
-			lblAosDeExperiencia.setBounds(10, 380, 136, 26);
+			lblAosDeExperiencia.setBounds(10, 210, 136, 26);
 			contentPanel.add(lblAosDeExperiencia);
 		}
 
 		cmbNvEscolar = new JComboBox();
 		cmbNvEscolar.setFont(new Font("Arial", Font.PLAIN, 13));
 		cmbNvEscolar.setModel(new DefaultComboBoxModel(NivelEscolar.values()));
-		cmbNvEscolar.setBounds(171, 260, 278, 26);
+		cmbNvEscolar.setBounds(171, 90, 278, 26);
 		contentPanel.add(cmbNvEscolar);
-		
-
-		JComboBox cmbEspc = new JComboBox();
-		cmbEspc.setBounds(100, 300, 307, 26);
-		contentPanel.add(cmbEspc);
 
 		JComboBox cmbRama = new JComboBox();
 		cmbRama.setFont(new Font("Arial", Font.PLAIN, 13));
 		cmbRama.setModel(new DefaultComboBoxModel(Sector.values()));
-		cmbRama.setBounds(100, 340, 249, 26);
+		cmbRama.setBounds(100, 170, 249, 26);
 		contentPanel.add(cmbRama);
 
 		spinner = new JSpinner();
-		spinner.setBounds(156, 380, 84, 26);
+		spinner.setBounds(156, 210, 84, 26);
 		contentPanel.add(spinner);
-
-		txtId = new JTextFieldModificado();
-		txtId.setTipoValidacion(2);
-		txtId.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		txtId.setPreferredSize(new Dimension(6, 20));
-		txtId.setLimite(11);
-		txtId.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtId.setText("Carnet de Identidad");
-		txtId.addFocusListener(new FocusAdapter() {
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(20, 343, 415, 73);
+		contentPanel.add(scrollPane);
+		
+		tableDocs = new JTable();
+		scrollPane.setViewportView(tableDocs);
+		
+		JLabel lblDoc = new JLabel("Documentos Necesarios");
+		lblDoc.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
+		lblDoc.setBounds(10, 254, 205, 26);
+		contentPanel.add(lblDoc);
+		
+		BotonAnimacion btnmcnAadir = new BotonAnimacion();
+		btnmcnAadir.setText("A\u00F1adir");
+		btnmcnAadir.setFocusPainted(false);
+		btnmcnAadir.setBounds(81, 298, 84, 34);
+		contentPanel.add(btnmcnAadir);
+		
+		BotonAnimacion btnmcnBorrar = new BotonAnimacion();
+		btnmcnBorrar.setText("Borrar");
+		btnmcnBorrar.setFocusPainted(false);
+		btnmcnBorrar.setBounds(276, 298, 84, 34);
+		contentPanel.add(btnmcnBorrar);
+		
+		txtEspecialidad = new JTextField();
+		txtEspecialidad.setText("Especialidad");
+		txtEspecialidad.setFont(new Font("Arial", Font.ITALIC, 13));
+		txtEspecialidad.setColumns(10);
+		txtEspecialidad.setBorder(new EmptyBorder(0, 5, 0, 5));
+		txtEspecialidad.setBounds(100, 130, 349, 26);
+		contentPanel.add(txtEspecialidad);
+		
+		tableModel = new DocumentosTableModel(){
+			private static final long serialVersionUID = 1L;
 			@Override
-			public void focusGained(FocusEvent e) {
-				if(!clickId){
-					clicBorrar(txtId,clickId);
-					txtId.setForeground(null);
-					clickId = true;
-				}
+			public boolean isCellEditable(int filas, int columnas){
+				return false;
 			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtId.getText().isEmpty()){
-					clicBorrar(txtId,clickId);
-					txtId.setText("Carnet de Identidad");
-					clickId = false;
-				}
-				else{
-					if(txtId.getText().length() < 11){
-						txtId.setForeground(Color.RED);
-						txtId.setText("Carnet de Identidad no válido");
-						clickId = false;
-					}
-				}
-			}
-		});
-		txtId.setBorder(null);
-		txtId.setBounds(100, 100, 349, 26);
-		contentPanel.add(txtId);
-
-		txtTel = new JTextFieldModificado();
-		txtTel.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if(!clickTel){
-					clicBorrar(txtTel,clickTel);
-					txtTel.setForeground(null);
-					clickTel = true;
-				}
-
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtTel.getText().isEmpty()){
-					clicBorrar(txtTel,clickTel);
-					txtTel.setText("Teléfono");
-					clickTel = false;
-				}
-				else{
-					String texto = txtTel.getText();
-
-					if(texto.charAt(0) == '0' || texto.trim().length() < 8){
-						txtTel.setForeground(Color.RED);
-						txtTel.setText("Teléfono no válido");
-						clickTel = false;
-					}
-
-				}
-			}
-		});
-		txtTel.setTipoValidacion(2);
-		txtTel.setText("Tel\u00E9fono");
-		txtTel.setPreferredSize(new Dimension(6, 20));
-		txtTel.setLimite(8);
-		txtTel.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtTel.setBorder(null);
-		txtTel.setAlignmentX(1.0f);
-		txtTel.setBounds(100, 142, 349, 26);
-		contentPanel.add(txtTel);
-		{
-			cmbGen = new JComboBox();
-			cmbGen.setModel(new DefaultComboBoxModel(Genero.values()));
-			cmbGen.setFont(new Font("Arial", Font.PLAIN, 13));
-			cmbGen.setBounds(100, 217, 349, 26);
-			contentPanel.add(cmbGen);
-		}
+		};
+		tableDocs.setModel(tableModel);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Arial", Font.PLAIN, 13));
+		comboBox.setBounds(186, 254, 249, 26);
+		contentPanel.add(comboBox);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(0, 191, 255));

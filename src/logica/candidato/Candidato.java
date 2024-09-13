@@ -16,7 +16,6 @@ public class Candidato implements Comparable<Candidato>{
 	private int aniosExp;
 	private Genero genero;
 	private NivelEscolar nivelEscolar;
-	//falta rama
 	
 	// Constructor
 	
