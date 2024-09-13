@@ -27,10 +27,10 @@ public class PanelCitas extends JPanel {
 	private JTable tableCitas;
 	private static CitasTableModel tableModel;
 
-	private void pruebas(){
+	/*private void pruebas(){
 		Cita a = new Cita(Empleadora.getInstancia().getEmpresas().get(0).getEmpleos().get(0), null, LocalDate.of(2024, 10, 1));
 		Empleadora.getInstancia().getCitas().add(a);
-	}
+	}*/
 	
 	
 	//Limpiar Tabla 
