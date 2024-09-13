@@ -310,11 +310,11 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 			contentPanel.add(lblRama);
 			
 			cmbRamas = new JComboBox<Rama>();
-			cmbRamas.setBorder(new EmptyBorder(0, 5, 0, 0));
+			cmbRamas.setBorder(null);
 			cmbRamas.setBounds(131, 243, 311, 26);
 			contentPanel.add(cmbRamas);
 			cmbEmpleadoras = new JComboBox<String>();
-			cmbEmpleadoras.setBorder(new EmptyBorder(0, 5, 0, 0));
+			cmbEmpleadoras.setBorder(null);
 			cmbEmpleadoras.addItemListener(new ItemListener() {
 				public void itemStateChanged(ItemEvent e) {
 					if (cmbEmpleadoras.getSelectedIndex()!= -1){

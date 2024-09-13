@@ -172,17 +172,20 @@ public class pantallaAdmin extends JFrame {
 		JMenu mnRegistro = new JMenu("Registro");
 		menuBar.add(mnRegistro);
 		
-		JMenuItem mntmRegistrosMensuales = new JMenuItem("Registros Mensuales");
-		mntmRegistrosMensuales.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				pRegistros = new PanelRegistros();
-				cambiarPantalla(pRegistros);
-			}
-		});
+		JMenu mnVerRegistros = new JMenu("Ver Registros");
+		mnRegistro.add(mnVerRegistros);
 		
-		JMenuItem mntmAbrirRegistros = new JMenuItem("Abrir Registros");
-		mnRegistro.add(mntmAbrirRegistros);
-		mnRegistro.add(mntmRegistrosMensuales);
+		JMenuItem mntmCandidatoMasLongevo = new JMenuItem("Candidato mas Longevo");
+		mnVerRegistros.add(mntmCandidatoMasLongevo);
+		
+		JMenuItem mntmCandidatosConMas = new JMenuItem("Candidatos con mas Citas");
+		mnVerRegistros.add(mntmCandidatosConMas);
+		
+		JMenuItem mntmMayoresOfertantes = new JMenuItem("Mayores Ofertantes");
+		mnVerRegistros.add(mntmMayoresOfertantes);
+		
+		JMenuItem mntmEmpleosMejorPagados = new JMenuItem("Empleos Mejor Pagados");
+		mnVerRegistros.add(mntmEmpleosMejorPagados);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
