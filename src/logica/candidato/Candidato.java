@@ -3,6 +3,8 @@ package logica.candidato;
 import java.util.ArrayList;
 import java.util.Date;
 
+import logica.cita.Cita;
+import logica.empleo.Empleo;
 import logica.enums.Genero;
 import logica.enums.NivelEscolar;
 import logica.enums.Rama;
@@ -19,6 +21,7 @@ public class Candidato implements Comparable<Candidato>{
 	private Genero genero;
 	private NivelEscolar nivelEscolar;
 	private Rama rama;
+	private ArrayList<Cita> citas;
 	
 	// Constructor
 	
@@ -35,6 +38,7 @@ public class Candidato implements Comparable<Candidato>{
 		this.setNivelEscolar(nivelEscolar);
 		this.setRama(rama);
 		this.setEspecialidad(especialidad);
+		citas = new ArrayList<>();
 	}
 	
 				//Metodos
@@ -175,5 +179,28 @@ public class Candidato implements Comparable<Candidato>{
 	public void esNuevo(String ci){
 		if(this.ci.equals(ci))
 			throw new IllegalArgumentException("El Carnet de Identidad ya esta en el sistemaa");
+	}
+	
+	public boolean aggCitas(Cita cita){
+		boolean agregado = true;
+		if(!(citas.isEmpty())){
+			for(int i = 0; i < citas.size() && agregado; i++){
+				if(citas.get(i).getFecha().compareTo(cita.getFecha()) == 0)
+					agregado = false;
+			}
+		}
+		
+		if(agregado)
+			citas.add(cita);
+		return agregado;
+	}
+	
+	public boolean esValido(Empleo empleo){
+		boolean valido = false;
+		if(empleo.getRama().toString().equalsIgnoreCase(rama.toString())){
+			valido = true;
+		}
+		
+		return valido;
 	}
 }

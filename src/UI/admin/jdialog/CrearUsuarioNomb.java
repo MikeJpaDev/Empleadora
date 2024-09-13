@@ -35,6 +35,8 @@ import logica.utilidades.logica.Sexo;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CrearUsuarioNomb extends JDialog {
 
@@ -43,7 +45,8 @@ public class CrearUsuarioNomb extends JDialog {
 	private BotonAnimacion btnCancel;
 	private JTextFieldModificado txtCi;
 	private JTextFieldModificado txtTel;
-	private JTextField txtNombre;
+	private JTextFieldModificado txtNombre;
+	private boolean clickNombre = false;
 
 	private void crearUser(){
 		try {
@@ -74,7 +77,18 @@ public class CrearUsuarioNomb extends JDialog {
 		label.setBounds(10, 53, 80, 26);
 		contentPanel.add(label);
 		
-		txtNombre = new JTextField();
+		txtNombre = new JTextFieldModificado();
+		txtNombre.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				//if()
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+		});
+		txtNombre.setValidacionPersonalizada("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ Ò·ÈÌÛ˙¡…Õ”⁄ ");
+		txtNombre.setTipoValidacion(4);
 		txtNombre.setText("Nombre Completo");
 		txtNombre.setFont(new Font("Arial", Font.ITALIC, 13));
 		txtNombre.setColumns(10);
