@@ -26,6 +26,7 @@ import logica.Empleadora;
 import logica.candidato.Candidato;
 import logica.enums.Genero;
 import logica.enums.NivelEscolar;
+import logica.enums.Rama;
 import componentesVisuales.BotonAnimacion;
 
 import java.awt.event.ActionListener;
@@ -63,17 +64,17 @@ public class PanelUsuarios extends JPanel {
 			datos[2] = c.getGenero().name();
 			datos[3] = c.getAniosExp();
 			datos[4] = c.getNivelEscolar().name();
-			datos[5] = c.getCi();
+			datos[5] = c.getRama().name();
 			tableModel.addRow(datos);
 		}
 	}
 	
 	private void prueba(){
-		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04050233879", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
+		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04050233879", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.CHOFER,"asdasdasd");
 		Empleadora.getInstancia().agCandidato(can);
 		
 		try{
-			Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "04045877123", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO);
+			Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "04045877123", 25, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.ENFERMERA,"asdasdasd");
 			Empleadora.getInstancia().agCandidato(can2);
 		}
 		catch(IllegalArgumentException e){

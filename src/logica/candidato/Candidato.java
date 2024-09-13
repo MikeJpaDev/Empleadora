@@ -5,6 +5,7 @@ import java.util.Date;
 
 import logica.enums.Genero;
 import logica.enums.NivelEscolar;
+import logica.enums.Rama;
 
 public class Candidato implements Comparable<Candidato>{
 	
@@ -13,15 +14,17 @@ public class Candidato implements Comparable<Candidato>{
 	private String dir;
 	private String telef;
 	private String ci;
+	private String especialidad;
 	private int aniosExp;
 	private Genero genero;
 	private NivelEscolar nivelEscolar;
+	private Rama rama;
 	
 	// Constructor
 	
 	
 	public Candidato(String nombre, String dir, String telef, String ci,
-			int aniosExp, Genero genero, NivelEscolar nivelEscolar) {
+			int aniosExp, Genero genero, NivelEscolar nivelEscolar,Rama rama,String especialidad) {
 		super();
 		this.setNombre(nombre);
 		this.setDir(dir);
@@ -30,6 +33,8 @@ public class Candidato implements Comparable<Candidato>{
 		this.setAniosExp(aniosExp);
 		this.setGenero(genero);
 		this.setNivelEscolar(nivelEscolar);
+		this.setRama(rama);
+		this.setEspecialidad(especialidad);
 	}
 	
 				//Metodos
@@ -119,6 +124,14 @@ public class Candidato implements Comparable<Candidato>{
 		this.nivelEscolar = nivelEscolar;
 	}
 	
+	private void setRama(Rama rama){
+		this.rama = rama;
+	}
+	
+	private void setEspecialidad(String especialidad) {
+		this.especialidad = especialidad;
+	}
+	
 	//Gets
 	
 	public String getCi() {
@@ -142,10 +155,16 @@ public class Candidato implements Comparable<Candidato>{
 	public String getTelef() {
 		return telef;
 	}
+	public String getEspecialidad() {
+		return especialidad;
+	}
+
+	public Rama getRama() {
+		return rama;
+	}
 
 	@Override
 	public int compareTo(Candidato o) {
 		return this.nombre.compareTo(o.getNombre());
 	}
-	
 }
