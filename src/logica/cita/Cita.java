@@ -12,7 +12,7 @@ public class Cita {
 	public Cita(Empleo empleo, LocalDate fecha) {
 		
 		this.empleo = empleo;
-		this.candidatos = new ArrayList<>();
+		this.candidatos = new ArrayList<Candidato>();
 		this.fecha = fecha;
 		
 	}

@@ -136,7 +136,6 @@ public class CrearCita extends JDialog {
 						
 						LocalDate local = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 						Empleadora.getInstancia().agregarCita(emp, local);
-						System.out.println("Ok");
 						dispose();
 												
 					}
