@@ -53,6 +53,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.border.EmptyBorder;
 //import java.util.ArrayList;
 
 public class panelEmpresas extends JPanel {
@@ -220,7 +221,7 @@ public class panelEmpresas extends JPanel {
 		txtBuscar.setForeground(new Color(192, 192, 192));
 		txtBuscar.setText("Introduce el Nombre");
 		txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
-		txtBuscar.setBorder(null);
+		txtBuscar.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtBuscar.setBounds(36, 122, 644, 42);
 		add(txtBuscar);
 		txtBuscar.setColumns(10);
@@ -276,6 +277,7 @@ public class panelEmpresas extends JPanel {
 		add(botonAnimacion_2);
 
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
+		botonAnimacion_3.setEnabled(false);
 		botonAnimacion_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				obtDatos();

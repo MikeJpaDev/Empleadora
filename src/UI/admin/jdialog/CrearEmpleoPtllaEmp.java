@@ -198,7 +198,7 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 		txtEmp.setText("Introduce el Nombre");
 		txtEmp.setFont(new Font("Arial", Font.ITALIC, 13));
 		txtEmp.setDisabledTextColor(Color.BLACK);
-		txtEmp.setBorder(null);
+		txtEmp.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtEmp.setBeepActivado(false);
 		txtEmp.setBounds(131, 94, 311, 26);
 		contentPanel.add(txtEmp);
@@ -209,7 +209,7 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 		txtSect.setFont(new Font("Arial", Font.ITALIC, 13));
 		txtSect.setEnabled(false);
 		txtSect.setDisabledTextColor(Color.BLACK);
-		txtSect.setBorder(null);
+		txtSect.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtSect.setBeepActivado(false);
 		txtSect.setBounds(131, 206, 311, 26);
 		contentPanel.add(txtSect);
@@ -257,7 +257,7 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 		txtSal.setBeepActivado(false);
 		txtSal.setFont(new Font("Arial", Font.ITALIC, 13));
 		txtSal.setText("Introduce el Salario");
-		txtSal.setBorder(null);
+		txtSal.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtSal.setBounds(131, 168, 311, 26);
 		contentPanel.add(txtSal);
 
@@ -310,9 +310,11 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 			contentPanel.add(lblRama);
 			
 			cmbRamas = new JComboBox<Rama>();
+			cmbRamas.setBorder(new EmptyBorder(0, 5, 0, 0));
 			cmbRamas.setBounds(131, 243, 311, 26);
 			contentPanel.add(cmbRamas);
 			cmbEmpleadoras = new JComboBox<String>();
+			cmbEmpleadoras.setBorder(new EmptyBorder(0, 5, 0, 0));
 			cmbEmpleadoras.addItemListener(new ItemListener() {
 				public void itemStateChanged(ItemEvent e) {
 					if (cmbEmpleadoras.getSelectedIndex()!= -1){

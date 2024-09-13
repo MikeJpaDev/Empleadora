@@ -149,7 +149,7 @@ public class CrearEmpresa extends JDialog {
 		});
 		txtNom.setFont(new Font("Arial", Font.ITALIC, 13));
 		txtNom.setText("Introduce el Nombre");
-		txtNom.setBorder(null);
+		txtNom.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtNom.setBounds(93, 97, 349, 26);
 		contentPanel.add(txtNom);
 		{
@@ -182,7 +182,7 @@ public class CrearEmpresa extends JDialog {
 		});
 		txtDir.setFont(new Font("Arial", Font.ITALIC, 13));
 		txtDir.setText("Introduce la Direcci\u00F3n");
-		txtDir.setBorder(null);
+		txtDir.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtDir.setBounds(93, 134, 349, 26);
 		contentPanel.add(txtDir);
 		
@@ -228,7 +228,7 @@ public class CrearEmpresa extends JDialog {
 		});
 		txtTel.setText("Introduce el Tel\u00E9fono");
 		txtTel.setFont(new Font("Arial", Font.ITALIC, 13));
-		txtTel.setBorder(null);
+		txtTel.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtTel.setBounds(93, 172, 349, 26);
 		contentPanel.add(txtTel);
 		
@@ -238,6 +238,7 @@ public class CrearEmpresa extends JDialog {
 		contentPanel.add(lblSector);
 		
 		cmbSect = new JComboBox();
+		cmbSect.setBorder(new EmptyBorder(0, 5, 0, 0));
 		cmbSect.setFont(new Font("Arial", Font.ITALIC, 13));
 		cmbSect.setModel(new DefaultComboBoxModel(Sector.values()));
 		cmbSect.setBounds(93, 209, 349, 26);
