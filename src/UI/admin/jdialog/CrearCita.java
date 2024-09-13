@@ -134,8 +134,8 @@ public class CrearCita extends JDialog {
 						int anioS = cldFecha.getYearChooser().getYear();
 						
 						
-						LocalDate local = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-						Empleadora.getInstancia().agregarCita(emp, local);
+						//LocalDate local = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+						Empleadora.getInstancia().agregarCita(emp, LocalDate.of(anioS, mesS+1, diaS));
 						dispose();
 												
 					}
