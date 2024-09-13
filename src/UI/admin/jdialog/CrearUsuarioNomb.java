@@ -30,6 +30,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 
 import logica.utilidades.logica.Sexo;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CrearUsuarioNomb extends JDialog {
 
@@ -150,6 +152,11 @@ public class CrearUsuarioNomb extends JDialog {
 			}
 			{
 				btnCancel = new BotonAnimacion();
+				btnCancel.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				btnCancel.setFocusPainted(false);
 				btnCancel.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
 				btnCancel.setText("Cancelar");

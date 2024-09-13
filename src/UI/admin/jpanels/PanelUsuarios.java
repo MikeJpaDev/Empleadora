@@ -18,20 +18,18 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 
-import UI.admin.pantallaAdmin;
+import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.CrearUsuario;
-import util.EmpresasTableModel;
+import UI.admin.jdialog.CrearUsuarioNomb;
 import util.UsersTableModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Component;
-
 import logica.Empleadora;
 import logica.candidato.Candidato;
 import logica.enums.Genero;
 import logica.enums.NivelEscolar;
 import componentesVisuales.BotonAnimacion;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelUsuarios extends JPanel {
 	private JTextField txtBuscar;
@@ -55,7 +53,7 @@ public class PanelUsuarios extends JPanel {
 	
 	//Llenar Tabla
 	
-	private void llenarTabla(){
+	private static void llenarTabla(){
 		limpiarTabla();
 		Object datos[] = new Object[6];
 		
@@ -158,6 +156,17 @@ public class PanelUsuarios extends JPanel {
 		add(botonAnimacion_1);
 		
 		BotonAnimacion botonAnimacion_2 = new BotonAnimacion();
+		botonAnimacion_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					CrearUsuarioNomb dialog = new CrearUsuarioNomb();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		botonAnimacion_2.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
 		botonAnimacion_2.setText("A\u00F1adir");
 		botonAnimacion_2.setHorizontalTextPosition(SwingConstants.LEFT);

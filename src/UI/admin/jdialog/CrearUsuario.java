@@ -287,6 +287,11 @@ public class CrearUsuario extends JDialog {
 			buttonPane.add(btnmcnCrear);
 			
 			btnCancel = new BotonAnimacion();
+			btnCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnCancel.setFocusPainted(false);
 			btnCancel.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
 			btnCancel.setText("Cancelar");
