@@ -308,7 +308,7 @@ public class CrearEmpleo extends JDialog {
 			contentPanel.add(lblRama);
 			
 			cmbRamas = new JComboBox();
-			cmbRamas.setBorder(new EmptyBorder(0, 5, 0, 0));
+			cmbRamas.setBorder(null);
 			cmbRamas.setBounds(131, 243, 311, 26);
 			contentPanel.add(cmbRamas);
 		}

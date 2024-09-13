@@ -266,7 +266,7 @@ public class EditarEmpresa extends JDialog {
 		contentPanel.add(lblSector);
 		
 		cmbSect = new JComboBox();
-		cmbSect.setBorder(new EmptyBorder(0, 5, 0, 0));
+		cmbSect.setBorder(null);
 		cmbSect.setFont(new Font("Arial", Font.ITALIC, 13));
 		cmbSect.setModel(new DefaultComboBoxModel(Sector.values()));
 		cmbSect.setBounds(93, 209, 349, 26);

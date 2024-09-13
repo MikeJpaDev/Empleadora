@@ -87,16 +87,16 @@ public class Empleadora {
 		int cont = 0;
 		for(int i = 0; i < empresas.size(); i++){
 			for(Empleo empleo: empresas.get(i).getEmpleos()){
-				if(empleo.getID().contains(nom) 
-						|| empleo.getID().toUpperCase().contains(nom.toUpperCase()) || 
-						empleo.getID().toLowerCase().contains(nom.toLowerCase()) ||
-						empleo.getID().contains(nom)){
+				if(empleo.getRamaEmp().toString().contains(nom) 
+						|| empleo.getRamaEmp().toString().toUpperCase().contains(nom.toUpperCase()) || 
+						empleo.getRamaEmp().toString().toLowerCase().contains(nom.toLowerCase()) ||
+						empleo.getRamaEmp().toString().contains(nom)){
 
 					datos = new Object[6];
 					datos[0] = cont+1;
 					datos[1] = empleo.getID();
 					datos[2] = empleo.getRama();
-					datos[3] = empleo.getSalario();
+					datos[3] = "$" + empleo.getSalario();
 					datos[4] = empleo.getEmpOfertante();
 					datos[5] = empleo.getRamaEmp();
 					cont++;
@@ -106,8 +106,8 @@ public class Empleadora {
 			}
 		}
 
-		if(cont == 0){
-			JOptionPane.showMessageDialog(null, "No se han registrados Empleos bajo ese nombre", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+		if(datosNuevos.size() == 0){
+			JOptionPane.showMessageDialog(null, "No se han registrados Empleos bajo relacionados a esta rama", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 		}
 
 		return datosNuevos;

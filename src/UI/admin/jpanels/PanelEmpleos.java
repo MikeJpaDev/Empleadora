@@ -50,6 +50,7 @@ public class PanelEmpleos extends JPanel {
 	private BotonAnimacion btnDel;
 	private boolean okBusc = false;
 	private boolean clickBusc = false;
+	private BotonAnimacion btnRecargar;
 
 	public PanelEmpleos(){
 		InicializarComponentes();
@@ -180,7 +181,7 @@ public class PanelEmpleos extends JPanel {
 		btnDel.setText("Borrar");
 		btnDel.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnDel.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnDel.setBounds(688, 253, 134, 42);
+		btnDel.setBounds(688, 240, 134, 42);
 		add(btnDel);
 
 		txtBuscar = new JTextField();
@@ -218,6 +219,7 @@ public class PanelEmpleos extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(txtBuscar.getText().trim().length() != 0 && okBusc){
 					busTabla();
+					btnRecargar.setVisible(true);
 				}
 			}
 		});
@@ -228,5 +230,21 @@ public class PanelEmpleos extends JPanel {
 		btnBuscar.setFocusPainted(false);
 		btnBuscar.setBounds(688, 104, 134, 42);
 		add(btnBuscar);
+		
+		btnRecargar = new BotonAnimacion();
+		btnRecargar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actTabla();
+				btnRecargar.setVisible(false);
+			}
+		});
+		btnRecargar.setVisible(false);
+		btnRecargar.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
+		btnRecargar.setText("Recargar");
+		btnRecargar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnRecargar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnRecargar.setFocusPainted(false);
+		btnRecargar.setBounds(688, 303, 134, 42);
+		add(btnRecargar);
 	}
 }
