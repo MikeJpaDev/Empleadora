@@ -200,6 +200,20 @@ public class Candidato implements Comparable<Candidato>{
 		return agregado;
 	}
 	
+	// Saber si es valido para un Empleo
+	
+	public boolean disponible(LocalDate date){
+		boolean disponible = true;
+		
+		if(!(citas.isEmpty())){
+			for(int i = 0; i < citas.size() && disponible; i++)
+				if((citas.get(i).getFecha().compareTo(date)) == 0)
+					disponible = false;
+		}
+		
+		return disponible;
+	}
+	
 	public boolean esValido(Empleo empleo){
 		boolean valido = false;
 		if(empleo.getRama().toString().equalsIgnoreCase(rama.toString())){
@@ -242,7 +256,7 @@ public class Candidato implements Comparable<Candidato>{
 			throw new IllegalArgumentException("la cantidad de digitos del telefono tiene que ser mayor que 8");
 	}
 	
-	public static void validarCi(String ci){
+	public static void validarCi(String ci){    //Validacion Del Ci
 		
 		
 		String anio = null;

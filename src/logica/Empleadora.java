@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,6 +9,7 @@ import javax.swing.JOptionPane;
 import UI.admin.jdialog.EditarEmpresa;
 import UI.admin.jdialog.VerEmpresa;
 import logica.candidato.Candidato;
+import logica.cita.Cita;
 import logica.empleo.Empleo;
 import logica.empresa.Empresa;
 
@@ -16,6 +18,7 @@ public class Empleadora {
 	private static Empleadora instancia;
 	private ArrayList<Empresa> empresas;
 	private ArrayList<Candidato> candidatos;
+	private ArrayList<Cita> citas;
 
 	public static Empleadora getInstancia(){
 		if (instancia == null){
@@ -27,6 +30,7 @@ public class Empleadora {
 	private Empleadora(){
 		empresas = new ArrayList<Empresa>();
 		candidatos = new ArrayList<Candidato>();
+		citas = new ArrayList<Cita>();
 	}
 
 	public ArrayList<Candidato> getUsuarios(){
@@ -35,6 +39,10 @@ public class Empleadora {
 
 	public ArrayList<Empresa> getEmpresas(){
 		return empresas;
+	}
+	
+	public ArrayList<Cita> getCitas() {
+		return citas;
 	}
 
 	//Metodos para trabajar con Las Empresas
@@ -198,6 +206,34 @@ public class Empleadora {
 		catch(IllegalArgumentException e){
 			throw e;
 		}
+	}
+	
+	public ArrayList<Candidato> disponiblesFecha(LocalDate fecha){
+		ArrayList<Candidato> disponibles = new ArrayList<Candidato>();
+		
+		for(Candidato c : candidatos){
+			if(c.disponible(fecha))
+				disponibles.add(c);
+		}
+		
+		return disponibles;
+	}
+	
+	//public ArrayList<Cita> citasDisponibles(Candidato candidato){
+	//	ArrayList<Cita> citasDisp = new ArrayList<>();
+	//	
+	//	for(Cita c : citas){
+	//		if(candidato.esValido(c.getEmpleo()))
+	//			
+	//	}
+	//	
+	//	return citasDisp;
+	//}
+	
+	//Logica Citas
+	
+	public void aggCita(Cita cita){
+		
 	}
 
 }

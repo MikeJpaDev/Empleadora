@@ -69,6 +69,13 @@ public class PanelUsuarios extends JPanel {
 		}
 	}
 	
+	
+	//Eliminar un Candidato
+	private void eliminarCandidato(int index){
+		Empleadora.getInstancia().getUsuarios().remove(index);
+		llenarTabla();
+	}
+	
 	private void prueba(){
 		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04010266989", 0, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.CHOFER,"asdasdasd");
 		Empleadora.getInstancia().agCandidato(can);
@@ -176,6 +183,7 @@ public class PanelUsuarios extends JPanel {
 		add(botonAnimacion_2);
 		
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
+		botonAnimacion_3.setEnabled(false);
 		botonAnimacion_3.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
 		botonAnimacion_3.setText("Editar");
 		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -184,19 +192,20 @@ public class PanelUsuarios extends JPanel {
 		add(botonAnimacion_3);
 		
 		BotonAnimacion botonAnimacion_4 = new BotonAnimacion();
+		botonAnimacion_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() != -1){
+					int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Eliminar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+					if (respuesta == JOptionPane.YES_OPTION)
+						eliminarCandidato(table.getSelectedRow());
+				}
+			}
+		});
 		botonAnimacion_4.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-papelera-50.png")));
 		botonAnimacion_4.setText("Borrar");
 		botonAnimacion_4.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_4.setBounds(697, 403, 134, 42);
 		add(botonAnimacion_4);
-		
-		BotonAnimacion botonAnimacion_5 = new BotonAnimacion();
-		botonAnimacion_5.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
-		botonAnimacion_5.setText("Actualizar");
-		botonAnimacion_5.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion_5.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_5.setBounds(697, 476, 134, 42);
-		add(botonAnimacion_5);
 	}
 }
