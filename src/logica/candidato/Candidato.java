@@ -83,12 +83,6 @@ public class Candidato implements Comparable<Candidato>{
 		
 		if(!dir.equalsIgnoreCase(dir.replaceAll("  ", "")))
 			throw new IllegalArgumentException("dos espacios en blanco juntos");
-		
-		String test = new String(dir.replace(" ", "")); //Comprobando caracteres especiales
-		for(int i = 0; i < test.length(); i++)
-			if(!Character.isAlphabetic(test.charAt(i)))
-				throw new IllegalArgumentException("La direccion contiene caracteres no validos");
-		
 		this.dir = dir;
 	}
 

@@ -296,7 +296,9 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tableEmps.getSelectedRow() != -1){
-					eliminarEmp();
+					int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Eliminar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+					if (respuesta == JOptionPane.YES_OPTION)
+							eliminarEmp();
 				}
 			}
 		});
