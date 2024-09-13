@@ -75,7 +75,6 @@ public class CrearUsuario extends JDialog {
 	private JTextField txtEspecialidad;
 	private DocumentosTableModel tableModel;
 	private JComboBox<String> cmbDocs;
-	private ArrayList<String> docNecesarios;
 	private JComboBox cmbRama;
 
 	private void clicBorrar(JTextField jtext, boolean click){
@@ -89,12 +88,15 @@ public class CrearUsuario extends JDialog {
 	}
 	
 	
-	private void llenarCmbDocs(){
+	private void llenarCmbDocs(String ramaSelect){
+		ArrayList<String> docNecesarios = null;
 		
-		if(cmbRama.getSelectedItem().toString().equalsIgnoreCase(Rama.SEGURIDAD.toString())){
+		cmbDocs.removeAllItems();
+		
+		if(ramaSelect.equalsIgnoreCase(Rama.SEGURIDAD.toString())){
 			docNecesarios = Rama.getDocSeguridad();
 		}
-		else if(cmbRama.getSelectedItem().toString().equalsIgnoreCase(Rama.DOCTOR.toString())){
+		else if(ramaSelect.equalsIgnoreCase(Rama.DOCTOR.toString())){
 			docNecesarios = Rama.getDocSalud();
 		}
 		
@@ -109,7 +111,7 @@ public class CrearUsuario extends JDialog {
 
 	public CrearUsuario() {
 		iniciarComponentes();
-		llenarCmbDocs();
+		llenarCmbDocs(cmbRama.getSelectedItem().toString());
 	}
 	
 	
@@ -205,7 +207,9 @@ public class CrearUsuario extends JDialog {
 		cmbRama = new JComboBox();
 		cmbRama.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				
+				if(cmbRama.getSelectedIndex() != -1){
+					llenarCmbDocs(cmbRama.getSelectedItem().toString());
+				}
 			}
 		});
 		cmbRama.setFont(new Font("Arial", Font.PLAIN, 13));
