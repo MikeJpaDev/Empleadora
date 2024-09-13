@@ -74,17 +74,6 @@ public class pantallaAdmin extends JFrame {
 		IniciarSesion sesion = new IniciarSesion();
 		sesion.setVisible(true);
 	}
-
-	private void crearUser(){
-		try {
-			CrearUsuario dialog = new CrearUsuario();
-			dialog.setLocationRelativeTo(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-	}
 	
 	private void llenarComponentes(){
 		setTitle("SIGEM");
@@ -160,7 +149,7 @@ public class pantallaAdmin extends JFrame {
 		JMenuItem mntmCrearUsuario = new JMenuItem("Crear Usuario");
 		mntmCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				crearUser();
+				
 			}
 		});
 		mnUsuarios.add(mntmCrearUsuario);

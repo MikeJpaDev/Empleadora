@@ -167,4 +167,13 @@ public class Candidato implements Comparable<Candidato>{
 	public int compareTo(Candidato o) {
 		return this.nombre.compareTo(o.getNombre());
 	}
+	
+	//Metodos
+	
+	//Saber si el CI ya esta en el sistema
+	
+	public void esNuevo(String ci){
+		if(this.ci.equals(ci))
+			throw new IllegalArgumentException("El Carnet de Identidad ya esta en el sistemaa");
+	}
 }

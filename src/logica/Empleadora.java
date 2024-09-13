@@ -189,5 +189,15 @@ public class Empleadora {
 		candidatos.add(can);
 		Collections.sort(candidatos);
 	}
+	
+	public void esNuevo(String ci){
+		try{
+			for(Candidato c : candidatos)
+				c.esNuevo(ci);
+		}
+		catch(IllegalArgumentException e){
+			throw e;
+		}
+	}
 
 }
