@@ -39,6 +39,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.border.EmptyBorder;
 
 public class PanelEmpleos extends JPanel {
 	private JTextField txtBuscar;
@@ -208,7 +209,7 @@ public class PanelEmpleos extends JPanel {
 		txtBuscar.setForeground(Color.LIGHT_GRAY);
 		txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
 		txtBuscar.setColumns(10);
-		txtBuscar.setBorder(null);
+		txtBuscar.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtBuscar.setBounds(34, 104, 644, 42);
 		add(txtBuscar);
 		

@@ -14,6 +14,8 @@ import javax.swing.JTable;
 
 import util.CitasTableModel;
 import util.EmpresasTableModel;
+import componentesVisuales.BotonAnimacion;
+import javax.swing.SwingConstants;
 
 public class PanelCitas extends JPanel {
 	private JTable tableCitas;
@@ -70,6 +72,24 @@ public class PanelCitas extends JPanel {
 			}
 		};
 		tableCitas.setModel(tableModel);
+		
+		BotonAnimacion btnAñadirCita = new BotonAnimacion();
+		btnAñadirCita.setIcon(new ImageIcon(PanelCitas.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
+		btnAñadirCita.setText("A\u00F1adir");
+		btnAñadirCita.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnAñadirCita.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnAñadirCita.setFocusPainted(false);
+		btnAñadirCita.setBounds(690, 130, 134, 42);
+		add(btnAñadirCita);
+		
+		BotonAnimacion btnBorrar = new BotonAnimacion();
+		btnBorrar.setIcon(new ImageIcon(PanelCitas.class.getResource("/icons/empresa/icons8-papelera-50.png")));
+		btnBorrar.setText("Borrar");
+		btnBorrar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnBorrar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnBorrar.setFocusPainted(false);
+		btnBorrar.setBounds(690, 196, 134, 42);
+		add(btnBorrar);
 		
 	}
 }
