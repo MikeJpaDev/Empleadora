@@ -9,10 +9,10 @@ public class Cita {
 	private ArrayList<Candidato> candidatos;
 	private LocalDate fecha;
 	
-	public Cita(Empleo empleo, ArrayList<Candidato> candidatos, LocalDate fecha) {
+	public Cita(Empleo empleo, LocalDate fecha) {
 		
 		this.empleo = empleo;
-		this.candidatos = candidatos;
+		this.candidatos = new ArrayList<>();
 		this.fecha = fecha;
 		
 	}
