@@ -6,7 +6,7 @@ public class CitasTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
 	
 	public CitasTableModel(){
-		String[] columNames = {"No","Dia","Nombre","Rama","Cant Candidatos"};
+		String[] columNames = {"No","Fecha","Nombre","Rama","Cant Candidatos"};
 		this.setColumnIdentifiers(columNames);
 	}
 }

@@ -240,7 +240,7 @@ public class Empleadora {
 	
 	//Logica Citas
 	
-	public void aggCita(Cita cita){
+	public void citasss(Cita cita){
 		
 	}
 

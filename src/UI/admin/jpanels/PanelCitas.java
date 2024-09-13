@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
@@ -15,15 +17,62 @@ import javax.swing.JTable;
 import util.CitasTableModel;
 import util.EmpresasTableModel;
 import componentesVisuales.BotonAnimacion;
+
 import javax.swing.SwingConstants;
+
+import logica.Empleadora;
+import logica.cita.Cita;
 
 public class PanelCitas extends JPanel {
 	private JTable tableCitas;
 	private static CitasTableModel tableModel;
 
-	//Llenar tabla
+	private void pruebas(){
+		Cita a = new Cita(Empleadora.getInstancia().getEmpresas().get(0).getEmpleos().get(0), null, LocalDate.of(2024, 10, 1));
+		Empleadora.getInstancia().getCitas().add(a);
+	}
+	
+	
+	//Limpiar Tabla 
+
+	private void limpiarTabla(){
+		int cantFil = tableModel.getRowCount()-1;
+		for(int i=cantFil ; i>=0 ; i--){ 
+			tableModel.removeRow(i);
+		}
+	}
+
+	//Llenar Tabla
+
+	public void llenarTabla(){
+		limpiarTabla();
+		Object datos[] = new Object[5];
+		int num = 1;
+		String fechaFormateada = null;
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		if(!(Empleadora.getInstancia().getCitas().isEmpty()))
+			for(Cita c : Empleadora.getInstancia().getCitas()){
+				fechaFormateada = c.getFecha().format(formato);
+				datos[0] = num++;
+				datos[1] = fechaFormateada;
+				datos[2] = c.getEmpleo().getID();
+				datos[3] = c.getEmpleo().getRama();
+				datos[5] = c.getCandidatos().size();
+				tableModel.addRow(datos);
+			}
+	}
+
+
+	//Eliminar un Candidato
+	private void eliminarCita(int index){
+		Empleadora.getInstancia().getCitas().remove(index);
+		llenarTabla();
+	}
+	
 	
 	public PanelCitas() {
+		//pruebas();
 		setBackground(new Color(135, 206, 235));
 		setSize(new Dimension(884, 580));
 		setLayout(null);
@@ -91,5 +140,7 @@ public class PanelCitas extends JPanel {
 		btnBorrar.setBounds(690, 196, 134, 42);
 		add(btnBorrar);
 		
+		
+		llenarTabla();
 	}
 }

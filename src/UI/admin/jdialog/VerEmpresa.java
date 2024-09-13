@@ -57,10 +57,6 @@ public class VerEmpresa extends JDialog {
 	private boolean clickNom = false;
 	private boolean clickDir = false;
 	private boolean clickTel = false;
-
-	private boolean okNom = false;
-	private boolean okDir = false;
-	private boolean okTel = false;
 	private BotonAnimacion btnCrear;
 	private JTextFieldModificado txtSect;
 	
