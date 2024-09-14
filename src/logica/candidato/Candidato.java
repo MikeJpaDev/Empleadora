@@ -215,7 +215,7 @@ public class Candidato implements Comparable<Candidato>{
 	
 	public boolean esValido(Empleo empleo){
 		boolean valido = false;
-		if(empleo.getRama().toString().equalsIgnoreCase(rama.toString())){
+		if(empleo.getRama().equals(rama)){
 			valido = true;
 		}
 		
