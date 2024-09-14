@@ -102,7 +102,7 @@ public class CrearEmpleo extends JDialog {
 	}
 	
 	private void agEmpleo(Empresa emp){
-		emp.agEmpleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp.getNombre(), (Rama)cmbRamas.getSelectedItem());
+		emp.agEmpleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp, (Rama)cmbRamas.getSelectedItem());
 	}
 	
 	private void clicBorrar(JTextField jtext, boolean click){

@@ -23,6 +23,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 
+import UI.admin.jdialog.CrearCita;
 import UI.admin.jdialog.CrearEmpleoPtllaEmp;
 import componentesVisuales.BotonAnimacion;
 import util.EmpleoTableModel;
@@ -39,6 +40,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.ArrayList;
+
 import javax.swing.border.EmptyBorder;
 
 public class PanelEmpleos extends JPanel {
@@ -51,6 +54,7 @@ public class PanelEmpleos extends JPanel {
 	private boolean okBusc = false;
 	private boolean clickBusc = false;
 	private BotonAnimacion btnRecargar;
+	private BotonAnimacion btnmcnAadirCita;
 
 	public PanelEmpleos(){
 		InicializarComponentes();
@@ -73,7 +77,7 @@ public class PanelEmpleos extends JPanel {
 				datos[1] = p.getID();
 				datos[2] = p.getRama();
 				datos[3] = "$" + p.getSalario();
-				datos[4] = p.getEmpOfertante();
+				datos[4] = p.getEmpOfertante().getNombre();
 				datos[5] = p.getRamaEmp();
 				tableModel.addRow(datos);
 			}
@@ -181,7 +185,7 @@ public class PanelEmpleos extends JPanel {
 		btnDel.setText("Borrar");
 		btnDel.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnDel.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnDel.setBounds(688, 240, 134, 42);
+		btnDel.setBounds(688, 231, 134, 42);
 		add(btnDel);
 
 		txtBuscar = new JTextField();
@@ -244,7 +248,39 @@ public class PanelEmpleos extends JPanel {
 		btnRecargar.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnRecargar.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnRecargar.setFocusPainted(false);
-		btnRecargar.setBounds(688, 303, 134, 42);
+		btnRecargar.setBounds(688, 424, 134, 42);
 		add(btnRecargar);
+		
+		btnmcnAadirCita = new BotonAnimacion();
+		btnmcnAadirCita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int filaSelect = tableEmps.getSelectedRow();
+				if(filaSelect != -1){
+					
+					Empleo empl = null;
+					
+					for (Empresa emp: Empleadora.getInstancia().getEmpresas()){
+						if(emp.getNombre().equalsIgnoreCase(tableEmps.getValueAt(filaSelect, 4).toString())){
+							for(Empleo empleo : emp.getEmpleos()){
+								if (empleo.getID().equals(tableEmps.getValueAt(filaSelect, 1).toString())){
+									empl = empleo;
+								}
+							}
+						}
+					}
+					
+					CrearCita cita = new CrearCita(empl);
+					cita.setVisible(true);
+					
+				}
+			}
+		});
+		btnmcnAadirCita.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
+		btnmcnAadirCita.setText("Crear Cita");
+		btnmcnAadirCita.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnAadirCita.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnAadirCita.setFocusPainted(false);
+		btnmcnAadirCita.setBounds(688, 284, 134, 42);
+		add(btnmcnAadirCita);
 	}
 }

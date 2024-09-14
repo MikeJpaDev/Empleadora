@@ -277,6 +277,12 @@ public class panelEmpresas extends JPanel {
 		add(botonAnimacion_2);
 
 		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
+		botonAnimacion_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(Empleadora.getInstancia().getCitas().size());
+			}
+		});
 		botonAnimacion_3.setEnabled(false);
 		botonAnimacion_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

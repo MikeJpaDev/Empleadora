@@ -19,12 +19,22 @@ public class Empleadora {
 	private ArrayList<Empresa> empresas;
 	private ArrayList<Candidato> candidatos;
 	private ArrayList<Cita> citas;
+	
+	
+	public ArrayList<Candidato> getCandidatos() {
+		return candidatos;
+	}
+
 
 	public static Empleadora getInstancia(){
 		if (instancia == null){
 			instancia = new Empleadora();
 		}
 		return instancia;
+	}
+	
+	public void agregarCita(Empleo empleo, LocalDate fecha){
+		citas.add(new Cita(empleo, fecha));
 	}
 
 	private Empleadora(){

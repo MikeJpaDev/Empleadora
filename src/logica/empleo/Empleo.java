@@ -1,5 +1,6 @@
 package logica.empleo;
 
+import logica.empresa.Empresa;
 import logica.enums.Rama;
 
 public class Empleo {
@@ -7,10 +8,10 @@ public class Empleo {
 	private String ID;
 	private String rama;
 	private Double salario;
-	private String empOfertante;
+	private Empresa empOfertante;
 	private Rama ramaEmp;
 	
-	public Empleo( String id, String rama, double sal, String empO, Rama ramaEmp){
+	public Empleo( String id, String rama, double sal, Empresa empO, Rama ramaEmp){
 		this.setID(id);
 		this.setRama(rama);
 		this.setSalario(sal);
@@ -46,12 +47,12 @@ public class Empleo {
 		this.salario = salario;
 	}
 
-	public String getEmpOfertante() {
+	public Empresa getEmpOfertante() {
 		return empOfertante;
 	}
 
-	public void setEmpOfertante(String empOfertante) {
-		this.empOfertante = empOfertante;
+	public void setEmpOfertante(Empresa empO) {
+		this.empOfertante = empO;
 	}
 	
 
