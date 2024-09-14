@@ -35,7 +35,7 @@ public class PanelCitas extends JPanel {
 	
 	//Limpiar Tabla 
 
-	private void limpiarTabla(){
+	private static void limpiarTabla(){
 		int cantFil = tableModel.getRowCount()-1;
 		for(int i=cantFil ; i>=0 ; i--){ 
 			tableModel.removeRow(i);
@@ -44,7 +44,7 @@ public class PanelCitas extends JPanel {
 
 	//Llenar Tabla
 
-	public void llenarTabla(){
+	public static void llenarTabla(){
 		limpiarTabla();
 		Object datos[] = new Object[5];
 		int num = 1;

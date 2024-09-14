@@ -33,6 +33,10 @@ public class Empleadora {
 		return instancia;
 	}
 	
+	public void agregarCita(Cita cita){
+		citas.add(cita);
+	}
+	
 	public void agregarCita(Empleo empleo, LocalDate fecha){
 		citas.add(new Cita(empleo, fecha));
 	}
@@ -234,7 +238,7 @@ public class Empleadora {
 		for(Cita c : citas){
 			if(candidato.esValido(c.getEmpleo()))
 				if(candidato.disponible(c.getFecha()))
-					candidato.aggCitas(c);
+					candidato.aggCitas(c, candidato);
 		}
 	}
 	

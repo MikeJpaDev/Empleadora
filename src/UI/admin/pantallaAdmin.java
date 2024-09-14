@@ -33,6 +33,7 @@ import javax.swing.JDesktopPane;
 import UI.IniciarSesion;
 import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.CrearUsuario;
+import UI.admin.jdialog.Reportes;
 import UI.admin.jpanels.PanelCitas;
 import UI.admin.jpanels.PanelEmpleos;
 import UI.admin.jpanels.PanelPrincipal;
@@ -161,6 +162,7 @@ public class pantallaAdmin extends JFrame {
 		mntmVerCitas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pCitas = new PanelCitas();
+				PanelCitas.llenarTabla();
 				cambiarPantalla(pCitas);
 			}
 		});
@@ -172,20 +174,14 @@ public class pantallaAdmin extends JFrame {
 		JMenu mnRegistro = new JMenu("Registro");
 		menuBar.add(mnRegistro);
 		
-		JMenu mnVerRegistros = new JMenu("Ver Registros");
-		mnRegistro.add(mnVerRegistros);
-		
-		JMenuItem mntmCandidatoMasLongevo = new JMenuItem("Candidato mas Longevo");
-		mnVerRegistros.add(mntmCandidatoMasLongevo);
-		
-		JMenuItem mntmCandidatosConMas = new JMenuItem("Candidatos con mas Citas");
-		mnVerRegistros.add(mntmCandidatosConMas);
-		
-		JMenuItem mntmMayoresOfertantes = new JMenuItem("Mayores Ofertantes");
-		mnVerRegistros.add(mntmMayoresOfertantes);
-		
-		JMenuItem mntmEmpleosMejorPagados = new JMenuItem("Empleos Mejor Pagados");
-		mnVerRegistros.add(mntmEmpleosMejorPagados);
+		JMenuItem mntmAbrirRegistros = new JMenuItem("Abrir Registros");
+		mntmAbrirRegistros.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reportes r = new Reportes();
+				r.setVisible(true);
+			}
+		});
+		mnRegistro.add(mntmAbrirRegistros);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);

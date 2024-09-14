@@ -185,7 +185,7 @@ public class Candidato implements Comparable<Candidato>{
 			throw new IllegalArgumentException("El Carnet de Identidad ya esta en el sistemaa");
 	}
 	
-	public boolean aggCitas(Cita cita){
+	public boolean aggCitas(Cita cita, Candidato c){
 		boolean agregado = true;
 		if(!(citas.isEmpty())){
 			for(int i = 0; i < citas.size() && agregado; i++){
@@ -194,8 +194,11 @@ public class Candidato implements Comparable<Candidato>{
 			}
 		}
 		
-		if(agregado)
+		if(agregado){
 			citas.add(cita);
+			cita.getCandidatos().add(c);
+		}
+		
 		return agregado;
 	}
 	
