@@ -166,6 +166,10 @@ public class Candidato implements Comparable<Candidato>{
 		return rama;
 	}
 
+	public ArrayList<Cita> getCitas() {
+		return citas;
+	}
+
 	@Override
 	public int compareTo(Candidato o) {
 		return this.nombre.compareTo(o.getNombre());
