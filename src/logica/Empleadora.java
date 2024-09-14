@@ -240,8 +240,4 @@ public class Empleadora {
 	
 	//Logica Citas
 	
-	public void citasss(Cita cita){
-		
-	}
-
 }

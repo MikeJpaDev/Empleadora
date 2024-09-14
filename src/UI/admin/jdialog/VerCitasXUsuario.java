@@ -311,8 +311,9 @@ public class VerCitasXUsuario extends JDialog {
 	//Llenar Tabla
 
 	public void llenarTabla(){
+		
 		limpiarTabla();
-		Object datos[] = new Object[5];
+		Object datos[] = new Object[6];
 		int num = 1;
 		String fechaFormateada = null;
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");

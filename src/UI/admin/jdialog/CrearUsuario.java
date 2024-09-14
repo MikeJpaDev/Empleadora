@@ -293,6 +293,7 @@ public class CrearUsuario extends JDialog {
 						Empleadora emp = Empleadora.getInstancia();
 						Candidato cand = new Candidato(nombre,txtDir.getText() , telef, ci, (int)spnExp.getValue() ,sexo, (NivelEscolar)cmbNvEscolar.getSelectedItem(), (Rama)cmbRama.getSelectedItem(), txtEspecialidad.getText());
 						emp.agCandidato(cand);
+						Empleadora.getInstancia().citasDisponibles(cand);
 						PanelUsuarios.llenarTabla();
 						dispose();
 					}
