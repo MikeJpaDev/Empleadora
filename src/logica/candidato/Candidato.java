@@ -31,7 +31,6 @@ public class Candidato implements Comparable<Candidato>{
 	
 	public Candidato(String nombre, String dir, String telef, String ci,
 			int aniosExp, Genero genero, NivelEscolar nivelEscolar,Rama rama,String especialidad) {
-		super();
 		this.setNombre(nombre);
 		this.setDir(dir);
 		this.setTelef(telef);
@@ -105,7 +104,7 @@ public class Candidato implements Comparable<Candidato>{
 		String anio = null;
 		if(diaSiglo <= 5  && diaSiglo >=0)
 			anio = "19" + ci.substring(0, 2);
-		else if(diaSiglo <= 7  && diaSiglo >=6)
+		else if(diaSiglo <= 8  && diaSiglo >=6)
 			anio = "20" + ci.substring(0, 2);
 		
 		int anioInt = Integer.parseInt(anio);
@@ -132,6 +131,8 @@ public class Candidato implements Comparable<Candidato>{
 	}
 	
 	private void setEspecialidad(String especialidad) {
+		if(especialidad.trim().isEmpty())
+			throw new IllegalArgumentException("La especialidad esta vacia");
 		this.especialidad = especialidad;
 	}
 	
