@@ -19,7 +19,7 @@ public class CandidatoEspecifico extends Candidato {
 			String ci, int aniosExp, Genero genero, NivelEscolar nivelEscolar,ArrayList<Documento> docs, Rama rama,String especialidad) {
 		
 		super(nombre, dir, telef, ci, aniosExp, genero, nivelEscolar,rama,especialidad);
-		documentos = new ArrayList<>(docs);		
+		documentos = docs;		
 	}
 	
 	

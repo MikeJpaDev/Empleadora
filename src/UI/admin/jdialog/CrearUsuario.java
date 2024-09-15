@@ -50,6 +50,8 @@ import util.DocumentosTableModel;
 import util.EmpresasTableModel;
 import logica.Empleadora;
 import logica.candidato.Candidato;
+import logica.candidato.CandidatoEspecifico;
+import logica.candidato.Documento;
 import logica.enums.NivelEscolar;
 import logica.enums.Rama;
 import logica.enums.Sector;
@@ -76,14 +78,15 @@ public class CrearUsuario extends JDialog {
 	private JSpinner spnExp;
 	private JTable tableDocs;
 	private JTextField txtEspecialidad;
-	private DocumentosTableModel tableModel;
+	private static DocumentosTableModel tableModel;
 	private JComboBox<String> cmbDocs;
 	private JComboBox cmbRama;
 	private String nombre;
 	private String ci;
 	private Genero sexo;
 	private String telef;
-	
+	private static ArrayList<Documento> documentos;
+
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
 			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -93,27 +96,27 @@ public class CrearUsuario extends JDialog {
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
-	
-	
+
+
 	private void llenarCmbDocs(String ramaSelect){
 		ArrayList<String> docNecesarios = null;
-		
+
 		cmbDocs.removeAllItems();
-		
+
 		if(ramaSelect.equalsIgnoreCase(Rama.SEGURIDAD.toString())){
 			docNecesarios = Rama.getDocSeguridad();
 		}
 		else if(ramaSelect.equalsIgnoreCase(Rama.DOCTOR.toString())){
 			docNecesarios = Rama.getDocSalud();
 		}
-		
-		
+
+
 		if(!(docNecesarios == null))
 			for(String s: docNecesarios){
 				cmbDocs.addItem(s);
 			}
 		cmbDocs.addItem("Otros Documentos");
-		
+
 	}
 
 	public CrearUsuario(String nombre, String ci, Genero sexo, String telef) {
@@ -121,11 +124,12 @@ public class CrearUsuario extends JDialog {
 		this.ci = ci;
 		this.sexo = sexo;
 		this.telef = telef;
+		documentos = new ArrayList<Documento>();
 		iniciarComponentes();
 		llenarCmbDocs(cmbRama.getSelectedItem().toString());
 	}
-	
-	
+
+
 	private void iniciarComponentes(){
 		setModal(true);
 		setResizable(false);
@@ -232,31 +236,73 @@ public class CrearUsuario extends JDialog {
 		spnExp.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		spnExp.setBounds(156, 210, 84, 26);
 		contentPanel.add(spnExp);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 343, 415, 73);
 		contentPanel.add(scrollPane);
-		
+
 		tableDocs = new JTable();
 		scrollPane.setViewportView(tableDocs);
-		
+
 		JLabel lblDoc = new JLabel("Documentos Necesarios");
 		lblDoc.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
 		lblDoc.setBounds(10, 254, 166, 26);
 		contentPanel.add(lblDoc);
-		
+
 		BotonAnimacion btnmcnAadir = new BotonAnimacion();
+		btnmcnAadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean anadido = false;
+
+				try {
+					if(!documentos.isEmpty()){
+						String nombre;
+						for(int i = 0; i < documentos.size() && !anadido;i++){
+							nombre = documentos.get(i).getNombre();
+							if(((String)cmbDocs.getSelectedItem()).equalsIgnoreCase(nombre))
+								anadido = true;
+						}
+						if(anadido)
+							throw new IllegalArgumentException("No se puede Crear dos veces el mismo documento");
+					}
+
+					boolean editable = true;
+					if(cmbDocs.getSelectedIndex() != cmbDocs.getItemCount()-1)
+						editable = false;
+					AnadirDocs dialog = new AnadirDocs(editable, (String)cmbDocs.getSelectedItem());
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				}
+				catch(IllegalArgumentException e2){
+					JOptionPane.showMessageDialog(null,e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnmcnAadir.setText("A\u00F1adir");
 		btnmcnAadir.setFocusPainted(false);
 		btnmcnAadir.setBounds(81, 298, 84, 34);
 		contentPanel.add(btnmcnAadir);
-		
+
 		BotonAnimacion btnmcnBorrar = new BotonAnimacion();
+		btnmcnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tableDocs.getSelectedRow() != -1){
+					int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Eliminar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+					if (respuesta == JOptionPane.YES_OPTION){
+						eliminarDocumento(tableDocs.getSelectedRow());
+						llenarTabla();
+					}
+				}
+			}
+		});
 		btnmcnBorrar.setText("Borrar");
 		btnmcnBorrar.setFocusPainted(false);
 		btnmcnBorrar.setBounds(276, 298, 84, 34);
 		contentPanel.add(btnmcnBorrar);
-		
+
 		txtEspecialidad = new JTextField();
 		txtEspecialidad.setText("Especialidad");
 		txtEspecialidad.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -264,7 +310,7 @@ public class CrearUsuario extends JDialog {
 		txtEspecialidad.setBorder(new EmptyBorder(0, 5, 0, 5));
 		txtEspecialidad.setBounds(100, 130, 349, 26);
 		contentPanel.add(txtEspecialidad);
-		
+
 		tableModel = new DocumentosTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -275,8 +321,8 @@ public class CrearUsuario extends JDialog {
 		tableDocs.setModel(tableModel);
 		TableColumnModel columnModel1 = tableDocs.getColumnModel();
 		columnModel1.getColumn(0).setMaxWidth(50);
-		
-		
+
+
 		cmbDocs = new JComboBox();
 		cmbDocs.setFont(new Font("Arial", Font.PLAIN, 13));
 		cmbDocs.setBounds(186, 254, 249, 26);
@@ -286,13 +332,21 @@ public class CrearUsuario extends JDialog {
 			buttonPane.setBackground(new Color(0, 191, 255));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			
+
 			btnmcnCrear = new BotonAnimacion();
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
 						Empleadora emp = Empleadora.getInstancia();
-						Candidato cand = new Candidato(nombre,txtDir.getText() , telef, ci, (int)spnExp.getValue() ,sexo, (NivelEscolar)cmbNvEscolar.getSelectedItem(), (Rama)cmbRama.getSelectedItem(), txtEspecialidad.getText());
+						Candidato cand;
+
+						if(documentos.isEmpty())
+							cand = new Candidato(nombre,txtDir.getText() , telef, ci, (int)spnExp.getValue() ,sexo, (NivelEscolar)cmbNvEscolar.getSelectedItem(),
+									(Rama)cmbRama.getSelectedItem(), txtEspecialidad.getText());
+						else
+							cand = new CandidatoEspecifico(nombre,txtDir.getText() , telef, ci, (int)spnExp.getValue() ,sexo, (NivelEscolar)cmbNvEscolar.getSelectedItem(),documentos,
+									(Rama)cmbRama.getSelectedItem(), txtEspecialidad.getText());	
+
 						emp.agCandidato(cand);
 						Empleadora.getInstancia().citasDisponibles(cand);
 						PanelUsuarios.llenarTabla();
@@ -312,14 +366,14 @@ public class CrearUsuario extends JDialog {
 					catch(IllegalArgumentException e1){
 						JOptionPane.showMessageDialog(null,e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					
+
 				}
 			});
 			btnmcnCrear.setFocusPainted(false);
 			btnmcnCrear.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/aceptar 24px.png")));
 			btnmcnCrear.setText("Crear");
 			buttonPane.add(btnmcnCrear);
-			
+
 			btnCancel = new BotonAnimacion();
 			btnCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -336,5 +390,41 @@ public class CrearUsuario extends JDialog {
 			btnCancel.setText("Atras");
 			buttonPane.add(btnCancel);
 		}
+	}
+
+
+	//agregar documentos
+	public static void aggDocumento(Documento doc){
+		documentos.add(doc);
+	}
+
+	//Limpiar Tabla 
+
+	private static void limpiarTabla(){
+		int cantFil = tableModel.getRowCount()-1;
+		for(int i=cantFil ; i>=0 ; i--){ 
+			tableModel.removeRow(i);
+		}
+	}
+
+	//Llenar Tabla
+
+	public static void llenarTabla(){
+		limpiarTabla();
+		Object datos[] = new Object[2];
+		int num = 1;
+
+		for(Documento d : documentos){
+			datos[0] = num++;
+			datos[1] = d.getNombre();
+			tableModel.addRow(datos);
+		}
+	}
+
+
+	//Eliminar un Candidato
+	private void eliminarDocumento(int index){
+		documentos.remove(index);
+		llenarTabla();
 	}
 }

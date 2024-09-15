@@ -253,9 +253,9 @@ public class Candidato implements Comparable<Candidato>{
 			if(!Character.isDigit(test.charAt(i)))
 				throw new IllegalArgumentException("el telefono contiene caracteres no numericos");
 		
-		if(telef.length() > 12)
+		if(telef.trim().length() > 12)
 			throw new IllegalArgumentException("la cantidad de digitos del telefono tiene que ser menor que 12");
-		if(telef.length() < 8)
+		if(telef.trim().length() < 8)
 			throw new IllegalArgumentException("la cantidad de digitos del telefono tiene que ser mayor que 8");
 	}
 	
