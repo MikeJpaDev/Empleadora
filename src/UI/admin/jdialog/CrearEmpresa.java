@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import UI.admin.jpanels.PanelPrincipal;
 import UI.admin.jpanels.panelEmpresas;
 import componentesVisuales.CampoCIValidado;
 
@@ -37,6 +38,7 @@ import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
 
 import javax.swing.SwingConstants;
+
 
 
 
@@ -275,6 +277,7 @@ public class CrearEmpresa extends JDialog {
 					if(crearEmp()){
 						dispose();	
 						panelEmpresas.actTabla();
+						PanelPrincipal.actualizarContadores();
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Error al Crear Empresa.\n Posibles Causas:\n 1- Campos vacíos o incorrectos.\n 2- Ya existe una empresa del mismo Nombre", "Error" , JOptionPane.ERROR_MESSAGE); 

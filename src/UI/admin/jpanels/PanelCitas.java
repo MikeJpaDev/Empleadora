@@ -57,7 +57,7 @@ public class PanelCitas extends JPanel {
 				datos[0] = num++;
 				datos[1] = fechaFormateada;
 				datos[2] = c.getEmpleo().getID();
-				datos[3] = c.getEmpleo().getRama();
+				datos[3] = c.getEmpleo().getRamaEmp();
 				datos[4] = c.getCandidatos().size();
 				tableModel.addRow(datos);
 			}

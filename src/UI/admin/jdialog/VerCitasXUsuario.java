@@ -51,6 +51,7 @@ public class VerCitasXUsuario extends JDialog {
 	private JTextFieldModificado txtEsp;
 	private JTable tableCitas;
 	private static CitasTableModel tableModel;
+	private JTabbedPane tbdPane;
 
 
 
@@ -81,20 +82,25 @@ public class VerCitasXUsuario extends JDialog {
 			getContentPane().add(buttonPane);
 			{
 				BotonAnimacion btnmcnAceptar = new BotonAnimacion();
+				btnmcnAceptar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				btnmcnAceptar.setText("Aceptar");
 				buttonPane.add(btnmcnAceptar);
 			}
 		}
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tabbedPane.setBackground(new Color(0, 255, 255));
-		tabbedPane.setBounds(0, 0, 516, 467);
-		getContentPane().add(tabbedPane);
+		tbdPane = new JTabbedPane(JTabbedPane.TOP);
+		tbdPane.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tbdPane.setBackground(new Color(0, 255, 255));
+		tbdPane.setBounds(0, 0, 516, 467);
+		getContentPane().add(tbdPane);
 
 		JPanel panelInfo = new JPanel();
 		panelInfo.setBackground(new Color(135, 206, 235));
-		tabbedPane.addTab("Información", null, panelInfo, null);
+		tbdPane.addTab("Información", null, panelInfo, null);
 		panelInfo.setLayout(null);
 
 		JLabel label = new JLabel("Nombre: ");
@@ -236,7 +242,7 @@ public class VerCitasXUsuario extends JDialog {
 		{
 			JPanel panelCitas = new JPanel();
 			panelCitas.setBackground(new Color(135, 206, 235));
-			tabbedPane.addTab("Citas", null, panelCitas, null);
+			tbdPane.addTab("Citas", null, panelCitas, null);
 			panelCitas.setLayout(null);
 
 			JScrollPane scrollPane = new JScrollPane();
@@ -335,5 +341,11 @@ public class VerCitasXUsuario extends JDialog {
 	private void eliminarCita(int index){
 		candidato.getCitas().remove(index);
 		llenarTabla();
+	}
+	
+	//Cambiar Ventana Inicial
+	
+	public void cambiarVentanaInicial(int index){
+		tbdPane.setSelectedIndex(index);
 	}
 }

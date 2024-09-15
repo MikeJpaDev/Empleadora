@@ -12,6 +12,7 @@ import javax.swing.JTable;
 
 
 
+
 import util.EmpresasTableModel;
 
 import java.awt.Color;
@@ -28,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
 //import org.omg.CORBA.PUBLIC_MEMBER;
+
 
 
 
@@ -49,10 +51,12 @@ import logica.empresa.Empresa;
 
 
 
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.border.EmptyBorder;
 //import java.util.ArrayList;
 
@@ -303,8 +307,10 @@ public class panelEmpresas extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(tableEmps.getSelectedRow() != -1){
 					int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Eliminar?", "Confirmación", JOptionPane.YES_NO_OPTION);
-					if (respuesta == JOptionPane.YES_OPTION)
+					if (respuesta == JOptionPane.YES_OPTION){
 							eliminarEmp();
+							PanelPrincipal.actualizarContadores();
+					}
 				}
 			}
 		});

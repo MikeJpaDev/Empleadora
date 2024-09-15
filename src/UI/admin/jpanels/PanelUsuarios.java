@@ -59,7 +59,7 @@ public class PanelUsuarios extends JPanel {
 		limpiarTabla();
 		Object datos[] = new Object[6];
 
-		for(Candidato c: Empleadora.getInstancia().getUsuarios()){
+		for(Candidato c: Empleadora.getInstancia().getCandidatos()){
 			datos[0] = c.getCi();
 			datos[1] = c.getNombre();
 			datos[2] = c.getGenero().name();
@@ -73,7 +73,7 @@ public class PanelUsuarios extends JPanel {
 
 	//Eliminar un Candidato
 	private void eliminarCandidato(int index){
-		Empleadora.getInstancia().getUsuarios().remove(index);
+		Empleadora.getInstancia().getCandidatos().remove(index);
 		llenarTabla();
 	}
 
@@ -162,7 +162,7 @@ public class PanelUsuarios extends JPanel {
 				if(table.getSelectedRow() != -1){
 					try {
 						int selct = table.getSelectedRow();
-						Candidato cand = Empleadora.getInstancia().getUsuarios().get(selct);
+						Candidato cand = Empleadora.getInstancia().getCandidatos().get(selct);
 						VerCitasXUsuario dialog = new VerCitasXUsuario(cand);
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						dialog.setVisible(true);
@@ -212,8 +212,10 @@ public class PanelUsuarios extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1){
 					int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Eliminar?", "Confirmación", JOptionPane.YES_NO_OPTION);
-					if (respuesta == JOptionPane.YES_OPTION)
+					if (respuesta == JOptionPane.YES_OPTION){
 						eliminarCandidato(table.getSelectedRow());
+						PanelPrincipal.actualizarContadores();
+					}
 				}
 			}
 		});

@@ -35,6 +35,7 @@ import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
 
+import UI.admin.jpanels.PanelPrincipal;
 import UI.admin.jpanels.PanelUsuarios;
 import componentesVisuales.JTextFieldModificado;
 
@@ -295,6 +296,17 @@ public class CrearUsuario extends JDialog {
 						emp.agCandidato(cand);
 						Empleadora.getInstancia().citasDisponibles(cand);
 						PanelUsuarios.llenarTabla();
+						PanelPrincipal.actualizarContadores();
+						setVisible(false);
+						try {
+							VerCitasXUsuario dialog = new VerCitasXUsuario(cand);
+							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							dialog.setLocationRelativeTo(null);
+							dialog.cambiarVentanaInicial(1);
+							dialog.setVisible(true);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 						dispose();
 					}
 					catch(IllegalArgumentException e1){

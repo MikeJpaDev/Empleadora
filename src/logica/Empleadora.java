@@ -47,10 +47,6 @@ public class Empleadora {
 		citas = new ArrayList<Cita>();
 	}
 
-	public ArrayList<Candidato> getUsuarios(){
-		return candidatos;
-	}
-
 	public ArrayList<Empresa> getEmpresas(){
 		return empresas;
 	}
@@ -59,6 +55,17 @@ public class Empleadora {
 		return citas;
 	}
 
+	//Contador cantidad de Empleos
+	public int cantEmpelos(){
+		int cantEmp = 0;
+		
+		for(Empresa e : empresas)
+			cantEmp += e.getTamArray();
+		
+		return cantEmp;
+	}
+	
+	
 	//Metodos para trabajar con Las Empresas
 
 

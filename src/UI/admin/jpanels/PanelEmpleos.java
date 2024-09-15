@@ -177,6 +177,7 @@ public class PanelEmpleos extends JPanel {
 				if(tableEmps.getSelectedRow() != -1){
 					Empleadora.getInstancia().elimEmpleo(tableEmps.getValueAt(tableEmps.getSelectedRow(), 1).toString());
 					actTabla();
+					PanelPrincipal.actualizarContadores();
 				}
 			}
 		});

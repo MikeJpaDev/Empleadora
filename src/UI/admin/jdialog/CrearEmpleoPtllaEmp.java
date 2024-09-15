@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import UI.admin.pantallaAdmin;
 import UI.admin.jpanels.PanelEmpleos;
+import UI.admin.jpanels.PanelPrincipal;
 import UI.admin.jpanels.panelEmpresas;
 import componentesVisuales.CampoCIValidado;
 
@@ -41,6 +42,7 @@ import logica.enums.Sector;
 import componentesVisuales.BotonAnimacion;
 
 import javax.swing.SwingConstants;
+
 
 
 
@@ -287,6 +289,7 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 						agEmpleo(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()));
 						dispose();
 						PanelEmpleos.actTabla();
+						PanelPrincipal.actualizarContadores();
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Verifique los Datos", "Error", JOptionPane.ERROR_MESSAGE);
