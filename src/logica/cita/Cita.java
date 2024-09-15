@@ -1,6 +1,7 @@
 package logica.cita;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import logica.candidato.Candidato;
 import logica.empleo.Empleo;
 
@@ -13,7 +14,7 @@ public class Cita {
 		
 		this.empleo = empleo;
 		this.candidatos = new ArrayList<Candidato>();
-		this.fecha = fecha;
+		this.setFecha(fecha);
 		
 	}
 	
@@ -34,6 +35,11 @@ public class Cita {
 		this.candidatos = candidatos;
 	}
 	public void setFecha(LocalDate fecha) {
+		LocalDate hoy = LocalDate.now();
+		if(hoy.compareTo(fecha) > 0)
+			throw new IllegalArgumentException("No se puede agregar una cita de una fecha pasada");
+		else if(hoy.compareTo(fecha) == 0)
+			throw new IllegalArgumentException("No se puede agregar una cita para el mismo dia actual");
 		this.fecha = fecha;
 	}
 	

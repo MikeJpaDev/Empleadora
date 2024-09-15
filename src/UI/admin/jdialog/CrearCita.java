@@ -59,7 +59,7 @@ public class CrearCita extends JDialog {
 	private BotonAnimacion btnCancel;
 	private JTextFieldModificado txtNombre;
 	private JCalendar cldFecha;
-	
+
 	private void inicializarComponentes(final Empleo emp){
 
 		setModal(true);
@@ -73,30 +73,30 @@ public class CrearCita extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
-		
+
 		JLabel lblEmpleo = new JLabel("Empleo:");
 		lblEmpleo.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
 		lblEmpleo.setBounds(10, 53, 80, 26);
 		contentPanel.add(lblEmpleo);
-		
+
 		JLabel lblFecha = new JLabel("Fecha:");
 		lblFecha.setFont(new Font("Roboto Medium", Font.PLAIN, 14));
 		lblFecha.setBounds(38, 164, 52, 26);
 		contentPanel.add(lblFecha);
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(0, 191, 255));
 		panel.setBounds(0, 0, 459, 42);
 		contentPanel.add(panel);
-		
+
 		JLabel lblCrearCita = new JLabel("Crear Cita");
 		lblCrearCita.setIcon(new ImageIcon(CrearCita.class.getResource("/icons/empresa/aceptar 24px.png")));
 		lblCrearCita.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCrearCita.setFont(new Font("Roboto Black", Font.BOLD, 20));
 		lblCrearCita.setBounds(10, 0, 439, 42);
 		panel.add(lblCrearCita);
-		
+
 		txtNombre = new JTextFieldModificado();
 		txtNombre.setDisabledTextColor(Color.BLACK);
 		txtNombre.setForeground(Color.BLACK);
@@ -108,7 +108,7 @@ public class CrearCita extends JDialog {
 		txtNombre.setTipoValidacion(4);
 		txtNombre.setBounds(100, 53, 349, 23);
 		contentPanel.add(txtNombre);
-		
+
 		cldFecha = new JCalendar();
 		cldFecha.setBounds(100, 94, 184, 153);
 		contentPanel.add(cldFecha);
@@ -123,21 +123,26 @@ public class CrearCita extends JDialog {
 				btnmcnCrear = new BotonAnimacion();
 				btnmcnCrear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						boolean ok = false;
-						Date fecha = new Date();
-						int diaL = fecha.getDay();
-						int mesL = fecha.getMonth();
-						int anioL = fecha.getYear();
-						
-						int diaS = cldFecha.getDayChooser().getDay();
-						int mesS = cldFecha.getMonthChooser().getMonth();
-						int anioS = cldFecha.getYearChooser().getYear();
-						
-						
-						//LocalDate local = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-						Empleadora.getInstancia().agregarCita(emp, LocalDate.of(anioS, mesS+1, diaS));
-						dispose();
-												
+						try{
+							boolean ok = false;
+							Date fecha = new Date();
+							int diaL = fecha.getDay();
+							int mesL = fecha.getMonth();
+							int anioL = fecha.getYear();
+
+							int diaS = cldFecha.getDayChooser().getDay();
+							int mesS = cldFecha.getMonthChooser().getMonth();
+							int anioS = cldFecha.getYearChooser().getYear();
+
+
+							//LocalDate local = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+							Empleadora.getInstancia().agregarCita(emp, LocalDate.of(anioS, mesS+1, diaS));
+							dispose();
+						}
+						catch(IllegalArgumentException e1){
+							JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						}
+
 					}
 				});
 				/*btnmcnCrear.addActionListener(new ActionListener() {
@@ -171,9 +176,9 @@ public class CrearCita extends JDialog {
 				buttonPane.add(btnCancel);
 			}
 		}
-	
+
 	}
-	
+
 	public CrearCita(Empleo nom) {
 		inicializarComponentes(nom);
 		txtNombre.setText(nom.getID());

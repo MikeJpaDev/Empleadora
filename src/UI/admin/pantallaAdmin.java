@@ -31,8 +31,10 @@ import javax.swing.JLabel;
 import javax.swing.JDesktopPane;
 
 import UI.IniciarSesion;
+import UI.admin.jdialog.CrearEmpleoPtllaEmp;
 import UI.admin.jdialog.CrearEmpresa;
 import UI.admin.jdialog.CrearUsuario;
+import UI.admin.jdialog.CrearUsuarioNomb;
 import UI.admin.jdialog.Reportes;
 import UI.admin.jpanels.PanelCitas;
 import UI.admin.jpanels.PanelEmpleos;
@@ -133,9 +135,6 @@ public class pantallaAdmin extends JFrame {
 		});
 		mnEmpleos.add(mntmListaDeEmpleos);
 		
-		JMenuItem mntmCrearEmpleo = new JMenuItem("Crear Empleo");
-		mnEmpleos.add(mntmCrearEmpleo);
-		
 		JMenu mnUsuarios = new JMenu("Usuarios");
 		menuBar.add(mnUsuarios);
 		
@@ -150,7 +149,13 @@ public class pantallaAdmin extends JFrame {
 		JMenuItem mntmCrearUsuario = new JMenuItem("Crear Usuario");
 		mntmCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					CrearUsuarioNomb dialog = new CrearUsuarioNomb();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		mnUsuarios.add(mntmCrearUsuario);
@@ -167,9 +172,6 @@ public class pantallaAdmin extends JFrame {
 			}
 		});
 		mnCitas.add(mntmVerCitas);
-		
-		JMenuItem mntmAdministrarCitas = new JMenuItem("Administrar Citas");
-		mnCitas.add(mntmAdministrarCitas);
 		
 		JMenu mnRegistro = new JMenu("Registro");
 		menuBar.add(mnRegistro);

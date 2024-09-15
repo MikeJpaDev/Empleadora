@@ -319,7 +319,7 @@ public class VerCitasXUsuario extends JDialog {
 	public void llenarTabla(){
 		
 		limpiarTabla();
-		Object datos[] = new Object[6];
+		Object datos[] = new Object[5];
 		int num = 1;
 		String fechaFormateada = null;
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -330,8 +330,8 @@ public class VerCitasXUsuario extends JDialog {
 				datos[0] = num++;
 				datos[1] = fechaFormateada;
 				datos[2] = c.getEmpleo().getID();
-				datos[3] = c.getEmpleo().getRama();
-				datos[5] = c.getCandidatos().size();
+				datos[3] = c.getEmpleo().getRamaEmp();
+				datos[4] = c.getCandidatos().size();
 				tableModel.addRow(datos);
 			}
 	}

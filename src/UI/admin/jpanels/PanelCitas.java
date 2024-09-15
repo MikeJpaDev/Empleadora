@@ -49,16 +49,19 @@ public class PanelCitas extends JPanel {
 		Object datos[] = new Object[5];
 		int num = 1;
 		String fechaFormateada = null;
+		int cantCand = 0;
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		if(!(Empleadora.getInstancia().getCitas().isEmpty()))
 			for(Cita c : Empleadora.getInstancia().getCitas()){
 				fechaFormateada = c.getFecha().format(formato);
+				cantCand = c.getCandidatos().size();
+				
 				datos[0] = num++;
 				datos[1] = fechaFormateada;
 				datos[2] = c.getEmpleo().getID();
 				datos[3] = c.getEmpleo().getRamaEmp();
-				datos[4] = c.getCandidatos().size();
+				datos[4] = cantCand;
 				tableModel.addRow(datos);
 			}
 	}

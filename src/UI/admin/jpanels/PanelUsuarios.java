@@ -182,13 +182,7 @@ public class PanelUsuarios extends JPanel {
 		BotonAnimacion botonAnimacion_2 = new BotonAnimacion();
 		botonAnimacion_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					CrearUsuarioNomb dialog = new CrearUsuarioNomb();
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+				crearCandidato();
 			}
 		});
 		botonAnimacion_2.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
@@ -225,5 +219,17 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_4.setBounds(697, 403, 134, 42);
 		add(botonAnimacion_4);
+	}
+	
+	// Crear usuario
+	
+	private void crearCandidato(){
+		try {
+			CrearUsuarioNomb dialog = new CrearUsuarioNomb();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }
