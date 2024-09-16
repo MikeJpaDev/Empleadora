@@ -36,7 +36,8 @@ public class Empresa {
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		if(nombre.replaceAll(" ", "").length() != 0)
+			this.nombre = nombre;
 	}
 
 	public String getDireccion() {
@@ -44,7 +45,8 @@ public class Empresa {
 	}
 
 	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+		if(direccion.replaceAll(" ", "").length() != 0)
+			this.direccion = direccion;
 	}
 
 	public String getTelefeno() {
@@ -52,7 +54,8 @@ public class Empresa {
 	}
 
 	public void setTelefeno(String telefeno) {
-		this.telefeno = telefeno;
+		if(telefeno.replaceAll(" ", "").length() != 0 && telefeno.replaceAll(" ", "").length() < 8)
+			this.telefeno = telefeno;
 	}
 
 	public String getSector() {

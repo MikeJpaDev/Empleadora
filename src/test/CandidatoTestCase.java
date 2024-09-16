@@ -18,12 +18,12 @@ public class CandidatoTestCase {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		System.out.println("Iniciando Pruebas");
+		System.out.println("Iniciando Pruebas Candidato");
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		System.out.println("Finalizando Preubas");
+		System.out.println("Finalizando Preubas Candidato");
 	}
 
 	@Test
