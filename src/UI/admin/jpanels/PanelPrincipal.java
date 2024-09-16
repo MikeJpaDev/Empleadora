@@ -19,9 +19,12 @@ public class PanelPrincipal extends JPanel {
 	private static JContador cntEmpleos;
 	private static JContador cntCand;
 
-	/**
-	 * Create the panel.
-	 */
+	public static void actualizarContadores(){
+		cntCand.actualizarContador(Empleadora.getInstancia().getCandidatos().size());
+		cntEmpresas.actualizarContador(Empleadora.getInstancia().getEmpresas().size());
+		cntEmpleos.actualizarContador(Empleadora.getInstancia().cantEmpelos());
+	}
+	
 	public PanelPrincipal() {
 		setBackground(new Color(135, 206, 235));
 		setSize(new Dimension(884, 580));
@@ -100,9 +103,5 @@ public class PanelPrincipal extends JPanel {
 		add(lblCandidatos);
 	}
 	
-	public static void actualizarContadores(){
-		cntCand.actualizarContador(Empleadora.getInstancia().getCandidatos().size());
-		cntEmpresas.actualizarContador(Empleadora.getInstancia().getEmpresas().size());
-		cntEmpleos.actualizarContador(Empleadora.getInstancia().cantEmpelos());
-	}
+
 }

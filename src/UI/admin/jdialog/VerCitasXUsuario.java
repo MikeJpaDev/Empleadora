@@ -52,6 +52,7 @@ public class VerCitasXUsuario extends JDialog {
 	private JTable tableCitas;
 	private static CitasTableModel tableModel;
 	private JTabbedPane tbdPane;
+	private JTextFieldModificado txtRama;
 
 
 
@@ -64,6 +65,7 @@ public class VerCitasXUsuario extends JDialog {
 		txtExp.setText(String.valueOf(candidato.getAniosExp()));
 		txtNiv.setText(candidato.getNivelEscolar().name());
 		txtEsp.setText(candidato.getEspecialidad());
+		txtRama.setText(candidato.getRama().toString());
 	}
 
 	public VerCitasXUsuario(Candidato cand) {
@@ -73,11 +75,11 @@ public class VerCitasXUsuario extends JDialog {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VerCitasXUsuario.class.getResource("/images/empresa/curriculum 64px.png")));
-		setBounds(100, 100, 522, 531);
+		setBounds(100, 100, 522, 563);
 		getContentPane().setLayout(null);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 467, 516, 35);
+			buttonPane.setBounds(0, 499, 516, 35);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
@@ -95,7 +97,7 @@ public class VerCitasXUsuario extends JDialog {
 		tbdPane = new JTabbedPane(JTabbedPane.TOP);
 		tbdPane.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tbdPane.setBackground(new Color(0, 255, 255));
-		tbdPane.setBounds(0, 0, 516, 467);
+		tbdPane.setBounds(0, 0, 516, 499);
 		getContentPane().add(tbdPane);
 
 		JPanel panelInfo = new JPanel();
@@ -239,6 +241,23 @@ public class VerCitasXUsuario extends JDialog {
 		txtEsp.setBeepActivado(false);
 		txtEsp.setBounds(178, 221, 292, 26);
 		panelInfo.add(txtEsp);
+		
+		JLabel lblRama = new JLabel("Rama: ");
+		lblRama.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblRama.setBounds(38, 407, 119, 26);
+		panelInfo.add(lblRama);
+		
+		txtRama = new JTextFieldModificado();
+		txtRama.setTipoValidacion(2);
+		txtRama.setText((String) null);
+		txtRama.setLimite(8);
+		txtRama.setFont(new Font("Arial", Font.ITALIC, 13));
+		txtRama.setEnabled(false);
+		txtRama.setDisabledTextColor(Color.BLACK);
+		txtRama.setBorder(null);
+		txtRama.setBeepActivado(false);
+		txtRama.setBounds(178, 407, 292, 26);
+		panelInfo.add(txtRama);
 		{
 			JPanel panelCitas = new JPanel();
 			panelCitas.setBackground(new Color(135, 206, 235));
@@ -339,7 +358,7 @@ public class VerCitasXUsuario extends JDialog {
 
 	//Eliminar un Candidato
 	private void eliminarCita(int index){
-		candidato.getCitas().remove(index);
+		Empleadora.getInstancia().eliminarCandidaroCita(candidato.getCitas().get(index), candidato);
 		llenarTabla();
 	}
 	

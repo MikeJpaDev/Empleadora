@@ -33,6 +33,7 @@ public class AnadirDocs extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNombre;
 	private JTextArea txaContenido;
+	private boolean nombreClick = false;
 	
 	
 	public AnadirDocs(boolean editable, String nombreDoc) {
@@ -46,17 +47,14 @@ public class AnadirDocs extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
 		txtNombre = new JTextField();
-		txtNombre.setEditable(editable);
-		if(!editable)
-			txtNombre.setText(nombreDoc);
 		txtNombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-                if (txtNombre.getText().equals("Nombre del Documento")) {
+                if (txtNombre.getText().equals("Nombre del Documento") && !nombreClick) {
                     txtNombre.setText("");
                     txtNombre.setForeground(Color.BLACK);
+                    nombreClick = true;
                 }
 			}
 			@Override
@@ -64,6 +62,7 @@ public class AnadirDocs extends JDialog {
                 if (txtNombre.getText().isEmpty()) {
                     txtNombre.setText("Nombre del Documento");
                     txtNombre.setForeground(Color.GRAY);
+                    nombreClick = false;
                 }
 			}
 		});
@@ -71,6 +70,9 @@ public class AnadirDocs extends JDialog {
 		txtNombre.setBounds(107, 77, 337, 20);
 		contentPanel.add(txtNombre);
 		txtNombre.setColumns(10);
+		txtNombre.setEditable(editable);
+		if(!editable)
+			txtNombre.setText(nombreDoc);
 		
 		JLabel lblNewLabel = new JLabel("Nombre :");
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -124,6 +126,11 @@ public class AnadirDocs extends JDialog {
 			buttonPane.add(btnOk);
 			
 			BotonAnimacion btnCanc = new BotonAnimacion();
+			btnCanc.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnCanc.setFont(new Font("Roboto", Font.PLAIN, 14));
 			btnCanc.setText("Cancelar");
 			buttonPane.add(btnCanc);

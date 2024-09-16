@@ -71,7 +71,6 @@ public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtDir;
-	private boolean clickDir = false;
 	private JComboBox cmbNvEscolar;
 	private BotonAnimacion btnmcnCrear;
 	private BotonAnimacion btnCancel;
@@ -86,6 +85,9 @@ public class CrearUsuario extends JDialog {
 	private Genero sexo;
 	private String telef;
 	private static ArrayList<Documento> documentos;
+	
+	private boolean dirClick = false;
+	private boolean espClick = false;
 
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
@@ -167,21 +169,22 @@ public class CrearUsuario extends JDialog {
 			txtDir.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(FocusEvent e) {
-					if(!clickDir){
-						clicBorrar(txtDir,clickDir);
-						clickDir = true;
-					}
+	                if (txtDir.getText().equals("Nombre del Candidato") && !dirClick) {
+	                	txtDir.setText("");
+	                	txtDir.setForeground(Color.BLACK);
+	                	dirClick = true;
+	                }
 				}
 				@Override
 				public void focusLost(FocusEvent e) {
-					if (txtDir.getText().isEmpty()){
-						clicBorrar(txtDir,clickDir);
-						txtDir.setText("Direcci\u00F3n");
-						clickDir = false;
-					}
+	                if (txtDir.getText().isEmpty()) {
+	                	txtDir.setText("Nombre del Candidato");
+	                	txtDir.setForeground(Color.GRAY);
+	                    dirClick = false;
+	                }
 				}
 			});
-			txtDir.setText("Direcci\u00F3n");
+			txtDir.setText("Nombre del Candidato");
 			txtDir.setFont(new Font("Arial", Font.ITALIC, 13));
 			txtDir.setColumns(10);
 			txtDir.setBorder(new EmptyBorder(0, 5, 0, 5));
@@ -213,13 +216,13 @@ public class CrearUsuario extends JDialog {
 			contentPanel.add(lblAosDeExperiencia);
 		}
 
-		cmbNvEscolar = new JComboBox();
+		cmbNvEscolar = new JComboBox<NivelEscolar>();
 		cmbNvEscolar.setFont(new Font("Arial", Font.PLAIN, 13));
 		cmbNvEscolar.setModel(new DefaultComboBoxModel(NivelEscolar.values()));
 		cmbNvEscolar.setBounds(171, 90, 278, 26);
 		contentPanel.add(cmbNvEscolar);
 
-		cmbRama = new JComboBox();
+		cmbRama = new JComboBox<Rama>();
 		cmbRama.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(cmbRama.getSelectedIndex() != -1){
@@ -304,6 +307,24 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(btnmcnBorrar);
 
 		txtEspecialidad = new JTextField();
+		txtEspecialidad.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+                if (txtEspecialidad.getText().equals("Especialidad") && !espClick) {
+                	txtEspecialidad.setText("");
+                	txtEspecialidad.setForeground(Color.BLACK);
+                	espClick = true;
+                }
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+                if (txtEspecialidad.getText().isEmpty()) {
+                	txtEspecialidad.setText("Especialidad");
+                	txtEspecialidad.setForeground(Color.GRAY);
+                    espClick = false;
+                }
+			}
+		});
 		txtEspecialidad.setText("Especialidad");
 		txtEspecialidad.setFont(new Font("Arial", Font.ITALIC, 13));
 		txtEspecialidad.setColumns(10);

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -22,6 +23,9 @@ import javax.swing.SwingConstants;
 
 import logica.Empleadora;
 import logica.cita.Cita;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelCitas extends JPanel {
 	private JTable tableCitas;
@@ -51,25 +55,24 @@ public class PanelCitas extends JPanel {
 		String fechaFormateada = null;
 		int cantCand = 0;
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
+		
 		if(!(Empleadora.getInstancia().getCitas().isEmpty()))
 			for(Cita c : Empleadora.getInstancia().getCitas()){
 				fechaFormateada = c.getFecha().format(formato);
-				cantCand = c.getCandidatos().size();
 				
 				datos[0] = num++;
 				datos[1] = fechaFormateada;
 				datos[2] = c.getEmpleo().getID();
-				datos[3] = c.getEmpleo().getRamaEmp();
+				datos[3] = c.getEmpleo().getRamaEmp().toString();;
 				datos[4] = cantCand;
 				tableModel.addRow(datos);
 			}
 	}
 
 
-	//Eliminar un Candidato
+	//Eliminar una cita
 	private void eliminarCita(int index){
-		Empleadora.getInstancia().getCitas().remove(index);
+		Empleadora.getInstancia().eliminarCita(Empleadora.getInstancia().getCitas().get(index));
 		llenarTabla();
 	}
 	
@@ -135,6 +138,16 @@ public class PanelCitas extends JPanel {
 		add(btnAñadirCita);
 		
 		BotonAnimacion btnBorrar = new BotonAnimacion();
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tableCitas.getSelectedRow() != -1){
+					int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Eliminar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+					if (respuesta == JOptionPane.YES_OPTION){
+						eliminarCita(tableCitas.getSelectedRow());
+					}
+				}
+			}
+		});
 		btnBorrar.setIcon(new ImageIcon(PanelCitas.class.getResource("/icons/empresa/icons8-papelera-50.png")));
 		btnBorrar.setText("Borrar");
 		btnBorrar.setHorizontalTextPosition(SwingConstants.LEFT);

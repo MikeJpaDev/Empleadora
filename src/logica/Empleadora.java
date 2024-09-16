@@ -251,4 +251,15 @@ public class Empleadora {
 	
 	//Logica Citas
 	
+	public void eliminarCandidaroCita(Cita cita, Candidato cand){
+		cita.getCandidatos().remove(cand);
+		cand.getCitas().remove(cita);
+	}
+	
+	public void eliminarCita(Cita cita){
+		citas.remove(cita);
+		for(Candidato c : candidatos)
+			c.getCitas().remove(cita);
+	}
+	
 }
