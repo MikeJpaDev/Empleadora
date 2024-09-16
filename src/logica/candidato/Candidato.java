@@ -228,7 +228,7 @@ public class Candidato implements Comparable<Candidato>{
 	
 	public static void validarNombre(String nombre){
 		
-		if(nombre == null || nombre.isEmpty())  //Comprobando nombre vacio
+		if(nombre == null || nombre.trim().isEmpty())  //Comprobando nombre vacio
 			throw new IllegalArgumentException("esta vacio el nombre");
 		
 		if(!nombre.equalsIgnoreCase(nombre.trim()))  //Espacios al principio o final
@@ -245,18 +245,21 @@ public class Candidato implements Comparable<Candidato>{
 	
 	public static void validarTelef(String telef){
 		
-		if(telef == null || telef.isEmpty())
-			throw new IllegalArgumentException("el telefono esta vacio");
+		if(telef == null || telef.trim().isEmpty())
+			throw new IllegalArgumentException("El telefono esta vacio");
 		
 		String test = new String(telef); //Comprobando caracteres no númericos
 		for(int i = 0; i < test.length(); i++)
 			if(!Character.isDigit(test.charAt(i)))
-				throw new IllegalArgumentException("el telefono contiene caracteres no numericos");
+				throw new IllegalArgumentException("El telefono contiene caracteres no numericos");
 		
 		if(telef.trim().length() > 12)
-			throw new IllegalArgumentException("la cantidad de digitos del telefono tiene que ser menor que 12");
+			throw new IllegalArgumentException("La cantidad de digitos del telefono tiene que ser menor que 12");
 		if(telef.trim().length() < 8)
-			throw new IllegalArgumentException("la cantidad de digitos del telefono tiene que ser mayor que 8");
+			throw new IllegalArgumentException("La cantidad de digitos del telefono tiene que ser mayor que 8");
+		long valorNum = Long.parseLong(telef);
+		if(valorNum < 10000000)
+			throw new IllegalArgumentException("El numero de teléfono no puede tener muchos 0 a la izquierda");
 	}
 	
 	public static void validarCi(String ci){    //Validacion Del Ci
