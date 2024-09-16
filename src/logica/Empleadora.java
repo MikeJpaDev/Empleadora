@@ -306,6 +306,14 @@ public class Empleadora {
 			c.getCitas().remove(cita);
 	}
 	
+	public ArrayList<Empresa> empresasConEmpleos(){
+		ArrayList<Empresa> ofertEmpleos = new ArrayList<Empresa>();
+		for(Empresa e : empresas)
+			if(!(e.getEmpleos().isEmpty()))
+				ofertEmpleos.add(e);
+		return ofertEmpleos;
+	}
+	
 	
 	//Reportes Candidatos
 	

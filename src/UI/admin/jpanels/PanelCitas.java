@@ -9,20 +9,24 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import util.CitasTableModel;
 import util.EmpresasTableModel;
+import UI.admin.jdialog.CrearCitaPtllCita;
 import componentesVisuales.BotonAnimacion;
 
 import javax.swing.SwingConstants;
 
 import logica.Empleadora;
 import logica.cita.Cita;
+import logica.empresa.Empresa;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -129,6 +133,23 @@ public class PanelCitas extends JPanel {
 		tableCitas.setModel(tableModel);
 		
 		BotonAnimacion btnAñadirCita = new BotonAnimacion();
+		btnAñadirCita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					try {
+						ArrayList<Empresa> ofertantes = Empleadora.getInstancia().empresasConEmpleos();
+						if(ofertantes.isEmpty())
+							throw new IllegalArgumentException("No hay empleos en el sistema");
+						CrearCitaPtllCita dialog = new CrearCitaPtllCita(ofertantes);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					}catch(IllegalArgumentException e2){
+						JOptionPane.showMessageDialog(null,e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch (Exception e1) {
+						e1.printStackTrace();
+					}
+			}
+		});
 		btnAñadirCita.setIcon(new ImageIcon(PanelCitas.class.getResource("/icons/empresa/icons8-a\u00F1adir-50.png")));
 		btnAñadirCita.setText("A\u00F1adir");
 		btnAñadirCita.setHorizontalTextPosition(SwingConstants.LEFT);

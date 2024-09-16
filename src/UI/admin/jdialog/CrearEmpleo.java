@@ -151,7 +151,7 @@ public class CrearEmpleo extends JDialog {
 			contentPanel.add(lblNewLabel);
 		}
 		{
-			JLabel lblNombre = new JLabel("Empleadora: ");
+			JLabel lblNombre = new JLabel("Empresa: ");
 			lblNombre.setFont(new Font("Arial", Font.PLAIN, 18));
 			lblNombre.setBounds(10, 132, 111, 26);
 			contentPanel.add(lblNombre);
