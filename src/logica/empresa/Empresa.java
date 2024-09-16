@@ -47,8 +47,9 @@ public class Empresa {
 		empleos = new ArrayList<Empleo>();
 	}
 	
-	public void agEmpleo(String id, String rama, Double sal, Empresa ofer, Rama ramaE){
+	public boolean agEmpleo(String id, String rama, Double sal, Empresa ofer, Rama ramaE){
 		empleos.add(new Empleo(id, rama, sal, ofer, ramaE));
+		return true;
 	}
 
 

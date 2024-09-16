@@ -57,7 +57,7 @@ public class EmpresasTestCase {
 			assertEquals("El nombre o direccion esta vacio", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testNombreEmpiezaEspacio(){
 		try{
@@ -79,7 +79,7 @@ public class EmpresasTestCase {
 			assertEquals("El nombre o direccion esta vacio", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testDirEmpiezaEspacio(){
 		try{
@@ -90,7 +90,7 @@ public class EmpresasTestCase {
 			assertEquals("El nombre o direcion no debe comenzar con espacios", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testDirTerminaEspacio(){
 		try{
@@ -101,7 +101,7 @@ public class EmpresasTestCase {
 			assertEquals("El nombre o direccion no debe terminar en espacio", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testNombreMuchosEspacios(){
 		try{
@@ -112,20 +112,42 @@ public class EmpresasTestCase {
 			assertEquals("El nombre o direcion no debe comenzar con espacios", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testNombreTerminaEspacio(){
 		try{
 			empresa = new Empresa("HabanaNoticias ", "Calle 17", "55065148", "SALUD");
-			fail("Espacios Juntos");
+			fail("Termina en Espacio");
 		}
 		catch(IllegalArgumentException e){
 			assertEquals("El nombre o direccion no debe terminar en espacio", e.getMessage());
 		}
 	}
 	
+	@Test
+	public void testNombreEspaciosIntermedios(){
+		try{
+			empresa = new Empresa("Habana  Noticias", "Calle 17", "55065148", "SALUD");
+			fail("Espacios Juntos");
+		}
+		catch(IllegalArgumentException e){
+			assertEquals("Espacios Juntos", e.getMessage());
+		}
+	}
 	
-	
+	@Test
+	public void testDirEspaciosIntermedios(){
+		try{
+			empresa = new Empresa("HabanaNoticias", "Calle  17", "55065148", "SALUD");
+			fail("Espacios Juntos");
+		}
+		catch(IllegalArgumentException e){
+			assertEquals("Espacios Juntos", e.getMessage());
+		}
+	}
+
+
+
 	@Test
 	public void testIdEmpleoVacio(){
 		try{
@@ -138,6 +160,30 @@ public class EmpresasTestCase {
 		}
 	}
 	
+	@Test
+	public void testIdEmpleoEspaciosIntermedios(){
+		try{
+			empresa = new Empresa("HabanaCuba", "Calle 17", "76641174", Sector.EDUCACION.toString());
+			empresa.agEmpleo("Secre  tario", Rama.EJECUTIVO.toString(), 5866d, empresa, Rama.CHOFER);
+			fail("Espacios Juntos");
+		}
+		catch(IllegalArgumentException e){
+			assertEquals("Espacios Juntos", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testRamaEmpleoEspaciosIntermedios(){
+		try{
+			empresa = new Empresa("HabanaCuba", "Calle 17", "76641174", Sector.EDUCACION.toString());
+			empresa.agEmpleo("Secretario", "EJE  CUTIVO", 5866d, empresa, Rama.CHOFER);
+			fail("Espacios Juntos");
+		}
+		catch(IllegalArgumentException e){
+			assertEquals("Espacios Juntos", e.getMessage());
+		}
+	}
+
 	@Test
 	public void testSectorEmpleoVacio(){
 		try{
@@ -161,7 +207,7 @@ public class EmpresasTestCase {
 			assertEquals("Empresa ofertante null", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testSalEmpleoNoValido(){
 		try{
@@ -173,7 +219,7 @@ public class EmpresasTestCase {
 			assertEquals("Salario no valido", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testRamaEmpleoNoValido(){
 		try{
@@ -185,5 +231,14 @@ public class EmpresasTestCase {
 			assertEquals("Rama de empleo vacia", e.getMessage());
 		}
 	}
+
+	@Test
+	public void testAgregarEmpleo(){
+		empresa = new Empresa("HabanaCuba", "Calle 17", "76641174", Sector.EDUCACION.toString());
+		boolean dime = empresa.agEmpleo("Secretario", Rama.CHOFER.toString(), 5866d, empresa, Rama.CHOFER);
+		assertTrue(dime);
+	}
+	
+	
 
 }
