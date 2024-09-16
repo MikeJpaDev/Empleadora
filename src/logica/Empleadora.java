@@ -7,7 +7,6 @@ import java.util.Collections;
 import javax.swing.JOptionPane;
 
 import comparadores.CompararCandPorEdad;
-
 import UI.admin.jdialog.EditarEmpresa;
 import UI.admin.jdialog.VerEmpresa;
 import logica.candidato.Candidato;
@@ -207,7 +206,7 @@ public class Empleadora {
 			}
 		}
 	}
-	
+		
 	
 	//Logica Empleados
 	
@@ -249,6 +248,49 @@ public class Empleadora {
 				if(candidato.disponible(c.getFecha()))
 					candidato.aggCitas(c, candidato);
 		}
+	}
+	
+	private ArrayList<Candidato> buscarXNombre(String nombre){
+		ArrayList<Candidato> encontrados = new ArrayList<Candidato>();
+		nombre = nombre.toUpperCase();
+		for(Candidato c : candidatos)
+			if(c.getNombreBus().contains(nombre))
+				encontrados.add(c);
+			
+		return encontrados;
+	}
+	
+	private ArrayList<Candidato> buscarXCi(String ci){
+		ArrayList<Candidato> encontrados = new ArrayList<Candidato>();
+		
+		for(Candidato c : candidatos)
+			if(c.getCi().contains(ci))
+				encontrados.add(c);
+		
+		return encontrados;
+	}
+	
+	public ArrayList<Candidato> buscarCand(String cadena){
+		ArrayList<Candidato> encontrados = null;
+		boolean contieneLetras = false;
+		boolean contieneNumeros = false;
+		
+		for(int i = 0; i < cadena.length() && !(contieneLetras && contieneNumeros); i++)
+			if(Character.isAlphabetic(cadena.charAt(i)))
+				contieneLetras = true;
+			else if(Character.isDigit(cadena.charAt(i)))
+				contieneNumeros = true;
+			else
+				throw new IllegalArgumentException("La cadena de busqueda no puede contener caracteres especiales");
+		
+		if(contieneLetras && contieneNumeros)
+			throw new IllegalArgumentException("La cadena de busqueda no puede contener caracteres especiales");
+		else if(contieneLetras)
+			encontrados = buscarXNombre(cadena);
+		else if(contieneNumeros)
+			encontrados = buscarXCi(cadena);
+		
+		return encontrados;
 	}
 	
 	//Logica Citas

@@ -24,6 +24,7 @@ import UI.admin.jdialog.CrearUsuarioNomb;
 import UI.admin.jdialog.VerCitasXUsuario;
 import util.UsersTableModel;
 import logica.Empleadora;
+import logica.algoritmos.Busqueda;
 import logica.candidato.Candidato;
 import logica.enums.Genero;
 import logica.enums.NivelEscolar;
@@ -32,11 +33,17 @@ import componentesVisuales.BotonAnimacion;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class PanelUsuarios extends JPanel {
 	private JTextField txtBuscar;
 	private JTable table;
+	private boolean buscarClick = false;
 	private static UsersTableModel tableModel;
+	private static boolean busqueda = false;
+	private ArrayList<Candidato> busquedas;
 
 	public PanelUsuarios() {
 		llenarComponentes();
@@ -57,8 +64,26 @@ public class PanelUsuarios extends JPanel {
 	public static void llenarTabla(){
 		limpiarTabla();
 		Object datos[] = new Object[6];
-
+		busqueda = false;
 		for(Candidato c: Empleadora.getInstancia().getCandidatos()){
+			datos[0] = c.getCi();
+			datos[1] = c.getNombre();
+			datos[2] = c.getGenero().name();
+			datos[3] = c.getAniosExp();
+			datos[4] = c.getNivelEscolar().name();
+			datos[5] = c.getRama().name();
+			tableModel.addRow(datos);
+		}
+	}
+
+	//Llenar tabla busqueda
+
+	private void llenarTablaBusq(){
+		limpiarTabla();
+		Object datos[] = new Object[6];
+		busqueda = true;
+
+		for(Candidato c: busquedas){
 			datos[0] = c.getCi();
 			datos[1] = c.getNombre();
 			datos[2] = c.getGenero().name();
@@ -126,6 +151,24 @@ public class PanelUsuarios extends JPanel {
 		table.setModel(tableModel);
 
 		txtBuscar = new JTextField();
+		txtBuscar.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtBuscar.getText().equals("Nombre/CI") && !buscarClick) {
+					txtBuscar.setText("");
+					txtBuscar.setForeground(Color.BLACK);
+					buscarClick = true;
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtBuscar.getText().isEmpty()) {
+					txtBuscar.setText("Nombre/CI");
+					txtBuscar.setForeground(Color.GRAY);
+					buscarClick = false;
+				}
+			}
+		});
 		txtBuscar.setText("Nombre/CI");
 		txtBuscar.setForeground(Color.LIGHT_GRAY);
 		txtBuscar.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -135,6 +178,19 @@ public class PanelUsuarios extends JPanel {
 		add(txtBuscar);
 
 		BotonAnimacion botonAnimacion = new BotonAnimacion();
+		botonAnimacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!buscarClick || txtBuscar.getText().equalsIgnoreCase("")){
+					llenarTabla();
+					busquedas = null;
+				}
+				else{
+					String buscar = txtBuscar.getText();
+					busquedas = Empleadora.getInstancia().buscarCand(buscar);
+					llenarTablaBusq();
+				}
+			}
+		});
 		botonAnimacion.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
 		botonAnimacion.setText("Buscar");
 		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -147,8 +203,15 @@ public class PanelUsuarios extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1){
 					try {
-						int selct = table.getSelectedRow();
-						Candidato cand = Empleadora.getInstancia().getCandidatos().get(selct);
+						Candidato cand = null;
+						int select = 0;
+						select = table.getSelectedRow();
+
+						if(!busqueda)					
+							cand = Empleadora.getInstancia().getCandidatos().get(select);
+						else
+							cand = busquedas.get(select);
+
 						VerCitasXUsuario dialog = new VerCitasXUsuario(cand);
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						dialog.setVisible(true);
@@ -178,22 +241,30 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion_2.setBounds(697, 260, 134, 42);
 		add(botonAnimacion_2);
 
-		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
-		botonAnimacion_3.setEnabled(false);
-		botonAnimacion_3.setIcon(new ImageIcon(PanelUsuarios.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
-		botonAnimacion_3.setText("Editar");
-		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_3.setBounds(697, 331, 134, 42);
-		add(botonAnimacion_3);
-
 		BotonAnimacion botonAnimacion_4 = new BotonAnimacion();
 		botonAnimacion_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1){
 					int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Eliminar?", "Confirmación", JOptionPane.YES_NO_OPTION);
 					if (respuesta == JOptionPane.YES_OPTION){
-						eliminarCandidato(table.getSelectedRow());
+						
+						Candidato cand = null;
+						int select = 0;
+						select = table.getSelectedRow();
+
+						if(!busqueda){					
+							cand = Empleadora.getInstancia().getCandidatos().get(select);
+							Empleadora.getInstancia().getCandidatos().remove(select);
+							llenarTabla();
+						}
+						else{
+							cand = busquedas.get(select);
+							Empleadora.getInstancia().getCandidatos().remove(cand);
+							busquedas.remove(select);
+							llenarTablaBusq();
+						}
+						
+						
 						PanelPrincipal.actualizarContadores();
 					}
 				}
@@ -203,14 +274,15 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion_4.setText("Borrar");
 		botonAnimacion_4.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_4.setBounds(697, 403, 134, 42);
+		botonAnimacion_4.setBounds(697, 319, 134, 42);
 		add(botonAnimacion_4);
 	}
-	
+
 	// Crear usuario
-	
+
 	private void crearCandidato(){
 		try {
+			buscarClick = false;
 			CrearUsuarioNomb dialog = new CrearUsuarioNomb();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);

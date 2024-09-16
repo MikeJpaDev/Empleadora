@@ -248,12 +248,12 @@ public class VerCitasXUsuario extends JDialog {
 		txtEsp.setBeepActivado(false);
 		txtEsp.setBounds(178, 221, 292, 26);
 		panelInfo.add(txtEsp);
-		
+
 		JLabel lblRama = new JLabel("Rama: ");
 		lblRama.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblRama.setBounds(38, 407, 119, 26);
 		panelInfo.add(lblRama);
-		
+
 		txtRama = new JTextFieldModificado();
 		txtRama.setTipoValidacion(2);
 		txtRama.setText((String) null);
@@ -265,23 +265,23 @@ public class VerCitasXUsuario extends JDialog {
 		txtRama.setBeepActivado(false);
 		txtRama.setBounds(178, 407, 292, 26);
 		panelInfo.add(txtRama);
-		
+
 		JPanel panelDoc = new JPanel();
 		tbdPane.addTab("Documentos", null, panelDoc, null);
 		panelDoc.setBackground(new Color(135, 206, 235));
 		panelDoc.setLayout(null);
-		
+
 		JLabel label_3 = new JLabel("Documento");
 		label_3.setIcon(new ImageIcon(VerCitasXUsuario.class.getResource("/images/empresa/Documetnto 50px.png")));
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_3.setFont(new Font("Roboto Black", Font.BOLD, 20));
 		label_3.setBounds(0, 11, 511, 55);
 		panelDoc.add(label_3);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(30, 118, 350, 327);
 		panelDoc.add(scrollPane_1);
-		
+
 		tableDocs = new JTable();
 		tableModelD = new DocumentosTableModel(){
 			private static final long serialVersionUID = 1L;
@@ -292,14 +292,30 @@ public class VerCitasXUsuario extends JDialog {
 		};
 		tableDocs.setModel(tableModelD);
 		scrollPane_1.setViewportView(tableDocs);
-		
+
 		BotonAnimacion btnmcnVer = new BotonAnimacion();
+		btnmcnVer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tableDocs.getSelectedRow() != -1){
+					try{
+						AnadirDocs dialog = new AnadirDocs(false, "");
+						int index = tableDocs.getSelectedRow();
+						dialog.verDoc(((CandidatoEspecifico)candidato).getDocumentos().get(index));
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					}
+					catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnmcnVer.setIcon(new ImageIcon(VerCitasXUsuario.class.getResource("/icons/empresa/binoculars-solid-36.png")));
 		btnmcnVer.setFont(new Font("Roboto Black", Font.PLAIN, 16));
 		btnmcnVer.setText("Ver");
 		btnmcnVer.setBounds(390, 138, 109, 41);
 		panelDoc.add(btnmcnVer);
-		
+
 		BotonAnimacion btnmcnEditar = new BotonAnimacion();
 		btnmcnEditar.setIcon(new ImageIcon(VerCitasXUsuario.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
 		btnmcnEditar.setFont(new Font("Roboto Black", Font.PLAIN, 16));
@@ -384,9 +400,9 @@ public class VerCitasXUsuario extends JDialog {
 			tableModel.removeRow(i);
 		}
 	}
-	
+
 	//Limpiar Tabla Documentos
-	
+
 	private void limpiarTablaDocs(){
 		int cantFil = tableModelD.getRowCount()-1;
 		for(int i=cantFil ; i>=0 ; i--){ 
@@ -397,7 +413,7 @@ public class VerCitasXUsuario extends JDialog {
 	//Llenar Tabla Citas
 
 	public void llenarTabla(){
-		
+
 		limpiarTabla();
 		Object datos[] = new Object[5];
 		int num = 1;
@@ -415,7 +431,7 @@ public class VerCitasXUsuario extends JDialog {
 				tableModel.addRow(datos);
 			}
 	}
-	
+
 	//Llenar Tabla Documentos
 	public void llenarTablaDoc(){
 		limpiarTablaDocs();
@@ -435,12 +451,12 @@ public class VerCitasXUsuario extends JDialog {
 		Empleadora.getInstancia().eliminarCandidaroCita(candidato.getCitas().get(index), candidato);
 		llenarTabla();
 	}
-	
+
 	//Cambiar Ventana Inicial
-	
+
 	public void cambiarVentanaInicial(int index){
 		tbdPane.setSelectedIndex(index);
 	}
-	
-	
+
+
 }

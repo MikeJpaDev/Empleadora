@@ -34,6 +34,9 @@ public class AnadirDocs extends JDialog {
 	private JTextField txtNombre;
 	private JTextArea txaContenido;
 	private boolean nombreClick = false;
+	private BotonAnimacion btnOk;
+	private BotonAnimacion btnCanc;
+	private BotonAnimacion btnImport;
 	
 	
 	public AnadirDocs(boolean editable, String nombreDoc) {
@@ -41,7 +44,7 @@ public class AnadirDocs extends JDialog {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearUsuario.class.getResource("/images/empresa/logo redondo 64.png")));
 		setTitle("Añadir documento");
-		setBounds(100, 100, 465, 500);
+		setBounds(100, 100, 465, 519);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(135, 206, 235));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,11 +99,11 @@ public class AnadirDocs extends JDialog {
 		lblNewLabel_2.setBounds(10, 11, 434, 55);
 		contentPanel.add(lblNewLabel_2);
 		
-		BotonAnimacion btnImport = new BotonAnimacion();
+		btnImport = new BotonAnimacion();
 		btnImport.setIcon(new ImageIcon(AnadirDocs.class.getResource("/icons/empresa/Importar 24pc.png")));
 		btnImport.setFont(new Font("Roboto", Font.PLAIN, 14));
 		btnImport.setText("Importar");
-		btnImport.setBounds(326, 393, 106, 32);
+		btnImport.setBounds(338, 402, 106, 32);
 		contentPanel.add(btnImport);
 		{
 			JPanel buttonPane = new JPanel();
@@ -108,7 +111,8 @@ public class AnadirDocs extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
-			BotonAnimacion btnOk = new BotonAnimacion();
+			btnOk = new BotonAnimacion();
+			btnOk.setIcon(new ImageIcon(AnadirDocs.class.getResource("/icons/empresa/aceptar 24px.png")));
 			btnOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
@@ -125,7 +129,8 @@ public class AnadirDocs extends JDialog {
 			btnOk.setText("A\u00F1adir");
 			buttonPane.add(btnOk);
 			
-			BotonAnimacion btnCanc = new BotonAnimacion();
+			btnCanc = new BotonAnimacion();
+			btnCanc.setIcon(new ImageIcon(AnadirDocs.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
 			btnCanc.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
@@ -135,5 +140,16 @@ public class AnadirDocs extends JDialog {
 			btnCanc.setText("Cancelar");
 			buttonPane.add(btnCanc);
 		}
+	}
+	
+	public void verDoc(Documento doc){
+		txtNombre.setText(doc.getNombre());
+		txaContenido.setText(doc.getContenido());
+		txtNombre.setEditable(false);
+		txaContenido.setEditable(false);
+		btnOk.setVisible(false);
+		btnCanc.setText("Salir");
+		btnImport.setVisible(false);
+		btnCanc.setIcon(new ImageIcon(AnadirDocs.class.getResource("/icons/empresa/Exit 24px.png")));
 	}
 }

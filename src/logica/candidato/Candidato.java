@@ -341,4 +341,8 @@ public class Candidato implements Comparable<Candidato>{
 		
 		return (int)ChronoUnit.YEARS.between(fechaCi, hoy);
 	}
+	
+	public String getNombreBus(){
+		return this.nombre.toUpperCase();
+	}
 }
