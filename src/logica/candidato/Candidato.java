@@ -309,4 +309,27 @@ public class Candidato implements Comparable<Candidato>{
 			throw new IllegalArgumentException("Menor de 18 a—os");
 		
 	}
+	
+	public int getEdad(){	
+		int diaSiglo = Character.getNumericValue(ci.charAt(6));
+		String anio = null;
+		
+		if(diaSiglo <= 5  && diaSiglo >=0)
+			anio = "19" + ci.substring(0, 2);
+		else if(diaSiglo <= 8  && diaSiglo >=6)
+			anio = "20" + ci.substring(0, 2);
+		
+		int mesInt = Integer.parseInt(ci.substring(2, 4));
+		Month mes = Month.of(mesInt);
+		
+		int cantDias = mes.length(false);
+		int dia = Integer.parseInt(ci.substring(4, 6));
+		
+		int anioInt = Integer.parseInt(anio);
+		
+		LocalDate fechaCi = LocalDate.of(anioInt, mes, dia);
+		LocalDate hoy = LocalDate.now();
+		
+		return (int)ChronoUnit.YEARS.between(fechaCi, hoy);
+	}
 }

@@ -39,6 +39,7 @@ import org.w3c.dom.css.RGBColor;
 
 import util.CitasTableModel;
 import util.EmpresasTableModel;
+import util.LongevosTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -49,6 +50,8 @@ public class Reportes extends JDialog {
 	
 	private static EmpresasTableModel tableModel;
 	private JTable tableEmps;
+	private JTable tableLongevos;
+	private static LongevosTableModel tableModelL;
 
 	private ArrayList<Empleo> empleos(){
 
@@ -68,7 +71,6 @@ public class Reportes extends JDialog {
 			}
 		}
 		
-		System.out.println(empleos.size());
 		return empleos;
 	}
 
@@ -94,15 +96,20 @@ public class Reportes extends JDialog {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Reportes.class.getResource("/images/empresa/curriculum 64px.png")));
-		setBounds(100, 100, 599, 531);
+		setBounds(100, 100, 681, 531);
 		getContentPane().setLayout(null);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 467, 583, 35);
+			buttonPane.setBounds(0, 467, 675, 35);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
 				BotonAnimacion btnmcnAceptar = new BotonAnimacion();
+				btnmcnAceptar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				btnmcnAceptar.setText("Aceptar");
 				buttonPane.add(btnmcnAceptar);
 			}
@@ -111,7 +118,7 @@ public class Reportes extends JDialog {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tabbedPane.setBackground(new Color(0, 255, 255));
-		tabbedPane.setBounds(0, 0, 593, 467);
+		tabbedPane.setBounds(0, 0, 675, 467);
 		getContentPane().add(tabbedPane);
 
 		JPanel panelInfo = new JPanel();
@@ -119,14 +126,21 @@ public class Reportes extends JDialog {
 		tabbedPane.addTab("Candidatos Mas Longevos", null, panelInfo, null);
 		panelInfo.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Empleado");
+		JLabel lblNewLabel = new JLabel("Candidatos m\u00E1s Longevos");
 		lblNewLabel.setBackground(new Color(0, 204, 255));
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD | Font.ITALIC, 23));
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon(Reportes.class.getResource("/images/empresa/Usuarios 64px.png")));
-		lblNewLabel.setBounds(0, 11, 511, 73);
+		lblNewLabel.setBounds(0, 11, 670, 73);
 		panelInfo.add(lblNewLabel);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(21, 124, 531, 302);
+		panelInfo.add(scrollPane_1);
+		
+		tableLongevos = new JTable();
+		scrollPane_1.setViewportView(tableLongevos);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(135, 206, 235));
@@ -138,7 +152,7 @@ public class Reportes extends JDialog {
 			panelCitas.setLayout(null);
 
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 145, 568, 268);
+			scrollPane.setBounds(10, 145, 650, 268);
 			panelCitas.add(scrollPane);
 			
 			tableEmps = new JTable();
@@ -156,16 +170,69 @@ public class Reportes extends JDialog {
 			lblNewLabel_1.setIcon(new ImageIcon(Reportes.class.getResource("/images/empresa/Calendario 64px.png")));
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD | Font.ITALIC, 23));
-			lblNewLabel_1.setBounds(0, 11, 511, 70);
+			lblNewLabel_1.setBounds(0, 11, 670, 70);
 			panelCitas.add(lblNewLabel_1);
 		}
 
 		JPanel panel1 = new JPanel();
 		panel1.setBackground(new Color(135, 206, 235));
 		tabbedPane.addTab("Mayores Ofertantes", null, panel1, null);
+		tableModelL = new LongevosTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int filas, int columnas){
+				return false;
+			}
+		};
+		tableLongevos.setModel(tableModelL);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\MYKE\\Pictures\\Empleadora DPOO\\flecha A 60px.png"));
+		lblNewLabel_2.setBounds(572, 307, 72, 59);
+		panelInfo.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("E");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Roboto Black", Font.BOLD, 26));
+		lblNewLabel_3.setBounds(585, 174, 46, 45);
+		panelInfo.add(lblNewLabel_3);
+		
+		JLabel lblD = new JLabel("D");
+		lblD.setHorizontalAlignment(SwingConstants.CENTER);
+		lblD.setFont(new Font("Roboto Black", Font.BOLD, 26));
+		lblD.setBounds(585, 204, 46, 45);
+		panelInfo.add(lblD);
+		
+		JLabel lblA = new JLabel("A");
+		lblA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA.setFont(new Font("Roboto Black", Font.BOLD, 26));
+		lblA.setBounds(585, 234, 46, 45);
+		panelInfo.add(lblA);
+		
+		JLabel lblD_1 = new JLabel("D");
+		lblD_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblD_1.setFont(new Font("Roboto Black", Font.BOLD, 26));
+		lblD_1.setBounds(585, 264, 46, 45);
+		panelInfo.add(lblD_1);
 		
 		mejorPagados();
+		masLong();
 	}
-
-
+	
+	private void masLong(){
+			Object datos[] = new Object[4];
+			int num = 1;
+			ArrayList<Candidato> longev = Empleadora.getInstancia().candidatosMasLongevos();
+			
+			if(!longev.isEmpty())
+				for(Candidato c : longev){
+					datos[0] = num++;
+					datos[1] = c.getCi();
+					datos[2] = c.getNombre();
+					datos[3] = c.getEdad();
+					
+					tableModelL.addRow(datos);
+		}
+	}
 }

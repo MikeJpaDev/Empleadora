@@ -6,6 +6,8 @@ import java.util.Collections;
 
 import javax.swing.JOptionPane;
 
+import comparadores.CompararCandPorEdad;
+
 import UI.admin.jdialog.EditarEmpresa;
 import UI.admin.jdialog.VerEmpresa;
 import logica.candidato.Candidato;
@@ -262,4 +264,12 @@ public class Empleadora {
 			c.getCitas().remove(cita);
 	}
 	
+	
+	//Reportes Candidatos
+	
+	public ArrayList<Candidato> candidatosMasLongevos(){
+		ArrayList<Candidato> longevos = new ArrayList<Candidato>(candidatos);
+		Collections.sort(longevos,new CompararCandPorEdad());
+		return longevos;
+	}
 }

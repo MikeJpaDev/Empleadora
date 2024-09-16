@@ -53,7 +53,6 @@ public class PanelCitas extends JPanel {
 		Object datos[] = new Object[5];
 		int num = 1;
 		String fechaFormateada = null;
-		int cantCand = 0;
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
 		if(!(Empleadora.getInstancia().getCitas().isEmpty()))
@@ -64,7 +63,7 @@ public class PanelCitas extends JPanel {
 				datos[1] = fechaFormateada;
 				datos[2] = c.getEmpleo().getID();
 				datos[3] = c.getEmpleo().getRamaEmp().toString();;
-				datos[4] = cantCand;
+				datos[4] = c.getCandidatos().size();
 				tableModel.addRow(datos);
 			}
 	}
@@ -72,7 +71,8 @@ public class PanelCitas extends JPanel {
 
 	//Eliminar una cita
 	private void eliminarCita(int index){
-		Empleadora.getInstancia().eliminarCita(Empleadora.getInstancia().getCitas().get(index));
+		Cita cita = Empleadora.getInstancia().getCitas().get(index);
+		Empleadora.getInstancia().eliminarCita(cita);
 		llenarTabla();
 	}
 	
