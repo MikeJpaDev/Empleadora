@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_74"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="src/api-2024.06.08.jar" sourcepath="src/api-2024.06.08.jar"/>
 	<classpathentry kind="lib" path="src/flatlaf-3.5.1.jar"/>
 	<classpathentry kind="lib" path="src/jcalendar-1.4.jar"/>
