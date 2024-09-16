@@ -120,7 +120,7 @@ public class AnadirDocs extends JDialog {
 				}
 			});
 			btnOk.setFont(new Font("Roboto", Font.PLAIN, 14));
-			btnOk.setText("OK");
+			btnOk.setText("A\u00F1adir");
 			buttonPane.add(btnOk);
 			
 			BotonAnimacion btnCanc = new BotonAnimacion();

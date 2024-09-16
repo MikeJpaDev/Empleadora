@@ -15,6 +15,11 @@ public class CandidatoEspecifico extends Candidato {
 		return documentos;
 	}
 	
+	public void setDocumentos(ArrayList<Documento> docs){
+		if(docs.isEmpty())
+			throw new IllegalArgumentException("se esta creando una candidato especiico sin documentos");
+	}
+	
 	public CandidatoEspecifico(String nombre, String dir, String telef,
 			String ci, int aniosExp, Genero genero, NivelEscolar nivelEscolar,ArrayList<Documento> docs, Rama rama,String especialidad) {
 		

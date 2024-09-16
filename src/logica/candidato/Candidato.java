@@ -74,7 +74,7 @@ public class Candidato implements Comparable<Candidato>{
 
 	private void setDir(String dir) {
 		
-		if(dir == null || dir.isEmpty())  //Comprobando nombre vacio
+		if(dir == null || dir.trim().isEmpty())  //Comprobando nombre vacio
 			throw new IllegalArgumentException("esta vacia la direccion");
 		
 		if(!dir.equalsIgnoreCase(dir.trim()))  //Espacios al principio o final
