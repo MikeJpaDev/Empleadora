@@ -188,7 +188,7 @@ public class Reportes extends JDialog {
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\MYKE\\Pictures\\Empleadora DPOO\\flecha A 60px.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/flecha A 60px.png")));
 		lblNewLabel_2.setBounds(572, 307, 72, 59);
 		panelInfo.add(lblNewLabel_2);
 		
