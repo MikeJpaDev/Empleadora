@@ -40,7 +40,6 @@ public class PanelUsuarios extends JPanel {
 
 	public PanelUsuarios() {
 		llenarComponentes();
-		prueba();
 		llenarTabla();
 	}
 
@@ -75,19 +74,6 @@ public class PanelUsuarios extends JPanel {
 	private void eliminarCandidato(int index){
 		Empleadora.getInstancia().getCandidatos().remove(index);
 		llenarTabla();
-	}
-
-	private void prueba(){
-		Candidato can = new Candidato("Juan Arturo", "Atocha", "76400063", "04010266989", 0, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.CHOFER,"asdasdasd");
-		Empleadora.getInstancia().agCandidato(can);
-
-		try{
-			Candidato can2 = new Candidato("Carlos Arturo", "Atocha", "76400063", "02010266989", 0, Genero.MASCULINO, NivelEscolar.UNIVERSITARIO,Rama.ENFERMERA,"asdasdasd");
-			Empleadora.getInstancia().agCandidato(can2);
-		}
-		catch(IllegalArgumentException e){
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
 	}
 
 	private void llenarComponentes(){

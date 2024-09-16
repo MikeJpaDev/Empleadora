@@ -258,6 +258,10 @@ public class VerCitasXUsuario extends JDialog {
 		txtRama.setBeepActivado(false);
 		txtRama.setBounds(178, 407, 292, 26);
 		panelInfo.add(txtRama);
+		
+		JPanel panelDoc = new JPanel();
+		tbdPane.addTab("Documentos", null, panelDoc, null);
+		panelDoc.setBackground(new Color(135, 206, 235));
 		{
 			JPanel panelCitas = new JPanel();
 			panelCitas.setBackground(new Color(135, 206, 235));
@@ -295,7 +299,7 @@ public class VerCitasXUsuario extends JDialog {
 						llenarTabla();
 					}
 					else
-						JOptionPane.showMessageDialog(null, "No hay Citas Disponivles", "No hay nuevas citas", 2);
+						JOptionPane.showMessageDialog(null, "No hay Citas Disponibles", "No hay nuevas citas", 2);
 				}
 			});
 			btnmcnBuscar.setFont(new Font("Roboto", Font.BOLD | Font.ITALIC, 13));

@@ -67,6 +67,8 @@ import java.util.ArrayList;
 
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class IniciarSesion extends JFrame {
 
@@ -172,9 +174,8 @@ public class IniciarSesion extends JFrame {
 		panel.add(lblCont);
 		
 		BotonAnimacion btnmcnIniciarSesin = new BotonAnimacion();
-		btnmcnIniciarSesin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		btnmcnIniciarSesin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				if(lblUser.getText().equals("admin") && lblCont.getText().equals("admin")){
 					abrirApp();
 				}
@@ -183,6 +184,11 @@ public class IniciarSesion extends JFrame {
 					lblCont.setText("");
 					lblUser.setText("");
 				}
+			}
+		});
+		btnmcnIniciarSesin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 			}
 		});
 		btnmcnIniciarSesin.setFocusPainted(false);

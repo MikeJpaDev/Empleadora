@@ -359,8 +359,8 @@ public class CrearUsuario extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					try{
 						Empleadora emp = Empleadora.getInstancia();
-						Candidato cand;
-
+						Candidato cand;					
+						todosDocs();					
 						if(documentos.isEmpty())
 							cand = new Candidato(nombre,txtDir.getText() , telef, ci, (int)spnExp.getValue() ,sexo, (NivelEscolar)cmbNvEscolar.getSelectedItem(),
 									(Rama)cmbRama.getSelectedItem(), txtEspecialidad.getText());
@@ -447,5 +447,19 @@ public class CrearUsuario extends JDialog {
 	private void eliminarDocumento(int index){
 		documentos.remove(index);
 		llenarTabla();
+	}
+	
+	private void todosDocs(){
+		int cantDocImp = cmbDocs.getItemCount() - 1;
+		int cantParcial = 0;
+		
+		for(int i = 0; i < documentos.size() && cantDocImp!=cantParcial; i++){
+			for(int j = 0; j < cantDocImp; j++)
+				if(documentos.get(i).getNombre().equalsIgnoreCase(cmbDocs.getItemAt(j).toString()))
+					cantParcial++;
+		}
+		
+		if(cantDocImp != cantParcial)
+			throw new IllegalArgumentException("Faltan Documentos Importantes Por Agregar");
 	}
 }
