@@ -84,7 +84,12 @@ public class CrearEmpresa extends JDialog {
 		boolean retorno = false;
 		
 		if(this.okDir && this.okNom && this.okTel){
-			retorno = Empleadora.getInstancia().agEmpresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
+			try{
+				retorno = Empleadora.getInstancia().agEmpresa(txtNom.getText(), txtDir.getText(), txtTel.getText(), cmbSect.getSelectedItem().toString());
+			}
+			catch(IllegalArgumentException e){
+				JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 			
 		}
 		
@@ -141,7 +146,7 @@ public class CrearEmpresa extends JDialog {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtNom.getText().isEmpty()){
+				if (txtNom.getText().isEmpty() || txtNom.getText().replaceAll(" ", "").length() == 0){
 					clicBorrar(txtNom,clickNom);
 					txtNom.setText("Introduce el Nombre");
 					clickNom = false;
@@ -174,7 +179,7 @@ public class CrearEmpresa extends JDialog {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtDir.getText().isEmpty()){
+				if (txtDir.getText().isEmpty()|| txtDir.getText().replaceAll(" ", "").length() == 0){
 					clicBorrar(txtDir,clickDir);
 					txtDir.setText("Introduce la Dirección");
 					clickDir = false;
@@ -278,9 +283,6 @@ public class CrearEmpresa extends JDialog {
 						dispose();	
 						panelEmpresas.actTabla();
 						PanelPrincipal.actualizarContadores();
-					}
-					else{
-						JOptionPane.showMessageDialog(null, "Error al Crear Empresa.\n Posibles Causas:\n 1- Campos vacíos o incorrectos.\n 2- Ya existe una empresa del mismo Nombre", "Error" , JOptionPane.ERROR_MESSAGE); 
 					}
 				}
 			});

@@ -170,6 +170,9 @@ public class Empleadora {
 				empresas.add(new Empresa(nom, dir, tel, sec));
 				retorno = true;
 			}
+			else{
+				throw new IllegalArgumentException("Ya existe la empresa");
+			}
 		}
 		else{
 			empresas.add(new Empresa(nom, dir, tel, sec));

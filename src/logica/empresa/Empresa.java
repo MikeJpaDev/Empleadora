@@ -17,6 +17,27 @@ public class Empresa {
 		return empleos.size();
 	}
 	
+	public static void validarNomyDir(String text){
+		
+		if(text.trim().length() == 0){ 
+			throw new IllegalArgumentException("El nombre o direccion esta vacio");
+		}
+		
+		for (int i = 0; i < text.length(); i++){
+			if (text.charAt(i) == ' ')
+				if (i == 0){
+					if(text.charAt(i+1) == ' ' || text.charAt(i) == ' ')
+						throw new IllegalArgumentException("El nombre o direcion no debe comenzar con espacios");
+				}
+				else if(i+1 < text.length()){
+					if(text.charAt(i+1) == ' ' || text.charAt(i-1) == ' ')
+						throw new IllegalArgumentException("Espacios Juntos");
+				}
+				else if(text.charAt(text.length()-1) == ' ')
+					throw new IllegalArgumentException("El nombre o direccion no debe terminar en espacio");
+		}
+	}
+	
 	
 	public Empresa(String nombre, String direccion, String telefeno, String sector) {
 		setNombre(nombre);
@@ -36,8 +57,13 @@ public class Empresa {
 	}
 
 	public void setNombre(String nombre) {
-		if(nombre.replaceAll(" ", "").length() != 0)
+		try{
+			validarNomyDir(nombre);
 			this.nombre = nombre;
+		}
+		catch(IllegalArgumentException e){
+			throw e;
+		}
 	}
 
 	public String getDireccion() {
@@ -45,8 +71,13 @@ public class Empresa {
 	}
 
 	public void setDireccion(String direccion) {
-		if(direccion.replaceAll(" ", "").length() != 0)
+		try{
+			validarNomyDir(direccion);
 			this.direccion = direccion;
+		}
+		catch(IllegalArgumentException e){
+			throw e;
+		}
 	}
 
 	public String getTelefeno() {
