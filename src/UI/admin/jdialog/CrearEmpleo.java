@@ -180,7 +180,7 @@ public class CrearEmpleo extends JDialog {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtEmp.getText().isEmpty()){
+				if (txtEmp.getText().isEmpty() || txtEmp.getText().replaceAll(" ", "").length() == 0){
 					clicBorrar(txtEmp,clickEmp);
 					txtEmp.setText("Introduce el Nombre");
 					clickEmp = false;
