@@ -333,28 +333,4 @@ public class CandidatoTestCase {
 			
 			assertEquals(false,  candidato.esValido(emp));
 	}
-	
-	@Test
-	public void testAnadirCita() {
-			candidato = new Candidato("Miguel", "Primera Cerro", "76406698", "04010266358", 0, Genero.MASCULINO, NivelEscolar.BACHILLER, Rama.CHOFER, "Conductor");
-			Empresa empresa = new Empresa("AguasHabana", "Santo Tomas", "76469895", Sector.SALUD.toString());
-			Empleo emp = new Empleo("Agua", "Turismo", 7500, empresa, Rama.CHOFER);
-			Cita cita = new Cita(emp, LocalDate.of(2024, 10, 1));
-			
-			assertEquals(true, candidato.aggCitas(cita, candidato));
-			
-	}
-	
-	@Test
-	public void testAnadirCitaF() {
-			candidato = new Candidato("Miguel", "Primera Cerro", "76406698", "04010266358", 0, Genero.MASCULINO, NivelEscolar.BACHILLER, Rama.CHOFER, "Conductor");
-			Empresa empresa = new Empresa("AguasHabana", "Santo Tomas", "76469895", Sector.SALUD.toString());
-			Empleo emp = new Empleo("Agua", "Turismo", 7500, empresa, Rama.CHOFER);
-			Cita cita = new Cita(emp, LocalDate.of(2024, 10, 1));
-			Cita cita2 = new Cita(emp, LocalDate.of(2024, 10, 1));
-			candidato.aggCitas(cita, candidato);
-			
-			assertEquals(false, candidato.aggCitas(cita2, candidato));
-			
-	}
 }

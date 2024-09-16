@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import util.CitasTableModel;
 import util.EmpresasTableModel;
 import UI.admin.jdialog.CrearCitaPtllCita;
+import UI.admin.jdialog.VerCita;
 import componentesVisuales.BotonAnimacion;
 
 import javax.swing.SwingConstants;
@@ -155,7 +156,7 @@ public class PanelCitas extends JPanel {
 		btnAñadirCita.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnAñadirCita.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnAñadirCita.setFocusPainted(false);
-		btnAñadirCita.setBounds(690, 130, 134, 42);
+		btnAñadirCita.setBounds(690, 210, 134, 42);
 		add(btnAñadirCita);
 		
 		BotonAnimacion btnBorrar = new BotonAnimacion();
@@ -174,8 +175,30 @@ public class PanelCitas extends JPanel {
 		btnBorrar.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnBorrar.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnBorrar.setFocusPainted(false);
-		btnBorrar.setBounds(690, 196, 134, 42);
+		btnBorrar.setBounds(690, 275, 134, 42);
 		add(btnBorrar);
+		
+		BotonAnimacion btnVer = new BotonAnimacion();
+		btnVer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tableCitas.getSelectedRow() != -1){
+					try {
+						VerCita dialog = new VerCita(Empleadora.getInstancia().getCitas().get(tableCitas.getSelectedRow()));
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			}
+		});
+		btnVer.setIcon(new ImageIcon(PanelCitas.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
+		btnVer.setText("Ver");
+		btnVer.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnVer.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnVer.setFocusPainted(false);
+		btnVer.setBounds(690, 144, 134, 42);
+		add(btnVer);
 		
 		
 		llenarTabla();

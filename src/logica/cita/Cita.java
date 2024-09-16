@@ -1,5 +1,6 @@
 package logica.cita;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import logica.candidato.Candidato;
@@ -40,6 +41,12 @@ public class Cita {
 			throw new IllegalArgumentException("No se puede agregar una cita de una fecha pasada");
 		else if(hoy.compareTo(fecha) == 0)
 			throw new IllegalArgumentException("No se puede agregar una cita para el mismo dia actual");
+		
+		long diasDiferencia = ChronoUnit.DAYS.between(hoy, fecha);
+		
+		if(diasDiferencia > 31)
+			throw new IllegalArgumentException("Planificar una cita tiene un maximo de 31 dias desde la fecha actual");
+		
 		this.fecha = fecha;
 	}
 	
