@@ -31,6 +31,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class CrearCitaPtllCita extends JDialog {
 
@@ -41,6 +43,7 @@ public class CrearCitaPtllCita extends JDialog {
 	private JCalendar calendar;
 
 	public CrearCitaPtllCita(ArrayList<Empresa> empresas) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CrearCitaPtllCita.class.getResource("/images/empresa/Calendario 64px.png")));
 		this.empresas = empresas;
 		setTitle("Crear Cita");
 		setBounds(100, 100, 465, 430);
@@ -89,6 +92,7 @@ public class CrearCitaPtllCita extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
 			BotonAnimacion btnmcnAceptar = new BotonAnimacion();
+			btnmcnAceptar.setIcon(new ImageIcon(CrearCitaPtllCita.class.getResource("/icons/empresa/aceptar 24px.png")));
 			btnmcnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
@@ -112,6 +116,12 @@ public class CrearCitaPtllCita extends JDialog {
 			buttonPane.add(btnmcnAceptar);
 			
 			BotonAnimacion btnmcnCancelar = new BotonAnimacion();
+			btnmcnCancelar.setIcon(new ImageIcon(CrearCitaPtllCita.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
+			btnmcnCancelar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnmcnCancelar.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnmcnCancelar.setText("Cancelar");
 			buttonPane.add(btnmcnCancelar);

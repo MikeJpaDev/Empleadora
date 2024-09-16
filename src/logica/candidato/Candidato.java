@@ -233,6 +233,10 @@ public class Candidato implements Comparable<Candidato>{
 		return valido;
 	}
 	
+	public boolean aptoEmpleo(Cita cita){
+		return (disponible(cita.getFecha()) && esValido(cita.getEmpleo()));
+	}
+	
 	public static void validarNombre(String nombre){
 		
 		if(nombre == null || nombre.trim().isEmpty())  //Comprobando nombre vacio

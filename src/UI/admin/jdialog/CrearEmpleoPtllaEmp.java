@@ -57,6 +57,7 @@ import javax.swing.SwingConstants;
 
 
 
+
 import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.event.FocusAdapter;
@@ -115,8 +116,10 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 		iniciarComponetes();
 	}
 	
-	private void agEmpleo(Empresa emp){
-		emp.agEmpleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp, (Rama)cmbRamas.getSelectedItem());
+	private Empleo agEmpleo(Empresa emp){
+		Empleo empleo = new Empleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp, (Rama)cmbRamas.getSelectedItem());
+		emp.getEmpleos().add(empleo);
+		return empleo;
 	}
 	
 	private void clicBorrar(JTextField jtext, boolean click){
@@ -286,8 +289,16 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(okEmp && okSal && cmbEmpleadoras.getSelectedIndex() != -1){
-						agEmpleo(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()));
+						Empleo empleo = agEmpleo(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()));
 						dispose();
+						
+						
+						int respuesta = JOptionPane.showConfirmDialog(null, "Desea agendar una cita", "Confirmación", JOptionPane.YES_NO_OPTION);
+						if (respuesta == JOptionPane.YES_OPTION){
+							CrearCita cita = new CrearCita(empleo);
+							cita.setVisible(true);
+						}
+						
 						PanelEmpleos.actTabla();
 						PanelPrincipal.actualizarContadores();
 					}

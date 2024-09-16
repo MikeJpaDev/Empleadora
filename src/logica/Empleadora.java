@@ -293,6 +293,16 @@ public class Empleadora {
 		return encontrados;
 	}
 	
+	public ArrayList<Candidato> candiatosDisponibles(Cita cita){
+		ArrayList<Candidato> disponible = new ArrayList<Candidato>();
+		
+		for(Candidato c :  candidatos)
+			if(c.aptoEmpleo(cita))
+				disponible.add(c);
+		
+		return disponible;
+	}
+	
 	//Logica Citas
 	
 	public void eliminarCandidaroCita(Cita cita, Candidato cand){
