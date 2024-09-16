@@ -274,7 +274,7 @@ public class PanelUsuarios extends JPanel {
 		botonAnimacion_4.setText("Borrar");
 		botonAnimacion_4.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion_4.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_4.setBounds(697, 319, 134, 42);
+		botonAnimacion_4.setBounds(697, 325, 134, 42);
 		add(botonAnimacion_4);
 	}
 
