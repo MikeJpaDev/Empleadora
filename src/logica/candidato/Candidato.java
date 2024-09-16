@@ -99,6 +99,9 @@ public class Candidato implements Comparable<Candidato>{
 
 	private void setAniosExp(int aniosExp) {
 		
+		if(aniosExp < 0)
+			throw new IllegalArgumentException("Los años de Experiencia no pueden ser negativos");
+		
 		int diaSiglo = Character.getNumericValue(ci.charAt(6));
 		
 		String anio = null;
@@ -117,7 +120,7 @@ public class Candidato implements Comparable<Candidato>{
 		if (aniosExp >= 0 && aniosExp<= difAnios)
 			this.aniosExp = aniosExp;
 		else
-			throw new IllegalArgumentException("años de experiencias no volido");
+			throw new IllegalArgumentException("Los años de experiencia no pueden ser mayor que los años desde que se cumplio la mayoria de edad");
 	}
 	private void setGenero(Genero genero) {
 		this.genero = genero;
@@ -133,6 +136,10 @@ public class Candidato implements Comparable<Candidato>{
 	private void setEspecialidad(String especialidad) {
 		if(especialidad.trim().isEmpty())
 			throw new IllegalArgumentException("La especialidad esta vacia");
+		if(!especialidad.equalsIgnoreCase(especialidad.trim()))  //Espacios al principio o final
+			throw new IllegalArgumentException("En la especialidad no deje espacios vacios al inicio o el fin");	
+		if(!especialidad.equalsIgnoreCase(especialidad.replaceAll("  ", "")))
+			throw new IllegalArgumentException("dos espacios en blanco juntos en especialidad");
 		this.especialidad = especialidad;
 	}
 	
@@ -266,16 +273,16 @@ public class Candidato implements Comparable<Candidato>{
 		
 		
 		String anio = null;
-		if(ci == null || ci.isEmpty())
-			throw new IllegalArgumentException("esta vacio el campo del ci");
+		if(ci == null || ci.trim().isEmpty())
+			throw new IllegalArgumentException("Esta vacio el campo del carnet de identidad");
 		
 		String test = new String(ci); //Comprobando caracteres especiales
 		for(int i = 0; i < test.length(); i++)
 			if(!Character.isDigit(test.charAt(i)))
-				throw new IllegalArgumentException("el carnet de identidad contiene caracteres no numericos");
+				throw new IllegalArgumentException("El carnet de identidad contiene caracteres no númericos");
 		
 		if(ci.length() != 11)
-			throw new IllegalArgumentException("La longitud del CI no es correcta");
+			throw new IllegalArgumentException("La longitud del Carnet de Identidad no es correcta");
 		
 		int diaSiglo = Character.getNumericValue(ci.charAt(6));
 		
@@ -284,19 +291,19 @@ public class Candidato implements Comparable<Candidato>{
 		else if(diaSiglo <= 8  && diaSiglo >=6)
 			anio = "20" + ci.substring(0, 2);
 		else
-			throw new IllegalArgumentException("El septimo digito del ci es incorrecto");
+			throw new IllegalArgumentException("El septimo dígito del Carnet de Identidad es incorrecto");
 		
 		int mesInt = Integer.parseInt(ci.substring(2, 4));
 		
 		if(mesInt < 1 || mesInt > 12)
-			throw new IllegalArgumentException("El mes del ci es incorrecto");
+			throw new IllegalArgumentException("El mes del Carnet de Identidad es incorrecto");
 		
 		Month mes = Month.of(mesInt);
 		int cantDias = mes.length(false);
 		int dia = Integer.parseInt(ci.substring(4, 6));
 		
 		if(dia <=0 || dia> cantDias)
-			throw new IllegalArgumentException("Los dias no coinciden con el mes del ci, es incorrecto");
+			throw new IllegalArgumentException("Los dias no coinciden con la duración del mes del Carnet de Identidad");
 		
 		int anioInt = Integer.parseInt(anio);
 		
@@ -304,7 +311,7 @@ public class Candidato implements Comparable<Candidato>{
 		LocalDate hoy = LocalDate.now();
 		
 		if(hoy.compareTo(fechaCi) <= 0)
-			throw new IllegalArgumentException("fecha mayor que la actual en el Ci");
+			throw new IllegalArgumentException("Fecha mayor que la actual en el Carnet de Identidad");
 		
 		int difAnios = (int)ChronoUnit.YEARS.between(fechaCi, hoy);
 		
@@ -325,7 +332,6 @@ public class Candidato implements Comparable<Candidato>{
 		int mesInt = Integer.parseInt(ci.substring(2, 4));
 		Month mes = Month.of(mesInt);
 		
-		int cantDias = mes.length(false);
 		int dia = Integer.parseInt(ci.substring(4, 6));
 		
 		int anioInt = Integer.parseInt(anio);
