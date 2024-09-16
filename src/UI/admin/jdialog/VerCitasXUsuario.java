@@ -27,12 +27,15 @@ import javax.swing.SwingConstants;
 
 import logica.Empleadora;
 import logica.candidato.Candidato;
+import logica.candidato.CandidatoEspecifico;
+import logica.candidato.Documento;
 import logica.cita.Cita;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import util.CitasTableModel;
+import util.DocumentosTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -53,6 +56,8 @@ public class VerCitasXUsuario extends JDialog {
 	private static CitasTableModel tableModel;
 	private JTabbedPane tbdPane;
 	private JTextFieldModificado txtRama;
+	private JTable tableDocs;
+	private static DocumentosTableModel tableModelD;
 
 
 
@@ -75,15 +80,17 @@ public class VerCitasXUsuario extends JDialog {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VerCitasXUsuario.class.getResource("/images/empresa/curriculum 64px.png")));
-		setBounds(100, 100, 522, 563);
+		setBounds(100, 100, 522, 575);
 		getContentPane().setLayout(null);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 499, 516, 35);
+			buttonPane.setBounds(0, 499, 516, 47);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
 				BotonAnimacion btnmcnAceptar = new BotonAnimacion();
+				btnmcnAceptar.setIcon(new ImageIcon(VerCitasXUsuario.class.getResource("/icons/empresa/aceptar 24px.png")));
+				btnmcnAceptar.setFont(new Font("Tahoma", Font.BOLD, 13));
 				btnmcnAceptar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
@@ -262,6 +269,43 @@ public class VerCitasXUsuario extends JDialog {
 		JPanel panelDoc = new JPanel();
 		tbdPane.addTab("Documentos", null, panelDoc, null);
 		panelDoc.setBackground(new Color(135, 206, 235));
+		panelDoc.setLayout(null);
+		
+		JLabel label_3 = new JLabel("Documento");
+		label_3.setIcon(new ImageIcon(VerCitasXUsuario.class.getResource("/images/empresa/Documetnto 50px.png")));
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setFont(new Font("Roboto Black", Font.BOLD, 20));
+		label_3.setBounds(0, 11, 511, 55);
+		panelDoc.add(label_3);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(30, 118, 350, 327);
+		panelDoc.add(scrollPane_1);
+		
+		tableDocs = new JTable();
+		tableModelD = new DocumentosTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int filas, int columnas){
+				return false;
+			}
+		};
+		tableDocs.setModel(tableModelD);
+		scrollPane_1.setViewportView(tableDocs);
+		
+		BotonAnimacion btnmcnVer = new BotonAnimacion();
+		btnmcnVer.setIcon(new ImageIcon(VerCitasXUsuario.class.getResource("/icons/empresa/binoculars-solid-36.png")));
+		btnmcnVer.setFont(new Font("Roboto Black", Font.PLAIN, 16));
+		btnmcnVer.setText("Ver");
+		btnmcnVer.setBounds(390, 138, 109, 41);
+		panelDoc.add(btnmcnVer);
+		
+		BotonAnimacion btnmcnEditar = new BotonAnimacion();
+		btnmcnEditar.setIcon(new ImageIcon(VerCitasXUsuario.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
+		btnmcnEditar.setFont(new Font("Roboto Black", Font.PLAIN, 16));
+		btnmcnEditar.setText("Editar");
+		btnmcnEditar.setBounds(390, 207, 111, 41);
+		panelDoc.add(btnmcnEditar);
 		{
 			JPanel panelCitas = new JPanel();
 			panelCitas.setBackground(new Color(135, 206, 235));
@@ -324,11 +368,15 @@ public class VerCitasXUsuario extends JDialog {
 
 		llenarCampos();
 		llenarTabla();
+		if(candidato instanceof CandidatoEspecifico)
+			llenarTablaDoc();
+		else
+			tbdPane.removeTabAt(1);
 	}
 
 
 
-	//Limpiar Tabla 
+	//Limpiar Tabla Citas
 
 	private void limpiarTabla(){
 		int cantFil = tableModel.getRowCount()-1;
@@ -336,8 +384,17 @@ public class VerCitasXUsuario extends JDialog {
 			tableModel.removeRow(i);
 		}
 	}
+	
+	//Limpiar Tabla Documentos
+	
+	private void limpiarTablaDocs(){
+		int cantFil = tableModelD.getRowCount()-1;
+		for(int i=cantFil ; i>=0 ; i--){ 
+			tableModelD.removeRow(i);
+		}
+	}
 
-	//Llenar Tabla
+	//Llenar Tabla Citas
 
 	public void llenarTabla(){
 		
@@ -358,9 +415,22 @@ public class VerCitasXUsuario extends JDialog {
 				tableModel.addRow(datos);
 			}
 	}
+	
+	//Llenar Tabla Documentos
+	public void llenarTablaDoc(){
+		limpiarTablaDocs();
+		Object datos[] = new Object[2];
+		int num = 1;
+
+		for(Documento d : ((CandidatoEspecifico)candidato).getDocumentos()){
+			datos[0] = num++;
+			datos[1] = d.getNombre();
+			tableModelD.addRow(datos);
+		}
+	}
 
 
-	//Eliminar un Candidato
+	//Eliminar una Cita
 	private void eliminarCita(int index){
 		Empleadora.getInstancia().eliminarCandidaroCita(candidato.getCitas().get(index), candidato);
 		llenarTabla();
@@ -371,4 +441,6 @@ public class VerCitasXUsuario extends JDialog {
 	public void cambiarVentanaInicial(int index){
 		tbdPane.setSelectedIndex(index);
 	}
+	
+	
 }

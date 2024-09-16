@@ -377,7 +377,12 @@ public class CrearUsuario extends JDialog {
 							VerCitasXUsuario dialog = new VerCitasXUsuario(cand);
 							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 							dialog.setLocationRelativeTo(null);
-							dialog.cambiarVentanaInicial(1);
+							int index = 1;
+							
+							if(cand instanceof CandidatoEspecifico)
+								index = 2;
+							
+							dialog.cambiarVentanaInicial(index);
 							dialog.setVisible(true);
 						} catch (Exception e1) {
 							e1.printStackTrace();
