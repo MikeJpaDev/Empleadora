@@ -79,24 +79,24 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 	private JTextFieldModificado txtSect;
 	private boolean clickSal = false;
 	private boolean okSal = false;
-	
+
 	private boolean clickEmp = false;
 	private boolean okEmp = false;
 	private JTextFieldModificado txtEmp;
 	private JComboBox<Rama> cmbRamas;
 	private JComboBox<String> cmbEmpleadoras;
-	
+
 	private void getEmpresasToCmb(JComboBox<String> cmb){
 		for(Empresa emp:Empleadora.getInstancia().getEmpresas()){
 			cmb.addItem(emp.getNombre());
 		}
 	}
-	
-	
+
+
 	private void getRamas(Empresa emp, JComboBox<Rama> cmb){
 		cmb.removeAllItems();
 		ArrayList<Rama> ramas;
-		
+
 		if(emp.getSector().equalsIgnoreCase(Sector.EDUCACION.toString())){
 			ramas = Rama.getRamasEducacion();
 		}
@@ -106,7 +106,7 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 		else{
 			ramas = Rama.getRamasTurPriv();
 		}
-		
+
 		for (Rama r : ramas){
 			cmbRamas.addItem(r);
 		}
@@ -115,13 +115,13 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 	public CrearEmpleoPtllaEmp() {
 		iniciarComponetes();
 	}
-	
+
 	private Empleo agEmpleo(Empresa emp){
 		Empleo empleo = new Empleo(txtEmp.getText(), emp.getSector(), Double.parseDouble(txtSal.getText()), emp, (Rama)cmbRamas.getSelectedItem());
 		emp.getEmpleos().add(empleo);
 		return empleo;
 	}
-	
+
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
 			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -131,11 +131,11 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
-	
+
 	private boolean verifPuntos(String txt){
 		boolean retorno = true;
 		int cont = 0;
-		
+
 		for(int i = 0; i < txt.length() && cont <= 1; i++){
 			if (txt.charAt(i) == '.'){
 				cont++;
@@ -144,7 +144,7 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 				retorno = false;
 			}
 		}
-		
+
 		return retorno;
 	}
 
@@ -171,12 +171,12 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 			lblNombre.setBounds(10, 132, 111, 26);
 			contentPanel.add(lblNombre);
 		}
-		
+
 		JLabel lblEmpleo = new JLabel("Empleo:");
 		lblEmpleo.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblEmpleo.setBounds(10, 95, 111, 26);
 		contentPanel.add(lblEmpleo);
-		
+
 		txtEmp = new JTextFieldModificado();
 		txtEmp.setLimite(25);
 		txtEmp.setValidacionPersonalizada("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ");
@@ -207,7 +207,7 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 		txtEmp.setBeepActivado(false);
 		txtEmp.setBounds(131, 94, 311, 26);
 		contentPanel.add(txtEmp);
-		
+
 		txtSect = new JTextFieldModificado();
 		txtSect.setTipoValidacion(2);
 		txtSect.setLimite(8);
@@ -284,23 +284,26 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 					dispose();
 				}
 			});
-			
+
 			BotonAnimacion btnmcnCrear = new BotonAnimacion();
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(okEmp && okSal && cmbEmpleadoras.getSelectedIndex() != -1){
-						Empleo empleo = agEmpleo(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()));
-						dispose();
-						
-						
-						int respuesta = JOptionPane.showConfirmDialog(null, "Desea agendar una cita", "Confirmación", JOptionPane.YES_NO_OPTION);
-						if (respuesta == JOptionPane.YES_OPTION){
-							CrearCita cita = new CrearCita(empleo);
-							cita.setVisible(true);
+						try{
+							Empleo empleo = agEmpleo(Empleadora.getInstancia().getEmpresas().get(cmbEmpleadoras.getSelectedIndex()));
+							int respuesta = JOptionPane.showConfirmDialog(null, "Desea agendar una cita", "Confirmación", JOptionPane.YES_NO_OPTION);
+							if (respuesta == JOptionPane.YES_OPTION){
+								CrearCita cita = new CrearCita(empleo);
+								cita.setVisible(true);
+							}
+
+							PanelEmpleos.actTabla();
+							PanelPrincipal.actualizarContadores();
+							dispose();
 						}
-						
-						PanelEmpleos.actTabla();
-						PanelPrincipal.actualizarContadores();
+						catch(Exception e1){
+							JOptionPane.showMessageDialog(rootPane, e1.getMessage());
+						}
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Verifique los Datos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -317,12 +320,12 @@ public class CrearEmpleoPtllaEmp extends JDialog {
 			btnCancelar.setText("Cancelar");
 			btnCancelar.setBorderPainted(false);
 			buttonPane.add(btnCancelar);
-			
+
 			JLabel lblRama = new JLabel("Rama: ");
 			lblRama.setFont(new Font("Arial", Font.PLAIN, 18));
 			lblRama.setBounds(10, 243, 92, 26);
 			contentPanel.add(lblRama);
-			
+
 			cmbRamas = new JComboBox<Rama>();
 			cmbRamas.setBorder(null);
 			cmbRamas.setBounds(131, 243, 311, 26);

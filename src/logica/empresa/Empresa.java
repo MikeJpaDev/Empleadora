@@ -86,7 +86,6 @@ public class Empresa {
 	}
 
 	public void setTelefeno(String telefeno) {
-		if(telefeno.replaceAll(" ", "").length() != 0 && telefeno.replaceAll(" ", "").length() < 8)
 			this.telefeno = telefeno;
 	}
 
