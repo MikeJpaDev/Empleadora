@@ -47,46 +47,78 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Reportes extends JDialog {
-	
+
 	private static EmpresasTableModel tableModel;
 	private JTable tableEmps;
 	private JTable tableLongevos;
 	private static LongevosTableModel tableModelL;
+	private JTable tableOfertantes;
+	static int cont = 1;
+
+	static Object[] datos = new Object[6];
 
 	private ArrayList<Empleo> empleos(){
 
 		ArrayList<Empleo> empleos = new ArrayList<>();
-		Double sal = Double.MIN_VALUE;
 
 		for (Empresa e: Empleadora.getInstancia().getEmpresas()){
 			for (Empleo emp: e.getEmpleos()){
-				if(emp.getSalario() > sal){
-					empleos.clear();
-					sal = (Double)emp.getSalario();
-					empleos.add(emp);
-				}
-				else if(emp.getSalario() == sal){
-					empleos.add(emp);
-				}				
-			}
+				empleos.add(emp);
+			}				
 		}
-		
+
+
 		return empleos;
+	}
+
+	private static void limpiarJTable(){
+		int a = tableModel.getRowCount()-1;
+		cont = 1;
+		for(int i=a;i>=0;i--){ 
+			tableModel.removeRow(i);
+		}
+	}
+
+	public static void actTabla(ArrayList<Empresa> empresas){
+		limpiarJTable();
+		for(Empresa emps: empresas){
+			datos[0] = cont++;
+			datos[1] = emps.getNombre();
+			datos[2] = emps.getDireccion();
+			datos[3] = emps.getTelefeno();
+			datos[4] = emps.getSector();
+			datos[5] = emps.getTamArray();
+			tableModel.addRow(datos);
+		}
 	}
 
 	public void mejorPagados(){
 
-		Object[] datos = new Object[6];
-		int cont = 1;
+		//int cont = 1;
 		ArrayList<Empleo> empleos = empleos();
+		Double sal = Double.MIN_VALUE;
 		for (Empleo p: empleos){
-			datos[0] = cont++;
-			datos[1] = p.getID();
-			datos[2] = p.getRama();
-			datos[3] = "$" + p.getSalario();
-			datos[4] = p.getEmpOfertante().getNombre();
-			datos[5] = p.getRamaEmp();
-			tableModel.addRow(datos);
+			if(p.getSalario() > sal){
+				sal = p.getSalario();
+				limpiarJTable();
+				datos[0] = cont++;
+				datos[1] = p.getID();
+				datos[2] = p.getRama();
+				datos[3] = "$" + p.getSalario();
+				datos[4] = p.getEmpOfertante().getNombre();
+				datos[5] = p.getRamaEmp();
+				tableModel.addRow(datos);
+			}
+			else if(p.getSalario() == sal){
+				sal = p.getSalario();
+				datos[0] = cont++;
+				datos[1] = p.getID();
+				datos[2] = p.getRama();
+				datos[3] = "$" + p.getSalario();
+				datos[4] = p.getEmpOfertante().getNombre();
+				datos[5] = p.getRamaEmp();
+				tableModel.addRow(datos);
+			}
 		}
 	}
 
@@ -134,17 +166,74 @@ public class Reportes extends JDialog {
 		lblNewLabel.setIcon(new ImageIcon(Reportes.class.getResource("/images/empresa/Usuarios 64px.png")));
 		lblNewLabel.setBounds(0, 11, 670, 73);
 		panelInfo.add(lblNewLabel);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(21, 124, 531, 302);
 		panelInfo.add(scrollPane_1);
-		
+
 		tableLongevos = new JTable();
 		scrollPane_1.setViewportView(tableLongevos);
+		tableModel = new EmpresasTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int filas, int columnas){
+				return false;
+			}
+		};
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(135, 206, 235));
 		tabbedPane.addTab("Candidatos Con Mas Citas", null, panel, null);
+
+		JPanel panelMayoresOfertantes = new JPanel();
+		panelMayoresOfertantes.setBackground(new Color(135, 206, 235));
+		tabbedPane.addTab("Mayores Ofertantes", null, panelMayoresOfertantes, null);
+		panelMayoresOfertantes.setLayout(null);
+
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 90, 650, 270);
+		panelMayoresOfertantes.add(scrollPane_2);
+
+		tableOfertantes = new JTable();
+		scrollPane_2.setViewportView(tableOfertantes);
+
+		tableOfertantes.setModel(tableModel);
+
+		JLabel lblMayoresOfertantes = new JLabel("Mayores Ofertantes");
+		lblMayoresOfertantes.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
+		lblMayoresOfertantes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMayoresOfertantes.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 23));
+		lblMayoresOfertantes.setBounds(10, 11, 650, 70);
+		panelMayoresOfertantes.add(lblMayoresOfertantes);
+
+		BotonAnimacion botonAnimacion = new BotonAnimacion();
+		botonAnimacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Empresa> mayoresOfertantes = new ArrayList<>();
+				int mayCantOfertas = Integer.MIN_VALUE;
+
+				for(Empresa emp : Empleadora.getInstancia().getEmpresas()){
+					if(emp.getEmpleos().size() == mayCantOfertas){
+						mayoresOfertantes.add(emp);
+					}
+					else if(emp.getEmpleos().size() > mayCantOfertas){
+						mayoresOfertantes.clear();
+						mayCantOfertas = emp.getEmpleos().size();
+						mayoresOfertantes.add(emp);
+					}
+				}
+
+				System.out.println(mayoresOfertantes.size());
+				actTabla(mayoresOfertantes);
+			}
+		});
+		botonAnimacion.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/Buscar 24px.png")));
+		botonAnimacion.setText("Buscar");
+		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
+		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
+		botonAnimacion.setFocusPainted(false);
+		botonAnimacion.setBounds(268, 371, 134, 42);
+		panelMayoresOfertantes.add(botonAnimacion);
 		{
 			JPanel panelCitas = new JPanel();
 			panelCitas.setBackground(new Color(135, 206, 235));
@@ -154,7 +243,7 @@ public class Reportes extends JDialog {
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 145, 650, 268);
 			panelCitas.add(scrollPane);
-			
+
 			tableEmps = new JTable();
 			scrollPane.setViewportView(tableEmps);
 			tableModel = new EmpresasTableModel(){
@@ -173,10 +262,6 @@ public class Reportes extends JDialog {
 			lblNewLabel_1.setBounds(0, 11, 670, 70);
 			panelCitas.add(lblNewLabel_1);
 		}
-
-		JPanel panel1 = new JPanel();
-		panel1.setBackground(new Color(135, 206, 235));
-		tabbedPane.addTab("Mayores Ofertantes", null, panel1, null);
 		tableModelL = new LongevosTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -185,54 +270,54 @@ public class Reportes extends JDialog {
 			}
 		};
 		tableLongevos.setModel(tableModelL);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/flecha A 60px.png")));
 		lblNewLabel_2.setBounds(572, 307, 72, 59);
 		panelInfo.add(lblNewLabel_2);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("E");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Roboto Black", Font.BOLD, 26));
 		lblNewLabel_3.setBounds(585, 174, 46, 45);
 		panelInfo.add(lblNewLabel_3);
-		
+
 		JLabel lblD = new JLabel("D");
 		lblD.setHorizontalAlignment(SwingConstants.CENTER);
 		lblD.setFont(new Font("Roboto Black", Font.BOLD, 26));
 		lblD.setBounds(585, 204, 46, 45);
 		panelInfo.add(lblD);
-		
+
 		JLabel lblA = new JLabel("A");
 		lblA.setHorizontalAlignment(SwingConstants.CENTER);
 		lblA.setFont(new Font("Roboto Black", Font.BOLD, 26));
 		lblA.setBounds(585, 234, 46, 45);
 		panelInfo.add(lblA);
-		
+
 		JLabel lblD_1 = new JLabel("D");
 		lblD_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblD_1.setFont(new Font("Roboto Black", Font.BOLD, 26));
 		lblD_1.setBounds(585, 264, 46, 45);
 		panelInfo.add(lblD_1);
-		
+
 		mejorPagados();
 		masLong();
 	}
-	
+
 	private void masLong(){
-			Object datos[] = new Object[4];
-			int num = 1;
-			ArrayList<Candidato> longev = Empleadora.getInstancia().candidatosMasLongevos();
-			
-			if(!longev.isEmpty())
-				for(Candidato c : longev){
-					datos[0] = num++;
-					datos[1] = c.getCi();
-					datos[2] = c.getNombre();
-					datos[3] = c.getEdad();
-					
-					tableModelL.addRow(datos);
-		}
+		Object datos[] = new Object[4];
+		int num = 1;
+		ArrayList<Candidato> longev = Empleadora.getInstancia().candidatosMasLongevos();
+
+		if(!longev.isEmpty())
+			for(Candidato c : longev){
+				datos[0] = num++;
+				datos[1] = c.getCi();
+				datos[2] = c.getNombre();
+				datos[3] = c.getEdad();
+
+				tableModelL.addRow(datos);
+			}
 	}
 }
