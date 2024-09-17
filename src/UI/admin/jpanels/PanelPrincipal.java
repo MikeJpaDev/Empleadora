@@ -54,54 +54,58 @@ public class PanelPrincipal extends JPanel {
 		JLabel lblFotoEmpresa = new JLabel("");
 		lblFotoEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFotoEmpresa.setIcon(new ImageIcon(PanelPrincipal.class.getResource("/images/empresa/Empresa 100px.png")));
-		lblFotoEmpresa.setBounds(120, 250, 150, 150);
+		lblFotoEmpresa.setBounds(120, 304, 150, 150);
 		add(lblFotoEmpresa);
 		
 		JLabel lblFotoEmpleos = new JLabel("");
 		lblFotoEmpleos.setIcon(new ImageIcon(PanelPrincipal.class.getResource("/images/empresa/Curriculum 100px.png")));
 		lblFotoEmpleos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFotoEmpleos.setBounds(342, 250, 150, 150);
+		lblFotoEmpleos.setBounds(342, 304, 150, 150);
 		add(lblFotoEmpleos);
 		
 		JLabel lblFotoUsers = new JLabel("");
 		lblFotoUsers.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFotoUsers.setIcon(new ImageIcon(PanelPrincipal.class.getResource("/images/empresa/Usuarios 100px.png")));
-		lblFotoUsers.setBounds(580, 250, 150, 150);
+		lblFotoUsers.setBounds(580, 304, 150, 150);
 		add(lblFotoUsers);
 		
 		cntEmpresas = new JContador(Empleadora.getInstancia().getEmpresas().size());
 		cntEmpresas.setHorizontalAlignment(SwingConstants.CENTER);
-		cntEmpresas.setBounds(120, 399, 150, 23);
+		cntEmpresas.setBounds(120, 453, 150, 23);
 		add(cntEmpresas);
 		
 		cntEmpleos = new JContador(Empleadora.getInstancia().cantEmpelos());
 		cntEmpleos.setHorizontalAlignment(SwingConstants.CENTER);
-		cntEmpleos.setBounds(342, 399, 150, 23);
+		cntEmpleos.setBounds(342, 453, 150, 23);
 		add(cntEmpleos);
 		
 		cntCand = new JContador(Empleadora.getInstancia().getCandidatos().size());
 		cntCand.setHorizontalAlignment(SwingConstants.CENTER);
-		cntCand.setBounds(580, 399, 150, 23);
+		cntCand.setBounds(580, 453, 150, 23);
 		add(cntCand);
 		
 		JLabel lblNewLabel = new JLabel("Empleos");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Roboto Black", Font.BOLD | Font.ITALIC, 19));
-		lblNewLabel.setBounds(342, 230, 150, 31);
+		lblNewLabel.setBounds(342, 284, 150, 31);
 		add(lblNewLabel);
 		
 		JLabel lblEmpresas = new JLabel("Empresas");
 		lblEmpresas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmpresas.setFont(new Font("Roboto Black", Font.BOLD | Font.ITALIC, 19));
-		lblEmpresas.setBounds(120, 230, 150, 31);
+		lblEmpresas.setBounds(120, 284, 150, 31);
 		add(lblEmpresas);
 		
 		JLabel lblCandidatos = new JLabel("Candidatos");
 		lblCandidatos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCandidatos.setFont(new Font("Roboto Black", Font.BOLD | Font.ITALIC, 19));
-		lblCandidatos.setBounds(580, 230, 150, 31);
+		lblCandidatos.setBounds(580, 284, 150, 31);
 		add(lblCandidatos);
+		
+		JLabel lblNewLabel_1 = new JLabel("Sistema de Gesti\u00F3n de Empleos");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Roboto Black", Font.BOLD, 36));
+		lblNewLabel_1.setBounds(0, 115, 884, 106);
+		add(lblNewLabel_1);
 	}
-	
-
 }
