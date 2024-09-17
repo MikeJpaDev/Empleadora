@@ -285,19 +285,23 @@ public class CrearEmpleo extends JDialog {
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(okEmp && okSal){
-						Empleo empleo = agEmpleo(emp);
-						new PanelEmpleos();
-						panelEmpresas.actEmpleos(emp);
-						PanelEmpleos.actTabla();
-						PanelPrincipal.actualizarContadores();
-						
-						int respuesta = JOptionPane.showConfirmDialog(null, "Desea agendar una cita", "Confirmación", JOptionPane.YES_NO_OPTION);
-						if (respuesta == JOptionPane.YES_OPTION){
-							CrearCita cita = new CrearCita(empleo);
-							cita.setVisible(true);
+						try {
+							Empleo empleo = agEmpleo(emp);
+							new PanelEmpleos();
+							panelEmpresas.actEmpleos(emp);
+							PanelEmpleos.actTabla();
+							PanelPrincipal.actualizarContadores();
+							
+							int respuesta = JOptionPane.showConfirmDialog(null, "Desea agendar una cita", "Confirmación", JOptionPane.YES_NO_OPTION);
+							if (respuesta == JOptionPane.YES_OPTION){
+								CrearCita cita = new CrearCita(empleo);
+								cita.setVisible(true);
+							}
+							
+							dispose();
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(rootPane, e2.getMessage());
 						}
-						
-						dispose();
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Verifique los Datos", "Error", JOptionPane.ERROR_MESSAGE);
