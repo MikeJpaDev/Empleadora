@@ -39,6 +39,36 @@ public class Empleadora {
 		return candidatos;
 	}
 	
+	public static ArrayList<Empleo> filtrarRama(String filtro){
+		ArrayList<Empleo> empleos = new ArrayList<>();
+		for(Empresa emp:empresas)
+			for(Empleo empleo:emp.getEmpleos())
+				if(empleo.getRamaEmp().toString().equalsIgnoreCase(filtro))
+					empleos.add(empleo);
+		return empleos;
+				
+	}
+	
+	public static ArrayList<Empleo> filtrarSector(String filtro){
+		ArrayList<Empleo> empleos = new ArrayList<>();
+		for(Empresa emp:empresas)
+			for(Empleo empleo:emp.getEmpleos())
+				if(empleo.getRama().toString().equalsIgnoreCase(filtro))
+					empleos.add(empleo);
+		return empleos;
+				
+	}
+	
+	public static ArrayList<Empleo> filtrarRamaSector(String filtro, String filtro2){
+		ArrayList<Empleo> empleos = new ArrayList<>();
+		for(Empresa emp:empresas)
+			for(Empleo empleo:emp.getEmpleos())
+				if(empleo.getRamaEmp().toString().equalsIgnoreCase(filtro) && empleo.getRama().toString().equalsIgnoreCase(filtro2))
+					empleos.add(empleo);
+		return empleos;
+				
+	}
+	
 
 	public static ArrayList<Empleo> mejoresPagados(){
 		ArrayList<Empleo> empleos = obtEmpleos();

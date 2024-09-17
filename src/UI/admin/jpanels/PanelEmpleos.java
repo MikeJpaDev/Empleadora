@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -43,9 +44,13 @@ import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+import logica.enums.Rama;
+import logica.enums.Sector;
 
 public class PanelEmpleos extends JPanel {
-	private JTextField txtBuscar;
 	private static JTable tableEmps;
 	private static EmpleoTableModel tableModel;
 	private static int cont = 1;
@@ -55,9 +60,17 @@ public class PanelEmpleos extends JPanel {
 	private boolean clickBusc = false;
 	private BotonAnimacion btnRecargar;
 	private BotonAnimacion btnmcnAadirCita;
+	private JComboBox cmbSector;
+	private JComboBox cmbRama;
+	private JLabel lblNewLabel;
+	private JLabel lblSector;
 
 	public PanelEmpleos(){
 		InicializarComponentes();
+	}
+	
+	private void error(){
+		JOptionPane.showMessageDialog(null, "No hay empleos para los filtros aplicados", "Info", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private static void limpiarJTable(){
@@ -84,6 +97,21 @@ public class PanelEmpleos extends JPanel {
 		}
 	}
 
+	public static void actTablaFiltrada(ArrayList<Empleo> empleos){
+		limpiarJTable();
+		Object[] datos = new Object[6];
+		for (Empleo p: empleos){
+			datos[0] = cont++;
+			datos[1] = p.getID();
+			datos[2] = p.getRama();
+			datos[3] = "$" + p.getSalario();
+			datos[4] = p.getEmpOfertante().getNombre();
+			datos[5] = p.getRamaEmp();
+			tableModel.addRow(datos);
+		}
+	}
+
+
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
 			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -92,15 +120,6 @@ public class PanelEmpleos extends JPanel {
 			jtext.setText("");
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
-	}
-
-	private void busTabla(){
-		limpiarJTable();
-		if(Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).size() != 0){
-			for(Object[] o: Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()))
-				tableModel.addRow(o);
-		}
-
 	}
 
 	private void InicializarComponentes() {
@@ -166,7 +185,7 @@ public class PanelEmpleos extends JPanel {
 		btnAdd.setText("A\u00F1adir");
 		btnAdd.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnAdd.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnAdd.setBounds(688, 177, 134, 42);
+		btnAdd.setBounds(688, 224, 134, 42);
 		add(btnAdd);
 
 		btnDel = new BotonAnimacion();
@@ -185,54 +204,61 @@ public class PanelEmpleos extends JPanel {
 		btnDel.setText("Borrar");
 		btnDel.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnDel.setFont(new Font("Dialog", Font.PLAIN, 18));
-		btnDel.setBounds(688, 231, 134, 42);
+		btnDel.setBounds(688, 277, 134, 42);
 		add(btnDel);
-
-		txtBuscar = new JTextField();
-		txtBuscar.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if(!clickBusc){
-					clicBorrar(txtBuscar,clickBusc);
-					clickBusc = true;
-					txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
-					okBusc = true;
-				}
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtBuscar.getText().isEmpty()){
-					clicBorrar(txtBuscar,clickBusc);
-					txtBuscar.setText("Introduce el Nombre");
-					txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
-					clickBusc = false;
-					okBusc = false;
-				}
-			}
-		});
-		txtBuscar.setText("Introduce el Nombre");
-		txtBuscar.setForeground(Color.LIGHT_GRAY);
-		txtBuscar.setFont(new Font("Arial", Font.ITALIC, 22));
-		txtBuscar.setColumns(10);
-		txtBuscar.setBorder(new EmptyBorder(0, 5, 0, 0));
-		txtBuscar.setBounds(34, 104, 644, 42);
-		add(txtBuscar);
 
 		BotonAnimacion btnBuscar = new BotonAnimacion();
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(txtBuscar.getText().trim().length() != 0 && okBusc){
-					busTabla();
-					btnRecargar.setVisible(true);
+				String f1 = null;
+				String f2 = null;
+
+				if(cmbRama.getSelectedIndex() != -1){
+					f1 = cmbRama.getSelectedItem().toString();
 				}
+
+				if(cmbSector.getSelectedIndex() != -1){
+					f2 = cmbSector.getSelectedItem().toString();
+				}
+
+				if(f1 != null && f2 != null){
+					if(Empleadora.filtrarRamaSector(f1, f2).size() != 0){
+						actTablaFiltrada(Empleadora.filtrarRamaSector(f1, f2));
+						btnRecargar.setVisible(true);
+					}
+					else{
+						error();
+					}
+				}
+				else if(f1 != null && f2 == null){
+					if(Empleadora.filtrarRama(f1).size() != 0){
+						actTablaFiltrada(Empleadora.filtrarRama(f1));
+						btnRecargar.setVisible(true);
+					}
+					else{
+						error();
+					}
+				}
+				else if(f2 != null && f1 == null){
+					if(Empleadora.filtrarSector(f2).size() != 0){
+						actTablaFiltrada(Empleadora.filtrarSector(f2));
+						btnRecargar.setVisible(true);
+					}
+					else{
+						error();
+					}
+				}
+				
+				cmbRama.setSelectedIndex(-1);
+				cmbSector.setSelectedIndex(-1);
 			}
 		});
 		btnBuscar.setIcon(new ImageIcon(PanelEmpleos.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
-		btnBuscar.setText("Buscar");
+		btnBuscar.setText("Filtrar");
 		btnBuscar.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnBuscar.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnBuscar.setFocusPainted(false);
-		btnBuscar.setBounds(688, 104, 134, 42);
+		btnBuscar.setBounds(688, 171, 134, 42);
 		add(btnBuscar);
 
 		btnRecargar = new BotonAnimacion();
@@ -280,7 +306,29 @@ public class PanelEmpleos extends JPanel {
 		btnmcnAadirCita.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnmcnAadirCita.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnmcnAadirCita.setFocusPainted(false);
-		btnmcnAadirCita.setBounds(688, 284, 134, 42);
+		btnmcnAadirCita.setBounds(688, 330, 134, 42);
 		add(btnmcnAadirCita);
+
+		cmbRama = new JComboBox();
+		cmbRama.setModel(new DefaultComboBoxModel(Rama.values()));
+		cmbRama.setBounds(102, 118, 209, 20);
+		cmbRama.setSelectedIndex(-1);
+		add(cmbRama);
+
+		cmbSector = new JComboBox();
+		cmbSector.setModel(new DefaultComboBoxModel(Sector.values()));
+		cmbSector.setBounds(407, 118, 209, 20);
+		cmbSector.setSelectedIndex(-1);
+		add(cmbSector);
+		
+		lblNewLabel = new JLabel("Rama:");
+		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblNewLabel.setBounds(46, 121, 46, 14);
+		add(lblNewLabel);
+		
+		lblSector = new JLabel("Sector:");
+		lblSector.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblSector.setBounds(351, 121, 46, 14);
+		add(lblSector);
 	}
 }
