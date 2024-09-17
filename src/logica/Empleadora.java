@@ -27,6 +27,7 @@ public class Empleadora {
 		return candidatos;
 	}
 	
+
 	public static ArrayList<Empleo> mejoresPagados(){
 		ArrayList<Empleo> empleos = obtEmpleos();
 		ArrayList<Empleo> mejPagados = new ArrayList<>();
