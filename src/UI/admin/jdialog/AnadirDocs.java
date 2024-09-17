@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import componentesVisuales.BotonAnimacion;
+import controlArchivos.BuscarArchivos;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,8 @@ import logica.candidato.Documento;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.File;
+import java.util.ArrayList;
 
 public class AnadirDocs extends JDialog {
 
@@ -101,6 +104,24 @@ public class AnadirDocs extends JDialog {
 		contentPanel.add(lblNewLabel_2);
 		
 		btnImport = new BotonAnimacion();
+		btnImport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+				BuscarArchivos.getInstance().agregarCarpeta();
+				ArrayList<File> archivos = BuscarArchivos.getInstance().buscadorTxt();
+					ImportarDoc dialog = new ImportarDoc(archivos);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+					Documento doc = dialog.anadirFile();
+					if(doc != null){
+						txtNombre.setText(doc.getNombre());
+						txaContenido.setText(doc.getContenido());
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnImport.setIcon(new ImageIcon(AnadirDocs.class.getResource("/icons/empresa/Importar 24pc.png")));
 		btnImport.setFont(new Font("Roboto", Font.PLAIN, 14));
 		btnImport.setText("Importar");
