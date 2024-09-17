@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import logica.candidato.Documento;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -116,6 +117,9 @@ public class AnadirDocs extends JDialog {
 			btnOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
+						if(txtNombre.getText().equalsIgnoreCase("Otros Documentos"))
+							throw new IllegalArgumentException("No se puede poner de nombre \"Otros Documentos\"");
+						
 						Documento doc = new Documento(txtNombre.getText(), txaContenido.getText());
 						CrearUsuario.aggDocumento(doc);
 						CrearUsuario.llenarTabla();

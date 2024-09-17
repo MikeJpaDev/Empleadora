@@ -67,6 +67,8 @@ import java.awt.event.ItemEvent;
 
 import javax.swing.SpinnerNumberModel;
 
+import com.jgoodies.looks.plastic.theme.DarkStar;
+
 public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -169,7 +171,7 @@ public class CrearUsuario extends JDialog {
 			txtDir.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(FocusEvent e) {
-	                if (txtDir.getText().equals("Nombre del Candidato") && !dirClick) {
+	                if (txtDir.getText().equals("Dirección") && !dirClick) {
 	                	txtDir.setText("");
 	                	txtDir.setForeground(Color.BLACK);
 	                	dirClick = true;
@@ -178,13 +180,13 @@ public class CrearUsuario extends JDialog {
 				@Override
 				public void focusLost(FocusEvent e) {
 	                if (txtDir.getText().isEmpty()) {
-	                	txtDir.setText("Nombre del Candidato");
+	                	txtDir.setText("Dirección");
 	                	txtDir.setForeground(Color.GRAY);
 	                    dirClick = false;
 	                }
 				}
 			});
-			txtDir.setText("Nombre del Candidato");
+			txtDir.setText("Direcci\u00F3n");
 			txtDir.setFont(new Font("Arial", Font.ITALIC, 13));
 			txtDir.setColumns(10);
 			txtDir.setBorder(new EmptyBorder(0, 5, 0, 5));
@@ -358,6 +360,9 @@ public class CrearUsuario extends JDialog {
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
+						if(!dirClick || !espClick)
+							throw new IllegalArgumentException("Hay campos vacios");
+						
 						Empleadora emp = Empleadora.getInstancia();
 						Candidato cand;					
 						todosDocs();					

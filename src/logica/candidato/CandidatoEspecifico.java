@@ -17,7 +17,19 @@ public class CandidatoEspecifico extends Candidato {
 	
 	public void setDocumentos(ArrayList<Documento> docs){
 		if(docs.isEmpty())
-			throw new IllegalArgumentException("se esta creando una candidato especiico sin documentos");
+			throw new IllegalArgumentException("se esta creando un candidato especiico sin documentos");
+	}
+	
+	public void aggDocumento(Documento doc){
+		if(doc.getNombre().trim().isEmpty())
+			throw new IllegalArgumentException("El nombre del documento esta vacio");
+		if(doc.getContenido().trim().isEmpty())
+			throw new IllegalArgumentException("El Contenido esta vacio");
+		for(Documento d : documentos)
+			if(d.getNombre().equalsIgnoreCase(doc.getNombre()))
+				throw new IllegalArgumentException("El nombre esta repetido");
+		
+		documentos.add(doc);
 	}
 	
 	public CandidatoEspecifico(String nombre, String dir, String telef,

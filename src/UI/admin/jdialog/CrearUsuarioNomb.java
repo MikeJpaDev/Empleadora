@@ -49,6 +49,9 @@ public class CrearUsuarioNomb extends JDialog {
 	private JTextFieldModificado txtCi;
 	private JTextFieldModificado txtTel;
 	private JComboBox cmbSexo;
+	private boolean nomClick = false;
+	private boolean ciClick = false;
+	private boolean telClick = false;
 
 	private void crearUser(){
 		try {
@@ -115,6 +118,25 @@ public class CrearUsuarioNomb extends JDialog {
 		contentPanel.add(cmbSexo);
 		
 		txtNombre = new JTextFieldModificado();
+		txtNombre.setText("Nombre del Candidato");
+		txtNombre.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+                if (txtNombre.getText().equals("Nombre del Candidato") && !nomClick) {
+                	txtNombre.setText("");
+                	txtNombre.setForeground(Color.BLACK);
+                	nomClick = true;
+                }
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+                if (txtNombre.getText().isEmpty()) {
+                	txtNombre.setText("Nombre del Candidato");
+                	txtNombre.setForeground(Color.GRAY);
+                	nomClick = false;
+                }
+			}
+		});
 		txtNombre.setBorder(new EmptyBorder(0, 5, 0, 5));
 		txtNombre.setBeepActivado(false);
 		txtNombre.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -124,6 +146,25 @@ public class CrearUsuarioNomb extends JDialog {
 		contentPanel.add(txtNombre);
 		
 		txtCi = new JTextFieldModificado();
+		txtCi.setText("Carnet de Identidad");
+		txtCi.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+                if (txtCi.getText().equals("Carnet de Identidad") && !ciClick) {
+                	txtCi.setText("");
+                	txtCi.setForeground(Color.BLACK);
+                	ciClick = true;
+                }
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+                if (txtCi.getText().isEmpty()) {
+                	txtCi.setText("Carnet de Identidad");
+                	txtCi.setForeground(Color.GRAY);
+                	ciClick = false;
+                }
+			}
+		});
 		txtCi.setBeepActivado(false);
 		txtCi.setLimite(11);
 		txtCi.setColumns(10);
@@ -134,6 +175,25 @@ public class CrearUsuarioNomb extends JDialog {
 		contentPanel.add(txtCi);
 		
 		txtTel = new JTextFieldModificado();
+		txtTel.setText("N\u00FAmero de Tel\u00E9fono");
+		txtTel.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+                if (txtTel.getText().equals("Número de Teléfono") && !telClick) {
+                	txtTel.setText("");
+                	txtTel.setForeground(Color.BLACK);
+                	telClick = true;
+                }
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+                if (txtTel.getText().isEmpty()) {
+                	txtTel.setText("Número de Teléfono");
+                	txtTel.setForeground(Color.GRAY);
+                	telClick = false;
+                }
+			}
+		});
 		txtTel.setBeepActivado(false);
 		txtTel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtTel.setBorder(new EmptyBorder(0, 5, 0, 5));
@@ -154,6 +214,10 @@ public class CrearUsuarioNomb extends JDialog {
 				btnmcnCrear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try{
+							
+							if(!nomClick || !ciClick || !telClick)
+								throw new IllegalArgumentException("Hay campos vacios");
+							
 							Candidato.validarNombre(txtNombre.getText());
 							Candidato.validarTelef(txtTel.getText());
 							Candidato.validarCi(txtCi.getText());
