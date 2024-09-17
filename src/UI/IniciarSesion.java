@@ -69,6 +69,8 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class IniciarSesion extends JFrame {
 
@@ -118,6 +120,20 @@ public class IniciarSesion extends JFrame {
 		panel.add(avatarCircular);
 		
 		lblUser = new JTextFieldModificado();
+		lblUser.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					if(lblUser.getText().equals("admin") && lblCont.getText().equals("admin")){
+						abrirApp();
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Revise sus credenciales", "Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+						lblCont.setText("");
+						lblUser.setText("");
+					}
+			}
+		});
 		lblUser.setOpaque(false);
 		lblUser.setToolTipText("");
 		lblUser.setBeepActivado(false);
@@ -139,6 +155,20 @@ public class IniciarSesion extends JFrame {
 		panel.add(lblContrasea);
 		
 		lblCont = new JPasswordField();
+		lblCont.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					if(lblUser.getText().equals("admin") && lblCont.getText().equals("admin")){
+						abrirApp();
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Revise sus credenciales", "Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+						lblCont.setText("");
+						lblUser.setText("");
+					}
+			}
+		});
 		
 		labelOjo = new JLabel("");
 
@@ -184,11 +214,6 @@ public class IniciarSesion extends JFrame {
 					lblCont.setText("");
 					lblUser.setText("");
 				}
-			}
-		});
-		btnmcnIniciarSesin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
 			}
 		});
 		btnmcnIniciarSesin.setFocusPainted(false);
