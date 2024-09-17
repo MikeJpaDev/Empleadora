@@ -83,7 +83,7 @@ public class PanelEmpleos extends JPanel {
 			}
 		}
 	}
-	
+
 	private void clicBorrar(JTextField jtext, boolean click){
 		if(click){
 			jtext.setFont(new Font("Arial", Font.ITALIC, 13));
@@ -93,16 +93,14 @@ public class PanelEmpleos extends JPanel {
 			jtext.setFont(new Font("Arial", Font.BOLD, 13));
 		}
 	}
-	
+
 	private void busTabla(){
 		limpiarJTable();
 		if(Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).size() != 0){
-			for (int i = 0; i < Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).size(); i++){
-				Object[] datos = new Object[6];
-				datos = (Object[]) Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()).get(i);
-				tableModel.addRow(datos);
-			}
+			for(Object[] o: Empleadora.getInstancia().buscarEmpleo(txtBuscar.getText()))
+				tableModel.addRow(o);
 		}
+
 	}
 
 	private void InicializarComponentes() {
@@ -219,7 +217,7 @@ public class PanelEmpleos extends JPanel {
 		txtBuscar.setBorder(new EmptyBorder(0, 5, 0, 0));
 		txtBuscar.setBounds(34, 104, 644, 42);
 		add(txtBuscar);
-		
+
 		BotonAnimacion btnBuscar = new BotonAnimacion();
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -236,7 +234,7 @@ public class PanelEmpleos extends JPanel {
 		btnBuscar.setFocusPainted(false);
 		btnBuscar.setBounds(688, 104, 134, 42);
 		add(btnBuscar);
-		
+
 		btnRecargar = new BotonAnimacion();
 		btnRecargar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -252,15 +250,15 @@ public class PanelEmpleos extends JPanel {
 		btnRecargar.setFocusPainted(false);
 		btnRecargar.setBounds(688, 424, 134, 42);
 		add(btnRecargar);
-		
+
 		btnmcnAadirCita = new BotonAnimacion();
 		btnmcnAadirCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int filaSelect = tableEmps.getSelectedRow();
 				if(filaSelect != -1){
-					
+
 					Empleo empl = null;
-					
+
 					for (Empresa emp: Empleadora.getInstancia().getEmpresas()){
 						if(emp.getNombre().equalsIgnoreCase(tableEmps.getValueAt(filaSelect, 4).toString())){
 							for(Empleo empleo : emp.getEmpleos()){
@@ -270,10 +268,10 @@ public class PanelEmpleos extends JPanel {
 							}
 						}
 					}
-					
+
 					CrearCita cita = new CrearCita(empl);
 					cita.setVisible(true);
-					
+
 				}
 			}
 		});

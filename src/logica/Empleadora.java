@@ -26,6 +26,56 @@ public class Empleadora {
 	public ArrayList<Candidato> getCandidatos() {
 		return candidatos;
 	}
+	
+	public static ArrayList<Empleo> mejoresPagados(){
+		ArrayList<Empleo> empleos = obtEmpleos();
+		ArrayList<Empleo> mejPagados = new ArrayList<>();
+		
+		Double sal = Double.MIN_VALUE;
+
+		for(Empleo emp : empleos){
+			if(emp.getSalario().compareTo(sal) == 0){
+				mejPagados.add(emp);
+			}
+			else if(emp.getSalario().compareTo(sal) > 0){
+				mejPagados.clear();
+				sal = emp.getSalario();
+				mejPagados.add(emp);
+			}
+		}
+		
+		return mejPagados;
+		
+		
+	}
+	
+	private static ArrayList<Empleo> obtEmpleos(){
+		ArrayList<Empleo> empleos = new ArrayList<>();
+		
+		for(Empresa e : Empleadora.getInstancia().getEmpresas())
+			for(Empleo em : e.getEmpleos())
+				empleos.add(em);
+		return empleos;
+	}
+	
+	
+	public static ArrayList<Empresa> mayoresOfertantes(){
+		ArrayList<Empresa> mayoresOfertantes = new ArrayList<>();
+		int mayCantOfertas = Integer.MIN_VALUE;
+
+		for(Empresa emp : Empleadora.getInstancia().getEmpresas()){
+			if(emp.getEmpleos().size() == mayCantOfertas){
+				mayoresOfertantes.add(emp);
+			}
+			else if(emp.getEmpleos().size() > mayCantOfertas){
+				mayoresOfertantes.clear();
+				mayCantOfertas = emp.getEmpleos().size();
+				mayoresOfertantes.add(emp);
+			}
+		}
+		
+		return mayoresOfertantes;
+	}
 
 
 	public static Empleadora getInstancia(){
@@ -105,8 +155,8 @@ public class Empleadora {
 
 	public ArrayList<Object[]> buscarEmpleo(String nom){
 
-		Object[] datos = null;
-		ArrayList<Object[]> datosNuevos = new ArrayList<Object[]>();
+		Object[] datos = new Object[6];
+		ArrayList<Object[]> datosNuevos = new ArrayList<>();
 		int cont = 0;
 		for(int i = 0; i < empresas.size(); i++){
 			for(Empleo empleo: empresas.get(i).getEmpleos()){
@@ -114,8 +164,7 @@ public class Empleadora {
 						|| empleo.getRamaEmp().toString().toUpperCase().contains(nom.toUpperCase()) || 
 						empleo.getRamaEmp().toString().toLowerCase().contains(nom.toLowerCase()) ||
 						empleo.getRamaEmp().toString().contains(nom)){
-
-					datos = new Object[6];
+					
 					datos[0] = cont+1;
 					datos[1] = empleo.getID();
 					datos[2] = empleo.getRama();
@@ -132,9 +181,8 @@ public class Empleadora {
 		if(datosNuevos.size() == 0){
 			JOptionPane.showMessageDialog(null, "No se han registrados Empleos bajo relacionados a esta rama", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 		}
-
+		
 		return datosNuevos;
-
 	}
 
 	public void verEmpresa(int index){
