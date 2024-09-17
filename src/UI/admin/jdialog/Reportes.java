@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import java.awt.Toolkit;
 
@@ -38,6 +40,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.RGBColor;
 
 import util.CitasTableModel;
+import util.EmpleoTableModel;
 import util.EmpresasTableModel;
 import util.LongevosTableModel;
 
@@ -48,39 +51,39 @@ import java.util.ArrayList;
 
 public class Reportes extends JDialog {
 
-	private static EmpresasTableModel tableModel;
+	private static EmpresasTableModel tableModelEmpresas;
+	private static EmpleoTableModel tableModelEmp;
+	private static LongevosTableModel tableModelL;
 	private JTable tableEmps;
 	private JTable tableLongevos;
-	private static LongevosTableModel tableModelL;
 	private JTable tableOfertantes;
 	static int cont = 1;
 
 	static Object[] datos = new Object[6];
 
-	private ArrayList<Empleo> empleos(){
-
-		ArrayList<Empleo> empleos = new ArrayList<>();
-
-		for (Empresa e: Empleadora.getInstancia().getEmpresas()){
-			for (Empleo emp: e.getEmpleos()){
-				empleos.add(emp);
-			}				
-		}
-
-
-		return empleos;
-	}
-
-	private static void limpiarJTable(){
-		int a = tableModel.getRowCount()-1;
+	private static void limpiarJTable(DefaultTableModel table){
+		int a = table.getRowCount()-1;
 		cont = 1;
 		for(int i=a;i>=0;i--){ 
-			tableModel.removeRow(i);
+			table.removeRow(i);
+		}
+	}
+	
+	public static void actTablaMejPagados(ArrayList<Empleo> empleos){
+		limpiarJTable(tableModelEmp);
+		for(Empleo p: empleos){
+			datos[0] = cont++;
+			datos[1] = p.getID();
+			datos[2] = p.getRama();
+			datos[3] = "$" + p.getSalario();
+			datos[4] = p.getEmpOfertante().getNombre();
+			datos[5] = p.getRamaEmp();
+			tableModelEmp.addRow(datos);
 		}
 	}
 
-	public static void actTabla(ArrayList<Empresa> empresas){
-		limpiarJTable();
+	public static void actTablaMayOfertantes(ArrayList<Empresa> empresas){
+		limpiarJTable(tableModelEmpresas);
 		for(Empresa emps: empresas){
 			datos[0] = cont++;
 			datos[1] = emps.getNombre();
@@ -88,37 +91,7 @@ public class Reportes extends JDialog {
 			datos[3] = emps.getTelefeno();
 			datos[4] = emps.getSector();
 			datos[5] = emps.getTamArray();
-			tableModel.addRow(datos);
-		}
-	}
-
-	public void mejorPagados(){
-
-		//int cont = 1;
-		ArrayList<Empleo> empleos = empleos();
-		Double sal = Double.MIN_VALUE;
-		for (Empleo p: empleos){
-			if(p.getSalario() > sal){
-				sal = p.getSalario();
-				limpiarJTable();
-				datos[0] = cont++;
-				datos[1] = p.getID();
-				datos[2] = p.getRama();
-				datos[3] = "$" + p.getSalario();
-				datos[4] = p.getEmpOfertante().getNombre();
-				datos[5] = p.getRamaEmp();
-				tableModel.addRow(datos);
-			}
-			else if(p.getSalario() == sal){
-				sal = p.getSalario();
-				datos[0] = cont++;
-				datos[1] = p.getID();
-				datos[2] = p.getRama();
-				datos[3] = "$" + p.getSalario();
-				datos[4] = p.getEmpOfertante().getNombre();
-				datos[5] = p.getRamaEmp();
-				tableModel.addRow(datos);
-			}
+			tableModelEmpresas.addRow(datos);
 		}
 	}
 
@@ -173,7 +146,7 @@ public class Reportes extends JDialog {
 
 		tableLongevos = new JTable();
 		scrollPane_1.setViewportView(tableLongevos);
-		tableModel = new EmpresasTableModel(){
+		tableModelEmpresas = new EmpresasTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
 			public boolean isCellEditable(int filas, int columnas){
@@ -197,7 +170,7 @@ public class Reportes extends JDialog {
 		tableOfertantes = new JTable();
 		scrollPane_2.setViewportView(tableOfertantes);
 
-		tableOfertantes.setModel(tableModel);
+		tableOfertantes.setModel(tableModelEmpresas);
 
 		JLabel lblMayoresOfertantes = new JLabel("Mayores Ofertantes");
 		lblMayoresOfertantes.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/search-alt-2-regular-36.png")));
@@ -208,23 +181,8 @@ public class Reportes extends JDialog {
 
 		BotonAnimacion botonAnimacion = new BotonAnimacion();
 		botonAnimacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<Empresa> mayoresOfertantes = new ArrayList<>();
-				int mayCantOfertas = Integer.MIN_VALUE;
-
-				for(Empresa emp : Empleadora.getInstancia().getEmpresas()){
-					if(emp.getEmpleos().size() == mayCantOfertas){
-						mayoresOfertantes.add(emp);
-					}
-					else if(emp.getEmpleos().size() > mayCantOfertas){
-						mayoresOfertantes.clear();
-						mayCantOfertas = emp.getEmpleos().size();
-						mayoresOfertantes.add(emp);
-					}
-				}
-
-				System.out.println(mayoresOfertantes.size());
-				actTabla(mayoresOfertantes);
+			public void actionPerformed(ActionEvent e) {		
+				actTablaMayOfertantes(Empleadora.mayoresOfertantes());
 			}
 		});
 		botonAnimacion.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/Buscar 24px.png")));
@@ -241,19 +199,19 @@ public class Reportes extends JDialog {
 			panelCitas.setLayout(null);
 
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 145, 650, 268);
+			scrollPane.setBounds(10, 145, 650, 228);
 			panelCitas.add(scrollPane);
 
 			tableEmps = new JTable();
 			scrollPane.setViewportView(tableEmps);
-			tableModel = new EmpresasTableModel(){
+			tableModelEmp = new EmpleoTableModel(){
 				private static final long serialVersionUID = 1L;
 				@Override
 				public boolean isCellEditable(int filas, int columnas){
 					return false;
 				}
 			};
-			tableEmps.setModel(tableModel);
+			tableEmps.setModel(tableModelEmp);
 
 			JLabel lblNewLabel_1 = new JLabel("Empleos Mejor Pagados");
 			lblNewLabel_1.setIcon(new ImageIcon(Reportes.class.getResource("/images/empresa/Calendario 64px.png")));
@@ -261,6 +219,20 @@ public class Reportes extends JDialog {
 			lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD | Font.ITALIC, 23));
 			lblNewLabel_1.setBounds(0, 11, 670, 70);
 			panelCitas.add(lblNewLabel_1);
+			
+			BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
+			botonAnimacion_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					actTablaMejPagados(Empleadora.mejoresPagados());
+				}
+			});
+			botonAnimacion_1.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/Buscar 24px.png")));
+			botonAnimacion_1.setText("Buscar");
+			botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
+			botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
+			botonAnimacion_1.setFocusPainted(false);
+			botonAnimacion_1.setBounds(268, 384, 134, 42);
+			panelCitas.add(botonAnimacion_1);
 		}
 		tableModelL = new LongevosTableModel(){
 			private static final long serialVersionUID = 1L;
@@ -300,8 +272,7 @@ public class Reportes extends JDialog {
 		lblD_1.setFont(new Font("Roboto Black", Font.BOLD, 26));
 		lblD_1.setBounds(585, 264, 46, 45);
 		panelInfo.add(lblD_1);
-
-		mejorPagados();
+		
 		masLong();
 	}
 
@@ -320,4 +291,6 @@ public class Reportes extends JDialog {
 				tableModelL.addRow(datos);
 			}
 	}
+	
+	
 }
