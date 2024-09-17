@@ -1,5 +1,9 @@
 package logica;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import comparadores.CompararCandPorEdad;
 import comparadores.CompararPorCitas;
-import UI.admin.jdialog.EditarEmpresa;
 import UI.admin.jdialog.VerEmpresa;
 import logica.candidato.Candidato;
 import logica.cita.Cita;
@@ -18,10 +21,19 @@ import logica.empresa.Empresa;
 public class Empleadora {
 
 	private static Empleadora instancia;
-	private ArrayList<Empresa> empresas;
+	private static ArrayList<Empresa> empresas;
 	private ArrayList<Candidato> candidatos;
 	private ArrayList<Cita> citas;
 	
+	public static void cargarDatos(){
+		ObjectInputStream datos = null;
+		try {
+			datos = new ObjectInputStream(new FileInputStream("empresas.dat"));
+			empresas = (ArrayList<Empresa>) datos.readObject();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error wacho");
+		}
+	}
 	
 	public ArrayList<Candidato> getCandidatos() {
 		return candidatos;
@@ -232,17 +244,6 @@ public class Empleadora {
 		return retorno;
 	}
 
-	public void editarDatos(int indice){
-
-		try {
-			EditarEmpresa dialog = new EditarEmpresa(empresas.get(indice), indice);	
-			dialog.setVisible(true);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
 
 	public void elimEmpresa(int emp){
 		eliminarEmpleosEmpresa(empresas.get(emp));

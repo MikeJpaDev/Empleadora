@@ -1,12 +1,14 @@
 package logica.empresa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import logica.empleo.Empleo;
 import logica.enums.Rama;
 
-public class Empresa {
+public class Empresa implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private String direccion;
 	private String telefeno;

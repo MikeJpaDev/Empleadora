@@ -193,7 +193,7 @@ public class Reportes extends JDialog {
 		panelMayoresOfertantes.setLayout(null);
 
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(10, 90, 650, 270);
+		scrollPane_2.setBounds(10, 90, 650, 336);
 		panelMayoresOfertantes.add(scrollPane_2);
 
 		tableOfertantes = new JTable();
@@ -207,20 +207,6 @@ public class Reportes extends JDialog {
 		lblMayoresOfertantes.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 23));
 		lblMayoresOfertantes.setBounds(10, 11, 650, 70);
 		panelMayoresOfertantes.add(lblMayoresOfertantes);
-
-		BotonAnimacion botonAnimacion = new BotonAnimacion();
-		botonAnimacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actTablaMayOfertantes(Empleadora.mayoresOfertantes());
-			}
-		});
-		botonAnimacion.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/Buscar 24px.png")));
-		botonAnimacion.setText("Buscar");
-		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion.setFocusPainted(false);
-		botonAnimacion.setBounds(268, 371, 134, 42);
-		panelMayoresOfertantes.add(botonAnimacion);
 		{
 			JPanel panelCitas = new JPanel();
 			panelCitas.setBackground(new Color(135, 206, 235));
@@ -228,7 +214,7 @@ public class Reportes extends JDialog {
 			panelCitas.setLayout(null);
 
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 145, 650, 228);
+			scrollPane.setBounds(10, 145, 650, 281);
 			panelCitas.add(scrollPane);
 
 			tableEmps = new JTable();
@@ -249,20 +235,6 @@ public class Reportes extends JDialog {
 			lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD | Font.ITALIC, 23));
 			lblNewLabel_1.setBounds(0, 11, 670, 70);
 			panelCitas.add(lblNewLabel_1);
-			
-			BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
-			botonAnimacion_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					actTablaMejPagados(Empleadora.mejoresPagados());
-				}
-			});
-			botonAnimacion_1.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/Buscar 24px.png")));
-			botonAnimacion_1.setText("Buscar");
-			botonAnimacion_1.setHorizontalTextPosition(SwingConstants.LEFT);
-			botonAnimacion_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-			botonAnimacion_1.setFocusPainted(false);
-			botonAnimacion_1.setBounds(268, 384, 134, 42);
-			panelCitas.add(botonAnimacion_1);
 		}
 		tableModelL = new LongevosTableModel(){
 			private static final long serialVersionUID = 1L;
@@ -305,6 +277,8 @@ public class Reportes extends JDialog {
 		
 		masLong();
 		masCitas();
+		actTablaMayOfertantes(Empleadora.mayoresOfertantes());
+		actTablaMejPagados(Empleadora.mejoresPagados());
 	}
 
 	private void masCitas(){

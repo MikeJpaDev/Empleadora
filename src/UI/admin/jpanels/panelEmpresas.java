@@ -1,14 +1,11 @@
 package UI.admin.jpanels;
 
-//import javafx.scene.control.ComboBox;
-
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-//import javax.swing.JButton;
 
 
 
@@ -19,26 +16,17 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-//import javax.swing.border.LineBorder;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-//import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-//import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
-
-//import org.omg.CORBA.PUBLIC_MEMBER;
 
 
 
 
 import UI.admin.jdialog.CrearEmpleo;
 import UI.admin.jdialog.CrearEmpresa;
-import UI.admin.jdialog.EditarEmpresa;
-//import UI.admin.jdialog.VerEmpresa;
-
-//import java.awt.Component;
 
 import componentesVisuales.BotonAnimacion;
 
@@ -47,20 +35,17 @@ import java.awt.event.ActionEvent;
 
 import logica.Empleadora;
 import logica.empresa.Empresa;
-//import logica.enums.Sector;
 
 
 
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.border.EmptyBorder;
-//import java.util.ArrayList;
 
 public class panelEmpresas extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private static JTable tableEmps;
 	private static EmpresasTableModel tableModel;
 	private JTextField txtBuscar;
@@ -68,6 +53,8 @@ public class panelEmpresas extends JPanel {
 	private static int cont = 1;
 	private boolean clickBusc = false;
 	private boolean okBusc = false;
+	private BotonAnimacion btnmcnRecargar;
+	private BotonAnimacion botonAnimacion;
 
 	public panelEmpresas() {
 		componentes();
@@ -79,15 +66,6 @@ public class panelEmpresas extends JPanel {
 
 		if(filaSelct != -1){
 			Empleadora.getInstancia().verEmpresa(filaSelct);
-		}
-	}
-
-	//Enlazar esta funcion a La Clase Gestora
-	private void obtDatos(){
-		int filaSelct = tableEmps.getSelectedRow();
-
-		if(filaSelct != -1){
-			Empleadora.getInstancia().editarDatos(filaSelct);
 		}
 	}
 
@@ -230,11 +208,13 @@ public class panelEmpresas extends JPanel {
 		add(txtBuscar);
 		txtBuscar.setColumns(10);
 
-		BotonAnimacion botonAnimacion = new BotonAnimacion();
+		botonAnimacion = new BotonAnimacion();
 		botonAnimacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(txtBuscar.getText().trim().length() != 0 && okBusc){
 					busTabla();
+					botonAnimacion.setVisible(false);
+					btnmcnRecargar.setVisible(true);
 				}
 			}
 		});
@@ -243,7 +223,7 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion.setText("Buscar");
 		botonAnimacion.setHorizontalTextPosition(SwingConstants.LEFT);
 		botonAnimacion.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion.setBounds(715, 122, 134, 42);
+		botonAnimacion.setBounds(715, 123, 134, 42);
 		add(botonAnimacion);
 
 		BotonAnimacion botonAnimacion_1 = new BotonAnimacion();
@@ -279,27 +259,6 @@ public class panelEmpresas extends JPanel {
 		botonAnimacion_2.setFont(new Font("Dialog", Font.PLAIN, 18));
 		botonAnimacion_2.setBounds(715, 263, 134, 42);
 		add(botonAnimacion_2);
-
-		BotonAnimacion botonAnimacion_3 = new BotonAnimacion();
-		botonAnimacion_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println(Empleadora.getInstancia().getCitas().size());
-			}
-		});
-		botonAnimacion_3.setEnabled(false);
-		botonAnimacion_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				obtDatos();
-			}
-		});
-		botonAnimacion_3.setFocusPainted(false);
-		botonAnimacion_3.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/edit-alt-solid-36.png")));
-		botonAnimacion_3.setText("Editar");
-		botonAnimacion_3.setHorizontalTextPosition(SwingConstants.LEFT);
-		botonAnimacion_3.setFont(new Font("Dialog", Font.PLAIN, 18));
-		botonAnimacion_3.setBounds(715, 334, 134, 42);
-		add(botonAnimacion_3);
 
 		BotonAnimacion botonAnimacion_4 = new BotonAnimacion();
 		botonAnimacion_4.setFocusPainted(false);
@@ -337,5 +296,37 @@ public class panelEmpresas extends JPanel {
 		btnCrearEmpleo.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnCrearEmpleo.setBounds(715, 479, 134, 42);
 		add(btnCrearEmpleo);
+		
+		BotonAnimacion btnmcnCargarEmpresas = new BotonAnimacion();
+		btnmcnCargarEmpresas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Empleadora.cargarDatos();
+				actTabla();
+			}
+		});
+		btnmcnCargarEmpresas.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/Importar 24pc.png")));
+		btnmcnCargarEmpresas.setText("Importar");
+		btnmcnCargarEmpresas.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnCargarEmpresas.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnCargarEmpresas.setFocusPainted(false);
+		btnmcnCargarEmpresas.setBounds(715, 333, 134, 42);
+		add(btnmcnCargarEmpresas);
+		
+		btnmcnRecargar = new BotonAnimacion();
+		btnmcnRecargar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actTabla();
+				btnmcnRecargar.setVisible(false);
+				botonAnimacion.setVisible(true);
+			}
+		});
+		btnmcnRecargar.setVisible(false);
+		btnmcnRecargar.setIcon(new ImageIcon(panelEmpresas.class.getResource("/icons/empresa/icons8-actualizar-24.png")));
+		btnmcnRecargar.setText("Recargar");
+		btnmcnRecargar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnmcnRecargar.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnmcnRecargar.setFocusPainted(false);
+		btnmcnRecargar.setBounds(715, 123, 134, 42);
+		add(btnmcnRecargar);
 	}
 }

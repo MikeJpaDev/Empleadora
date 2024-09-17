@@ -1,19 +1,8 @@
 package UI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-
-import raven.swing.AvatarIcon;
-
-import javax.swing.Icon;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 
 import UI.admin.pantallaAdmin;
@@ -21,14 +10,6 @@ import componentesVisuales.AvatarCircular;
 import componentesVisuales.Linea;
 
 import java.awt.Color;
-
-import componentesVisuales.NotificacionesModernas;
-
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme;
-import com.github.weisj.jsvg.nodes.Line;
-
-import java.awt.FlowLayout;
 
 import javax.swing.border.MatteBorder;
 
@@ -41,39 +22,19 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 
 import componentesVisuales.BotonAnimacion;
-import raven.utils.FlatLafStyleUtils;
-import util.CreadorRandom;
-import logica.Empleadora;
-import logica.empresa.Empresa;
-import logica.utilidades.interfaz.ManejadorLookAndFeels;
 
 import java.awt.Toolkit;
-
-import javax.swing.text.IconView;
-import javax.swing.text.Element;
-
-import com.github.weisj.jsvg.nodes.Image;
-
-import java.awt.SystemColor;
-
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
-import java.util.ArrayList;
-
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class IniciarSesion extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel labelOjo;
 	private JTextFieldModificado lblUser;
@@ -82,7 +43,6 @@ public class IniciarSesion extends JFrame {
 	
 	private void abrirApp(){
 		this.dispose();
-		CreadorRandom.creadorEmpresas();
 		pantallaAdmin frame = new pantallaAdmin();
 		frame.setVisible(true);
 		
@@ -121,6 +81,7 @@ public class IniciarSesion extends JFrame {
 		
 		lblUser = new JTextFieldModificado();
 		lblUser.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
@@ -156,6 +117,7 @@ public class IniciarSesion extends JFrame {
 		
 		lblCont = new JPasswordField();
 		lblCont.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
