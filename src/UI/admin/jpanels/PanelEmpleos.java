@@ -175,7 +175,8 @@ public class PanelEmpleos extends JPanel {
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tableEmps.getSelectedRow() != -1){
-					Empleadora.getInstancia().elimEmpleo(tableEmps.getValueAt(tableEmps.getSelectedRow(), 1).toString());
+					Empleo empleo = Empleadora.getInstancia().elimEmpleo(tableEmps.getValueAt(tableEmps.getSelectedRow(), 1).toString());
+					Empleadora.getInstancia().eliminarCitasDeUnEmpleo(empleo);
 					actTabla();
 					PanelPrincipal.actualizarContadores();
 				}

@@ -40,6 +40,7 @@ import org.w3c.dom.css.RGBColor;
 import util.CitasTableModel;
 import util.EmpresasTableModel;
 import util.LongevosTableModel;
+import util.MasCitasTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -52,10 +53,12 @@ public class Reportes extends JDialog {
 	private JTable tableEmps;
 	private JTable tableLongevos;
 	private static LongevosTableModel tableModelL;
+	private static MasCitasTableModel tableModelC;
 	private JTable tableOfertantes;
 	static int cont = 1;
 
 	static Object[] datos = new Object[6];
+	private JTable tableCitas;
 
 	private ArrayList<Empleo> empleos(){
 
@@ -184,6 +187,31 @@ public class Reportes extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(135, 206, 235));
 		tabbedPane.addTab("Candidatos Con Mas Citas", null, panel, null);
+		panel.setLayout(null);
+		
+		JLabel lblCandidatosConMas = new JLabel("Candidatos con mas citas");
+		lblCandidatosConMas.setIcon(new ImageIcon(Reportes.class.getResource("/images/empresa/Usuarios 64px.png")));
+		lblCandidatosConMas.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblCandidatosConMas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCandidatosConMas.setFont(new Font("Roboto", Font.BOLD | Font.ITALIC, 23));
+		lblCandidatosConMas.setBackground(new Color(0, 204, 255));
+		lblCandidatosConMas.setBounds(0, 11, 670, 73);
+		panel.add(lblCandidatosConMas);
+		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(21, 124, 622, 302);
+		panel.add(scrollPane_3);
+		
+		tableCitas = new JTable();
+		tableModelC = new MasCitasTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int filas, int columnas){
+				return false;
+			}
+		};
+		tableCitas.setModel(tableModelC);
+		scrollPane_3.setViewportView(tableCitas);
 
 		JPanel panelMayoresOfertantes = new JPanel();
 		panelMayoresOfertantes.setBackground(new Color(135, 206, 235));
@@ -303,8 +331,25 @@ public class Reportes extends JDialog {
 
 		mejorPagados();
 		masLong();
+		masCitas();
 	}
 
+	private void masCitas(){
+		Object datos[] = new Object[4];
+		int num = 1;
+		ArrayList<Candidato> citas = Empleadora.getInstancia().candidatosMasCitas();
+
+		if(!citas.isEmpty())
+			for(Candidato c : citas){
+				datos[0] = num++;
+				datos[1] = c.getCi();
+				datos[2] = c.getNombre();
+				datos[3] = c.getCitas().size();
+
+				tableModelC.addRow(datos);
+			}
+	}
+	
 	private void masLong(){
 		Object datos[] = new Object[4];
 		int num = 1;

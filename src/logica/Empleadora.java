@@ -7,6 +7,7 @@ import java.util.Collections;
 import javax.swing.JOptionPane;
 
 import comparadores.CompararCandPorEdad;
+import comparadores.CompararPorCitas;
 import UI.admin.jdialog.EditarEmpresa;
 import UI.admin.jdialog.VerEmpresa;
 import logica.candidato.Candidato;
@@ -195,21 +196,45 @@ public class Empleadora {
 	}
 
 	public void elimEmpresa(int emp){
+		eliminarEmpleosEmpresa(empresas.get(emp));
 		empresas.remove(emp);
 	}
 	
-	public void elimEmpleo(String nom){
+	public Empleo elimEmpleo(String nom){
 		boolean encontrado = false;
+		Empleo empleo = null;
 		for (int i = 0; i < empresas.size() && !encontrado; i++){
 			for (int j = 0; j < empresas.get(i).getEmpleos().size() && !encontrado; j++){
 				if (empresas.get(i).getEmpleos().get(j).getID().equalsIgnoreCase(nom)){
+					empleo = empresas.get(i).getEmpleos().get(j);
 					empresas.get(i).getEmpleos().remove(j);
 					encontrado = true;
 				}
 			}
 		}
+		return empleo;
 	}
+	
+	public void eliminarCitasDeUnEmpleo(Empleo empleo){
 		
+		for(int i = 0; i < citas.size(); i++){
+			if(citas.get(i).getEmpleo().equals(empleo)){
+				citas.remove(i--);
+			}
+		}
+		
+		for(Candidato c : candidatos)
+			for(int i = 0; i < c.getCitas().size(); i++){
+				if(c.getCitas().get(i).getEmpleo().equals(empleo))
+					c.getCitas().remove(i--);
+			}
+	}
+	
+	public void eliminarEmpleosEmpresa(Empresa empresa){
+		for(int i = 0; i < empresa.getEmpleos().size(); i++)
+			eliminarCitasDeUnEmpleo(empresa.getEmpleos().get(i));
+		empresa.getEmpleos().clear();
+	}
 	
 	//Logica Empleados
 	
@@ -347,5 +372,11 @@ public class Empleadora {
 		ArrayList<Candidato> longevos = new ArrayList<Candidato>(candidatos);
 		Collections.sort(longevos,new CompararCandPorEdad());
 		return longevos;
+	}
+	
+	public ArrayList<Candidato> candidatosMasCitas(){
+		ArrayList<Candidato> Citass = new ArrayList<Candidato>(candidatos);
+		Collections.sort(Citass,new CompararPorCitas());
+		return Citass;
 	}
 }

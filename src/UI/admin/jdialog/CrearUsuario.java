@@ -255,6 +255,7 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(lblDoc);
 
 		BotonAnimacion btnmcnAadir = new BotonAnimacion();
+		btnmcnAadir.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/Importar 24pc.png")));
 		btnmcnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean anadido = false;
@@ -292,6 +293,7 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(btnmcnAadir);
 
 		BotonAnimacion btnmcnBorrar = new BotonAnimacion();
+		btnmcnBorrar.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/borrar 24px.png")));
 		btnmcnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tableDocs.getSelectedRow() != -1){
