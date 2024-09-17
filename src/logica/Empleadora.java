@@ -232,16 +232,11 @@ public class Empleadora {
 			throw e;
 		}
 	}
-	
-	public ArrayList<Candidato> disponiblesFecha(LocalDate fecha){
-		ArrayList<Candidato> disponibles = new ArrayList<Candidato>();
-		
-		for(Candidato c : candidatos){
-			if(c.disponible(fecha))
-				disponibles.add(c);
-		}
-		
-		return disponibles;
+
+	public void llenarCita(Cita cita){
+		ArrayList<Candidato> cand = candiatosDisponibles(cita);
+		for(int i = 0; i < cand.size(); i++)
+			aggCitas(cita, cand.get(i));
 	}
 	
 	public void citasDisponibles(Candidato candidato){
@@ -249,7 +244,7 @@ public class Empleadora {
 		for(Cita c : citas){
 			if(candidato.esValido(c.getEmpleo()))
 				if(candidato.disponible(c.getFecha()))
-					candidato.aggCitas(c, candidato);
+					aggCitas(c, candidato);
 		}
 	}
 	
@@ -287,7 +282,7 @@ public class Empleadora {
 				throw new IllegalArgumentException("La cadena de busqueda no puede contener caracteres especiales");
 		
 		if(contieneLetras && contieneNumeros)
-			throw new IllegalArgumentException("La cadena de busqueda no puede contener caracteres especiales");
+			throw new IllegalArgumentException("La cadena de busqueda no puede contener números y letras a la misma vez");
 		else if(contieneLetras)
 			encontrados = buscarXNombre(cadena);
 		else if(contieneNumeros)
@@ -304,6 +299,24 @@ public class Empleadora {
 				disponible.add(c);
 		
 		return disponible;
+	}
+	
+	public boolean aggCitas(Cita cita, Candidato c){
+		boolean agregado = true;
+		ArrayList<Cita> citaC = c.getCitas();
+		if(!(citaC.isEmpty())){
+			for(int i = 0; i < citaC.size() && agregado; i++){
+				if(citaC.get(i).getFecha().compareTo(cita.getFecha()) == 0)
+					agregado = false;
+			}
+		}
+		
+		if(agregado){
+			c.getCitas().add(cita);
+			cita.getCandidatos().add(c);
+		}
+		
+		return agregado;
 	}
 	
 	//Logica Citas

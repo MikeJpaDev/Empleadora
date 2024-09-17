@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import UI.admin.jpanels.PanelCitas;
 import componentesVisuales.BotonAnimacion;
 
 import java.awt.Font;
@@ -31,7 +32,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.ImageIcon;
+
 import java.awt.Toolkit;
 
 public class CrearCitaPtllCita extends JDialog {
@@ -74,7 +77,7 @@ public class CrearCitaPtllCita extends JDialog {
 		contentPanel.add(cmbEmpresa);
 		
 		cmbEmpleo = new JComboBox();
-		cmbEmpleo.setBounds(91, 78, 273, 25);
+		cmbEmpleo.setBounds(91, 80, 273, 25);
 		contentPanel.add(cmbEmpleo);
 		
 		JLabel lblFecha = new JLabel("Fecha:");
@@ -105,6 +108,9 @@ public class CrearCitaPtllCita extends JDialog {
 						Cita cita = new Cita(obtenerEmpleo(), fecha);
 						
 						Empleadora.getInstancia().getCitas().add(cita);
+						
+						dispose();
+						PanelCitas.llenarTabla();
 					}
 					catch(IllegalArgumentException e1){
 						JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -137,7 +143,7 @@ public class CrearCitaPtllCita extends JDialog {
 	private void llenarCmbEmpleos(int index){
 		cmbEmpleo.removeAllItems();
 		for(Empleo e : empresas.get(index).getEmpleos())
-			cmbEmpleo.addItem(e.toString());
+			cmbEmpleo.addItem(e.getID());
 	}
 	
 	private Empleo obtenerEmpleo(){

@@ -180,6 +180,7 @@ public class PanelUsuarios extends JPanel {
 		BotonAnimacion botonAnimacion = new BotonAnimacion();
 		botonAnimacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try{
 				if(!buscarClick || txtBuscar.getText().equalsIgnoreCase("")){
 					llenarTabla();
 					busquedas = null;
@@ -188,6 +189,9 @@ public class PanelUsuarios extends JPanel {
 					String buscar = txtBuscar.getText();
 					busquedas = Empleadora.getInstancia().buscarCand(buscar);
 					llenarTablaBusq();
+				}
+				}catch(IllegalArgumentException e2){
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

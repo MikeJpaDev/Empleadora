@@ -192,22 +192,7 @@ public class Candidato implements Comparable<Candidato>{
 			throw new IllegalArgumentException("El Carnet de Identidad ya esta en el sistemaa");
 	}
 	
-	public boolean aggCitas(Cita cita, Candidato c){
-		boolean agregado = true;
-		if(!(citas.isEmpty())){
-			for(int i = 0; i < citas.size() && agregado; i++){
-				if(citas.get(i).getFecha().compareTo(cita.getFecha()) == 0)
-					agregado = false;
-			}
-		}
-		
-		if(agregado){
-			citas.add(cita);
-			cita.getCandidatos().add(c);
-		}
-		
-		return agregado;
-	}
+
 	
 	// Saber si es valido para un Empleo
 	
