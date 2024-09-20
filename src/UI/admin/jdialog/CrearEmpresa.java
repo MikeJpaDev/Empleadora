@@ -275,6 +275,7 @@ public class CrearEmpresa extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
 			btnCrear = new BotonAnimacion();
+			btnCrear.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnCrear.setFocusPainted(false);
 			btnCrear.setFocusTraversalKeysEnabled(false);
 			btnCrear.addActionListener(new ActionListener() {
@@ -292,6 +293,7 @@ public class CrearEmpresa extends JDialog {
 			buttonPane.add(btnCrear);
 			
 			btnmcnCancelar = new BotonAnimacion();
+			btnmcnCancelar.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnmcnCancelar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();

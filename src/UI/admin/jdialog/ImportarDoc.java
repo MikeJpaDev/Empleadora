@@ -29,6 +29,8 @@ import logica.candidato.Documento;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class ImportarDoc extends JDialog {
 
@@ -38,6 +40,7 @@ public class ImportarDoc extends JDialog {
 	private Documento documento = null;
 
 	public ImportarDoc(ArrayList<File> files) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ImportarDoc.class.getResource("/images/empresa/logo redondo 64.png")));
 		archivos = files;
 		setTitle("Importar Documento");
 		setModal(true);
@@ -69,6 +72,8 @@ public class ImportarDoc extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				BotonAnimacion btnmcnAceptar = new BotonAnimacion();
+				btnmcnAceptar.setFont(new Font("Roboto", Font.PLAIN, 15));
+				btnmcnAceptar.setIcon(new ImageIcon(ImportarDoc.class.getResource("/icons/empresa/aceptar 24px.png")));
 				btnmcnAceptar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try{
@@ -87,6 +92,8 @@ public class ImportarDoc extends JDialog {
 			}
 			{
 				BotonAnimacion btnmcnCancelar = new BotonAnimacion();
+				btnmcnCancelar.setFont(new Font("Roboto", Font.PLAIN, 15));
+				btnmcnCancelar.setIcon(new ImageIcon(ImportarDoc.class.getResource("/icons/empresa/icons8-cancelar-24.png")));
 				btnmcnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

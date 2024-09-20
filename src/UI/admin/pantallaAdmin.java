@@ -207,5 +207,6 @@ public class pantallaAdmin extends JFrame {
 		contentPanels.add(pantalla);
 		contentPanels.revalidate();
 		contentPanels.repaint();
+		PanelPrincipal.actualizarContadores();
 	}
 }

@@ -211,6 +211,7 @@ public class CrearUsuarioNomb extends JDialog {
 			buttonPane.setLayout(fl_buttonPane);
 			{
 				btnmcnCrear = new BotonAnimacion();
+				btnmcnCrear.setFont(new Font("Roboto", Font.PLAIN, 15));
 				btnmcnCrear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try{
@@ -235,6 +236,7 @@ public class CrearUsuarioNomb extends JDialog {
 			}
 			{
 				btnCancel = new BotonAnimacion();
+				btnCancel.setFont(new Font("Roboto", Font.PLAIN, 15));
 				btnCancel.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

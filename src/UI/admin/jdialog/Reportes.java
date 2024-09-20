@@ -114,12 +114,14 @@ public class Reportes extends JDialog {
 			getContentPane().add(buttonPane);
 			{
 				BotonAnimacion btnmcnAceptar = new BotonAnimacion();
+				btnmcnAceptar.setFont(new Font("Roboto", Font.PLAIN, 15));
+				btnmcnAceptar.setIcon(new ImageIcon(Reportes.class.getResource("/icons/empresa/Exit 24px.png")));
 				btnmcnAceptar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
 					}
 				});
-				btnmcnAceptar.setText("Aceptar");
+				btnmcnAceptar.setText("Salir");
 				buttonPane.add(btnmcnAceptar);
 			}
 		}

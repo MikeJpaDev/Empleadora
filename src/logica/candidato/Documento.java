@@ -13,18 +13,18 @@ public class Documento {
 	}
 	private void setNombre(String nombre) {
 		if(nombre == null || nombre.trim().isEmpty())  //Comprobando nombre vacio
-			throw new IllegalArgumentException("El nombre esta vacio");
+			throw new IllegalArgumentException("El nombre esta vacío");
 		
 		if(!nombre.equalsIgnoreCase(nombre.trim()))  //Espacios al principio o final
 			throw new IllegalArgumentException("No deje espacios en blanco al principio o al final");
 		
 		if(!nombre.equalsIgnoreCase(nombre.replaceAll("  ", "")))
-			throw new IllegalArgumentException("dos espacios en blanco juntos");
+			throw new IllegalArgumentException("Dos espacios en blanco juntos");
 		this.nombre = nombre;
 	}
 	private void setContenido(String contenido) {
 		if(contenido == null || contenido.trim().isEmpty())  //Comprobando nombre vacio
-			throw new IllegalArgumentException("El contenido esta vacio");
+			throw new IllegalArgumentException("El contenido esta vacío");
 		this.contenido = contenido;
 	}
 	public Documento(String nombre, String contenido) {

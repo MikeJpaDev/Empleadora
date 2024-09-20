@@ -30,6 +30,7 @@ import util.UsersTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.time.format.DateTimeFormatter;
+import java.awt.Toolkit;
 
 public class VerCita extends JDialog {
 
@@ -88,6 +89,7 @@ public class VerCita extends JDialog {
 	}
 	
 	public VerCita(Cita cita) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VerCita.class.getResource("/images/empresa/logo redondo 64.png")));
 		setModal(true);
 		setResizable(false);
 		setTitle("Candidatos Disponibles");
@@ -157,7 +159,7 @@ public class VerCita extends JDialog {
 			}
 		});
 		btnBuscar.setIcon(new ImageIcon(VerCita.class.getResource("/icons/empresa/Buscar 24px.png")));
-		btnBuscar.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnBuscar.setFont(new Font("Roboto", Font.PLAIN, 15));
 		btnBuscar.setText("Buscar");
 		btnBuscar.setBounds(313, 252, 109, 32);
 		contentPanel.add(btnBuscar);
@@ -170,7 +172,7 @@ public class VerCita extends JDialog {
 			}
 		});
 		btnEliminar.setIcon(new ImageIcon(VerCita.class.getResource("/icons/empresa/borrar 24px.png")));
-		btnEliminar.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnEliminar.setFont(new Font("Roboto", Font.PLAIN, 15));
 		btnEliminar.setText("Eliminar");
 		btnEliminar.setBounds(313, 302, 109, 32);
 		contentPanel.add(btnEliminar);
@@ -199,7 +201,7 @@ public class VerCita extends JDialog {
 		});
 		btnver.setIcon(new ImageIcon(VerCita.class.getResource("/icons/empresa/ver 24px.png")));
 		btnver.setText("Ver");
-		btnver.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnver.setFont(new Font("Roboto", Font.PLAIN, 15));
 		btnver.setBounds(313, 202, 109, 32);
 		contentPanel.add(btnver);
 		{
@@ -226,7 +228,7 @@ public class VerCita extends JDialog {
 					}
 				});
 				btnmcnAceptar.setIcon(new ImageIcon(VerCita.class.getResource("/icons/empresa/Exit 24px.png")));
-				btnmcnAceptar.setFont(new Font("Roboto", Font.PLAIN, 14));
+				btnmcnAceptar.setFont(new Font("Roboto", Font.PLAIN, 15));
 				btnmcnAceptar.setText("Salir");
 				buttonPane.add(btnmcnAceptar);
 			}

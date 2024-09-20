@@ -255,6 +255,7 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(lblDoc);
 
 		BotonAnimacion btnmcnAadir = new BotonAnimacion();
+		btnmcnAadir.setFont(new Font("Roboto", Font.PLAIN, 15));
 		btnmcnAadir.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/Importar 24pc.png")));
 		btnmcnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -293,6 +294,7 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(btnmcnAadir);
 
 		BotonAnimacion btnmcnBorrar = new BotonAnimacion();
+		btnmcnBorrar.setFont(new Font("Roboto", Font.PLAIN, 15));
 		btnmcnBorrar.setIcon(new ImageIcon(CrearUsuario.class.getResource("/icons/empresa/borrar 24px.png")));
 		btnmcnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -359,6 +361,7 @@ public class CrearUsuario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 			btnmcnCrear = new BotonAnimacion();
+			btnmcnCrear.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
@@ -408,6 +411,7 @@ public class CrearUsuario extends JDialog {
 			buttonPane.add(btnmcnCrear);
 
 			btnCancel = new BotonAnimacion();
+			btnCancel.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {

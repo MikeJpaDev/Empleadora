@@ -189,7 +189,7 @@ public class VerCitasXUsuario extends JDialog {
 		txtGen.setBounds(121, 295, 349, 26);
 		panelInfo.add(txtGen);
 
-		JLabel lblAiosDeExperiencia = new JLabel("A\u00F1ios de experiencia: ");
+		JLabel lblAiosDeExperiencia = new JLabel("A\u00F1os de experiencia: ");
 		lblAiosDeExperiencia.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblAiosDeExperiencia.setBounds(38, 333, 180, 26);
 		panelInfo.add(lblAiosDeExperiencia);

@@ -159,6 +159,7 @@ public class VerEmpresa extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 			btnCrear = new BotonAnimacion();
+			btnCrear.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnCrear.setFocusPainted(false);
 			btnCrear.setFocusTraversalKeysEnabled(false);
 			btnCrear.addActionListener(new ActionListener() {

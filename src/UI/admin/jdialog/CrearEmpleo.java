@@ -273,6 +273,7 @@ public class CrearEmpleo extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 			btnCancelar = new BotonAnimacion();
+			btnCancelar.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnCancelar.setFocusPainted(false);
 			btnCancelar.setFocusTraversalKeysEnabled(false);
 			btnCancelar.addActionListener(new ActionListener() {
@@ -282,6 +283,7 @@ public class CrearEmpleo extends JDialog {
 			});
 			
 			BotonAnimacion btnmcnCrear = new BotonAnimacion();
+			btnmcnCrear.setFont(new Font("Roboto", Font.PLAIN, 15));
 			btnmcnCrear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(okEmp && okSal){

@@ -17,14 +17,14 @@ public class CandidatoEspecifico extends Candidato {
 	
 	public void setDocumentos(ArrayList<Documento> docs){
 		if(docs.isEmpty())
-			throw new IllegalArgumentException("se esta creando un candidato especiico sin documentos");
+			throw new IllegalArgumentException("Se esta creando un candidato específico sin documentos");
 	}
 	
 	public void aggDocumento(Documento doc){
 		if(doc.getNombre().trim().isEmpty())
-			throw new IllegalArgumentException("El nombre del documento esta vacio");
+			throw new IllegalArgumentException("El nombre del documento esta vacío");
 		if(doc.getContenido().trim().isEmpty())
-			throw new IllegalArgumentException("El Contenido esta vacio");
+			throw new IllegalArgumentException("El Contenido esta vacío");
 		for(Documento d : documentos)
 			if(d.getNombre().equalsIgnoreCase(doc.getNombre()))
 				throw new IllegalArgumentException("El nombre esta repetido");
