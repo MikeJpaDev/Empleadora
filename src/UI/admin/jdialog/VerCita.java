@@ -21,9 +21,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import com.itextpdf.text.DocumentException;
+
 import logica.Empleadora;
 import logica.candidato.Candidato;
 import logica.cita.Cita;
+import logica.pdf.PdfCreate;
 import util.CandidatosEnCitasTableModel;
 import util.UsersTableModel;
 
@@ -31,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.time.format.DateTimeFormatter;
 import java.awt.Toolkit;
+import java.io.FileNotFoundException;
 
 public class VerCita extends JDialog {
 
@@ -41,18 +45,6 @@ public class VerCita extends JDialog {
 	private JLabel lblEmpresa;
 	private JLabel lblEmpleo;
 	private JLabel lblFecha;
-	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	
 	
 	//Limpiar Tabla 
@@ -216,6 +208,21 @@ public class VerCita extends JDialog {
 			lblFecha.setBounds(90, 104, 322, 14);
 			contentPanel.add(lblFecha);
 		}
+		
+		BotonAnimacion btnExportar = new BotonAnimacion();
+		btnExportar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					PdfCreate.crearPDF(citaPanel);
+				} catch (FileNotFoundException | DocumentException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnExportar.setText("Exportar");
+		btnExportar.setFont(new Font("Roboto", Font.PLAIN, 15));
+		btnExportar.setBounds(313, 350, 109, 32);
+		contentPanel.add(btnExportar);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
